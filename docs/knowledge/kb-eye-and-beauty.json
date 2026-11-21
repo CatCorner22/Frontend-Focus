@@ -1,0 +1,1341 @@
+{
+  "part": "eye-tracking-and-beauty",
+  "generated": "2026-11-14",
+  "entries": [
+    {
+      "id": "scanning-patterns-by-design",
+      "topic": "eye-tracking",
+      "principle": "The structure of a text decides which scanning pattern a reader uses",
+      "claim": "Nielsen Norman Group eye tracking names four main scanning patterns for web text: the F-pattern, the spotted pattern, the layer-cake pattern and the commitment pattern. The firm calls the layer-cake pattern by far the most effective way to scan a page. Headings that stand out from body text produce the layer-cake pattern; text with no structure produces the F-pattern.",
+      "mechanism": "A scanning pattern is the path the eyes take over a page. In the layer-cake pattern the eyes rest mostly on headings and subheadings and make a few deliberate stops in the body text between them; on a heat map this looks like horizontal stripes with blank bands between. In the spotted pattern the reader skips large blocks and stops on single items such as a link, a number or an address. In the commitment pattern a motivated reader reads almost everything, which is thorough and slow. The F-pattern appears when the text offers no structure and the reader is not committed. A later edition of the firm's report adds a lawn-mower pattern on tables and comparison pages and a pinball pattern on search results pages.",
+      "effects": {
+        "cognitiveLoad": "lowers \u2014 headings let the reader skip to the relevant section instead of sampling every line",
+        "satisfaction": "unknown \u2014 the sources seen report gaze behavior, not satisfaction",
+        "perceivedIntuitiveness": "raises \u2014 visible structure shows where each answer is"
+      },
+      "designMoves": [
+        "Give every section a heading that is larger or bolder than body text and that names the content in plain words.",
+        "Mark the few items that readers hunt for (prices, opening hours, phone number, address) so that the spotted pattern finds them: use a list, a table or bold text.",
+        "Use a table for comparisons so that the reader can sweep along rows.",
+        "Expect the commitment pattern only where the reader has a strong reason to read, such as a service description they are about to buy."
+      ],
+      "antiPatterns": [
+        "Headings styled like body text, which removes the stripes that the layer-cake pattern needs.",
+        "A long paragraph that hides the price or the opening hours in its middle.",
+        "Treating any one scanning pattern as a layout template."
+      ],
+      "howToCheck": {
+        "machine": "Count the words between consecutive headings and flag any run of body text above the Catalog limit that contains no heading, list or bold term (the research gives no number). Assert that each heading differs from body text: computed font-size ratio above 1, or font-weight of 600 or more. Assert that must-see facts (price, hours, phone, address) sit in a list, a table, a heading or bold text, not only inside a paragraph.",
+        "human": "Read only the headings from top to bottom. A first-time reader should be able to say which section answers a given question, for example 'When are you open?'."
+      },
+      "evidence": {
+        "grade": "B",
+        "kind": "large-practitioner-study",
+        "strengthNote": "One firm's eye-tracking program. Every source was seen only as a search summary, because the firm's website did not open in this session. The search summary quotes the definition of the layer-cake pattern, the horizontal-stripes description, the phrase 'by far the most effective way to scan pages' and the statement that the firm first documented the layer-cake pattern in 2004. The firm lists the four patterns from worst to best; the exact order of that list was not confirmed. The names lawn-mower pattern and pinball pattern were confirmed; their definitions were not, and the wording above for them comes from memory. Sample sizes for the pattern studies were not confirmed. Related figure made more exact: the claim that people read 20% to 28% of the words on a page is Nielsen's 2008 calculation from browser logs of 25 users collected in 2005 by Weinreich and colleagues (59,573 page views; 45,237 after cleaning; average page 593 words; time on page about 25 seconds plus 4.4 seconds per 100 words). It is an upper bound computed from time on page and an assumed reading speed, not an eye-tracking measurement, and the 25 users were heavy users."
+      },
+      "sources": [
+        {
+          "citation": "Nielsen Norman Group. Text Scanning Patterns: Eyetracking Evidence. (Author and year recalled as Pernice, 2019; not confirmed.)",
+          "url": "https://www.nngroup.com/articles/text-scanning-patterns-eyetracking/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Pernice, K. The Layer-Cake Pattern of Scanning Content on the Web. Nielsen Norman Group. (Year recalled as 2019; not confirmed.)",
+          "url": "https://www.nngroup.com/articles/layer-cake-pattern-scanning/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Nielsen Norman Group. How People Read Online: The Eyetracking Evidence, 2nd edition (report).",
+          "url": "https://www.nngroup.com/reports/how-people-read-web-eyetracking-evidence/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Nielsen, J. (2008). How Little Do Users Read? Nielsen Norman Group.",
+          "url": "https://www.nngroup.com/articles/how-little-do-users-read/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Weinreich, H., Obendorf, H., Herder, E., & Mayer, M. (2008). Not quite the average: An empirical study of Web use. ACM Transactions on the Web, 2(1). (Known here only through Nielsen's description; journal details recalled.)",
+          "url": null,
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "The patterns describe text pages. Image-led pages and pages with little text were not the subject. The firm also describes a marking pattern and a bypassing pattern; secondary pages found by the search describe bypassing differently from what is remembered, so this record leaves both out. In right-to-left languages the patterns mirror. The existing record f-pattern-is-a-symptom covers the F-pattern alone.",
+      "appliesTo": [
+        "copy",
+        "heading-treatment",
+        "sections",
+        "tables",
+        "emphasis"
+      ]
+    },
+    {
+      "id": "fold-attention-by-study-year",
+      "topic": "eye-tracking",
+      "principle": "People scroll more than they did in 2010, and attention still falls sharply after the first screenful",
+      "claim": "The fold is the bottom edge of what a screen shows before the person scrolls. In Nielsen Norman Group eye tracking, 80% of viewing time fell above the fold in 2010 and 57% in 2018; in 2018, 74% fell within the first two screenfuls (the top 2,160 pixels). The firm says the sharp drop after the fold has the same shape in both years. Analytics from other vendors measure different things and give different pictures: Chartbeat reported in 2013 that about two thirds of the time spent on media pages is spent below the fold, and Contentsquare reports that the average visit scrolls through roughly half of a page's height.",
+      "mechanism": "People decide from the first screenful whether the rest is worth the effort of scrolling. Long pages became common between 2010 and 2018, so people expect to scroll and do so when the first screenful promises something. Eye tracking measures where eyes rest during set tasks in a laboratory. Analytics measure how far the page was moved and how long each part stayed in view, on real visits, without knowing where the eyes were.",
+      "effects": {
+        "cognitiveLoad": "lowers \u2014 when the main message is in the first screenful, the reader does not have to search for the point of the page",
+        "satisfaction": "unknown \u2014 the sources seen measure viewing time and scroll distance",
+        "perceivedIntuitiveness": "raises \u2014 the page states what it is before asking for effort"
+      },
+      "designMoves": [
+        "Put the main heading, one sentence that says what the business offers, and the primary action in the first screenful at phone and laptop sizes.",
+        "Let some content cross the fold (a cut-off card, the top of the next heading) so that the page does not look finished.",
+        "Order sections by importance: each further screenful gets less attention.",
+        "Repeat the primary action lower on a long page instead of placing it only at the bottom."
+      ],
+      "antiPatterns": [
+        "A first screenful that is filled edge to edge by one image with no text, which can look like the whole page.",
+        "The only contact detail or the only primary action placed below the third screenful.",
+        "Quoting 'nobody scrolls' (out of date) or 'the fold is a myth' (also wrong) as a rule."
+      ],
+      "howToCheck": {
+        "machine": "Render at 390x844, 1366x768 and 1920x1080. Assert that the top edge of the main heading and the whole primary action lie above y = viewport height. Flag any must-see item whose first appearance starts below y = 2 x viewport height. Test whether at least one content element's box straddles y = viewport height; flag the page when none does (false floor).",
+        "human": "Look at the first screenful only, for five seconds. Say what the business does and what to do next. Then say whether the page looks as if it continues."
+      },
+      "evidence": {
+        "grade": "B",
+        "kind": "large-practitioner-study",
+        "strengthNote": "All figures were seen only as search summaries. The search summary of the Nielsen Norman Group article by Fessenden (2018) confirms 57% above the fold, 74% in the first two screenfuls (up to 2,160 px), and 80% above the fold in 2010; participant numbers were not confirmed. This replaces the remembered figures in the existing record front-load-headings-fold with checked ones. Chartbeat: a Slate article (2013) reports the company's aggregate figure that about two thirds of time on a page is below the fold, and a trade article reports that the top of the page was in view for about 4 seconds while engaged time peaked just below the fold at about 16 seconds; these are one analytics vendor's data from media sites. A Chartbeat blog also states that 35% of desktop visitors leave before scrolling at all. Contentsquare: its benchmark reports give an average scroll rate of 56.8% in one annual edition, 54% in a later edition, and 50.5% on desktop against 45.2% on mobile in the edition built on 2023 data; the edition years of the first two figures were not confirmed. Vendor benchmarks are grade B at most."
+      },
+      "sources": [
+        {
+          "citation": "Fessenden, T. (2018). Scrolling and Attention. Nielsen Norman Group.",
+          "url": "https://www.nngroup.com/articles/scrolling-and-attention/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Nielsen, J. (2010). Scrolling and Attention (original research). Nielsen Norman Group.",
+          "url": "https://www.nngroup.com/alertbox/scrolling-attention.html",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Manjoo, F. (2013). You Won't Finish This Article. Slate. (Author and title recalled. Reports Chartbeat data analysed by Josh Schwartz.)",
+          "url": "https://www.slate.com/articles/technology/technology/2013/06/how_people_read_online_why_you_won_t_finish_this_article.html",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Chartbeat. Scrolling in the Deep: What reader data shows us about on-page interactions (company blog).",
+          "url": "https://blog.chartbeat.com/?p=3927",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "MarTech. Chartbeat Demonstrates Below-the-Fold Ad Placement Is More Valuable Than Originally Assumed (trade article).",
+          "url": "https://martech.org/chartbeat-proves-below-the-fold-ad-placement-may-offer-more-value-than-assumed/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Contentsquare. Digital Experience Benchmark, engagement chapter (vendor report; scroll rate by device).",
+          "url": "https://contentsquare.com/guides/digital-experience-benchmark/engagement/",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "The eye-tracking figures and the analytics figures do not contradict each other: the first measures gaze during tasks, the second measures time in view among people who scrolled, mostly on article pages. The fold is a different line on every device. A small-business page is shorter than a news article, so the media figures transfer poorly. The 2018 study is now eight years old.",
+      "appliesTo": [
+        "hero",
+        "sections",
+        "copy",
+        "mobile"
+      ]
+    },
+    {
+      "id": "left-side-attention",
+      "topic": "eye-tracking",
+      "principle": "On left-to-right pages, most looking happens on the left half",
+      "claim": "In Nielsen Norman Group eye tracking of left-to-right pages, 69% of viewing fell on the left half of the page in the 2010 study and about 80% of fixations fell on the left half in the later study, which used a 1920x1080 monitor and more than 120 participants. On search results pages the figure was 94%.",
+      "mechanism": "Lines of text in left-to-right languages start at the left, and by convention the logo, the navigation and the start of the main content sit there too. Readers return to the left edge for every new line and expect the important things to begin there. The bias reflects how pages are written and built, not a fixed property of the eye.",
+      "effects": {
+        "cognitiveLoad": "lowers \u2014 content sits where readers already look",
+        "satisfaction": "unknown \u2014 not measured in the sources seen",
+        "perceivedIntuitiveness": "raises \u2014 the layout matches the reader's expectation"
+      },
+      "designMoves": [
+        "Start the main heading, the key statement and the primary action in the left half or in a centered column, not in a right-hand rail.",
+        "Use the right-hand side for secondary content that a reader can miss without harm.",
+        "On wide screens, cap the content width so that text does not stretch to the far right.",
+        "Mirror the layout for right-to-left languages."
+      ],
+      "antiPatterns": [
+        "The only phone number or booking button in a narrow column at the far right of a wide screen.",
+        "A split hero with a large decorative image on the left and the whole message on the right.",
+        "Full-width text lines on a 1920-pixel screen."
+      ],
+      "howToCheck": {
+        "machine": "Render at 1920 px width. For the main heading, the first paragraph and the primary action, compute the horizontal center of each box. Flag any of the three whose box lies wholly in the right half while the left half of the same band holds only an image or empty space. Flag must-see items that appear only in the rightmost 20% of the width. When the document direction is rtl, mirror the test.",
+        "human": "Cover the right third of a wide screenshot. The page should still say what the business offers and what to do next."
+      },
+      "evidence": {
+        "grade": "B",
+        "kind": "large-practitioner-study",
+        "strengthNote": "One firm's eye tracking, seen only as a search summary. The summary quotes the later article: 80% of fixations on the left half, more than the earlier 69%, a 1920x1080 monitor, more than 120 participants, and 94% on search results pages. The later article's author and date (recalled as Fessenden, 2017) were not confirmed, and the unit of the 2010 figure (remembered as viewing time) was not confirmed. The pages tested were left-to-right sites of that period, most of them with left-aligned content."
+      },
+      "sources": [
+        {
+          "citation": "Nielsen Norman Group. Horizontal Attention Leans Left. (Author and year recalled as Fessenden, 2017; not confirmed.)",
+          "url": "https://www.nngroup.com/articles/horizontal-attention-leans-left/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Nielsen, J. (2010). Horizontal Attention Leans Left (original research). Nielsen Norman Group.",
+          "url": "https://www.nngroup.com/articles/horizontal-attention-original-research/",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "A centered single column is not penalized by this finding: the measure is where content starts, and a centered column on a wide screen still starts left of the right-hand rail. The percentages depend on screen width and on the layouts in the sample. On a phone the page is one column and the left-right split barely applies.",
+      "appliesTo": [
+        "hero",
+        "nav",
+        "content-width",
+        "sections"
+      ]
+    },
+    {
+      "id": "entry-point-headline-first-words",
+      "topic": "eye-tracking",
+      "principle": "Eyes enter at the dominant headline near the upper left, and often read only its first two or three words",
+      "claim": "In the Poynter Institute's Eyetrack III study of news home pages (2004), eyes most often landed first in the upper left, the dominant headline drew the eyes before the main photograph did, readers often read only the first two or three words of a headline, and smaller type led to focused reading while larger type led to scanning. Nielsen Norman Group's 2006 study (232 users) found that the third word on a line is read much less often than the first two. Fixed diagrams of eye movement such as the Gutenberg diagram and the Z-pattern have little empirical support.",
+      "mechanism": "A reader new to a page looks for the largest text near the place where reading starts, takes in a couple of words, and decides whether to continue. Words after the first two or three are read only when the first ones match what the reader wants.",
+      "effects": {
+        "cognitiveLoad": "lowers \u2014 the first words answer 'is this for me?' without further reading",
+        "satisfaction": "unknown \u2014 not measured in the sources seen",
+        "perceivedIntuitiveness": "raises \u2014 the page says what it is at the point where people look first"
+      },
+      "designMoves": [
+        "Make the main heading the largest text in the first screenful and place it in the upper half.",
+        "Begin every heading and link label with the words that carry the meaning: 'Boiler repair in Leeds', not 'Welcome to our website'.",
+        "Do not rely on the hero photograph to state the offer; the headline is read first.",
+        "Write link labels that differ from each other in their first two words."
+      ],
+      "antiPatterns": [
+        "Headlines that begin with 'Welcome', 'Our', 'About' or the business's slogan.",
+        "A list of links that all begin with the same words ('Learn more about ...').",
+        "Arranging a page along a 'Z' or a 'Gutenberg diagonal' because a diagram says eyes move that way."
+      ],
+      "howToCheck": {
+        "machine": "In the first viewport, assert that the element with the largest computed font size is the main heading and that its box starts in the upper half of the viewport. For each heading and link label, compare the first two words with a stop list (welcome, our, about, the, a, learn, more, click, here, we, at); flag labels whose first two words are both on the list. Flag link lists in which two or more labels share the same first 11 characters (the Catalog may change the number; see the strength note).",
+        "human": "Read only the first two words of every heading and link. The reader should still know what the business does and where each link goes."
+      },
+      "evidence": {
+        "grade": "B",
+        "kind": "large-practitioner-study",
+        "strengthNote": "All sources were seen only as search summaries. Eyetrack III is known here through secondary summaries (a journalism symposium page and news articles from 2004), which agree on the headline-first, upper-left, first-words and type-size findings; the original report did not open and its sample size (recalled as 46 people) was not confirmed. The study tested news home pages of 2004 on desktop screens. The Nielsen Norman Group sentence about the third word comes from a secondary quotation of the 2006 F-pattern article. Nielsen's 2009 article on the first two words is remembered as reporting that people see about the first 11 characters of a link in a list; the search did not find the article, so the figure is not confirmed. Buscher, Cutrell and Morris (CHI 2009; 20 participants, 361 pages) report location-based attention patterns that vary with the task; their specific location results were not confirmed. On the Gutenberg diagram, a design reference book states that there is little empirical evidence that layouts following it improve reading, and that it predicts eye movement only for evenly distributed, homogeneous content; no eye-tracking study that supports the Z-pattern was found."
+      },
+      "sources": [
+        {
+          "citation": "Outing, S., & Ruel, L. (2004). Eyetrack III: What news websites look like through readers' eyes. Poynter Institute. (Seen through secondary summaries; authors and title recalled.)",
+          "url": "https://isoj.org/eyetrack-iii-shows-how-people-look-at-news-web-sites/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Nielsen, J. (2006). F-Shaped Pattern for Reading Web Content (original eye-tracking research). Nielsen Norman Group.",
+          "url": "https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content-discovered/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Nielsen, J. (2009). First 2 Words: A Signal for the Scanning Eye. Nielsen Norman Group.",
+          "url": null,
+          "verified": "from-memory-unverified"
+        },
+        {
+          "citation": "Buscher, G., Cutrell, E., & Morris, M. R. (2009). What do you see when you're surfing? Using eye tracking to predict salient regions of web pages. Proceedings of CHI 2009, 21-30.",
+          "url": "https://www.microsoft.com/en-us/research/publication/what-do-you-see-when-youre-surfing-using-eye-tracking-to-predict-salient-regions-of-web-pages/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Lidwell, W., Holden, K., & Butler, J. Gutenberg Diagram. In The Pocket Universal Principles of Design.",
+          "url": "https://www.oreilly.com/library/view/the-pocket-universal/9781627883665/xhtml/ch064.html",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "News home pages of 2004 are dense lists of headlines; a small-business page with one large image may be entered differently, and no eye-tracking study of that page type was found. A face in the first screenful competes for the first fixations (see faces-capture-first-fixations). The existing record front-load-headings-fold covers the general advice; this record adds the measured details and the first-words check.",
+      "appliesTo": [
+        "hero",
+        "heading-treatment",
+        "copy",
+        "nav"
+      ]
+    },
+    {
+      "id": "gaze-cueing-pictured-people",
+      "topic": "eye-tracking",
+      "principle": "Viewers look where a pictured person looks; effects on attitude are less certain",
+      "claim": "Gaze cueing is the shift of a viewer's attention toward the place another person's eyes point at. A meta-analysis of 423 laboratory gaze-cueing effects found the shift under every task and cue feature it assessed. In four eye-tracking experiments with advertisements, a pictured face that looked at the product or message increased looking at the product, the brand or the text, compared with a face that looked at the viewer or away from the product. Two of the experiments also found better memory, one found higher intention to buy, and one found no difference in attitude toward the advertisement.",
+      "mechanism": "People follow other people's eyes quickly and with little control, because gaze usually points at something worth knowing. A face that looks out of the picture at the viewer holds attention on the face itself. Arrows shift attention in laboratory tasks too, so the effect is not unique to eyes.",
+      "effects": {
+        "cognitiveLoad": "lowers \u2014 slightly, when the pictured gaze leads to the message instead of away from it",
+        "satisfaction": "unknown \u2014 attitude results are mixed across the experiments",
+        "perceivedIntuitiveness": "unknown \u2014 not measured"
+      },
+      "designMoves": [
+        "When a photograph of a person sits beside the main message, choose a frame in which the person looks toward the headline, the product or the primary action.",
+        "Use a face that looks at the viewer when the person is the message, for example the owner on an 'About' page.",
+        "Do not flip a photograph that contains text, a logo or a recognisable asymmetry to fix the gaze direction; choose another frame."
+      ],
+      "antiPatterns": [
+        "A hero photograph in which the person looks off the edge of the page, away from the headline.",
+        "A large face that looks at the viewer placed beside a small primary action.",
+        "Citing the well-known 'baby looks at the headline' heat map as proof; its source could not be found in this session."
+      ],
+      "howToCheck": {
+        "machine": "No reliable check exists without a vision model. With a face-landmark model: for each face in the first viewport larger than the Catalog's minimum size, estimate the gaze direction and test whether a ray from the eyes crosses the box of the main heading or the primary action; report 'toward message', 'toward viewer' or 'away'.",
+        "human": "For each photograph of a person in the first screenful, write down where the person looks: at the viewer, at the message, or away from both. Flag 'away from both'."
+      },
+      "evidence": {
+        "grade": "A-",
+        "kind": "meta-analysis",
+        "strengthNote": "All sources were seen only as search summaries. Laboratory effect: McKay and colleagues (2021, Psychological Bulletin) pooled 423 gaze-cueing effects with a multilevel model; the effect appeared across all tasks and cue features assessed, and schematic, computer-generated and real faces did not differ reliably. The pooled effect size was not found, so it is not confirmed; the laboratory effect is a difference in reaction time, not a difference in behavior on a page. Advertisements: Hutton and Nolte (2011) found longer looks at the product, the logo and the rest of a print advertisement when the model looked at the product. Sajjacholapunt and Ball (2014) found that averted gaze toward the content increased attention to banner text and product on web pages and improved memory for brand and message, while faces with direct gaze drew attention to the face. Palcu, Sudkamp and Florack (2017) found more looks at the product and higher intention to buy on a fictional shopping page. Adil, Lacoste-Badie and Droulers (2018) found better attention, memory and brand attitude but no difference in attitude toward the advertisement. Sample sizes were not confirmed. All four used advertisements, not hero images of small-business pages. Grade A- applies to the attention effect; the effect on attitude and purchase is grade C."
+      },
+      "sources": [
+        {
+          "citation": "McKay, K. T., Grainger, S. A., Coundouris, S. P., Skorich, D. P., Phillips, L. H., & Henry, J. D. (2021). Visual attentional orienting by eye gaze: A meta-analytic review of the gaze-cueing effect. Psychological Bulletin, 147(12), 1269-1289.",
+          "url": "https://abdn.elsevierpure.com/en/publications/visual-attentional-orienting-by-eye-gaze-a-meta-analytic-review-o",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Hutton, S. B., & Nolte, S. (2011). The effect of gaze cues on attention to print advertisements. Applied Cognitive Psychology.",
+          "url": "https://zendy.io/title/10.1002/acp.1763",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Sajjacholapunt, P., & Ball, L. J. (2014). The influence of banner advertisements on attention and memory: Human faces with averted gaze can enhance advertising effectiveness. Frontiers in Psychology, 5, 166.",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3941030",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Palcu, J., Sudkamp, J., & Florack, A. (2017). Judgments at gaze value: Gaze cuing in banner advertisements, its effect on attention allocation and product judgments. Frontiers in Psychology, 8, 881.",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5454066",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Adil, S., Lacoste-Badie, S., & Droulers, O. (2018). Face presence and gaze direction in print advertisements. Journal of Advertising Research. (Title recalled; seen through a trade summary.)",
+          "url": "https://www.warc.com/newsandopinion/news/how-models-impact-print-ad-effectiveness/41544",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Tipples, J. (2002). Eye gaze is not unique: Automatic orienting in response to uninformative arrows. Psychonomic Bulletin & Review.",
+          "url": "https://typeset.io/pdf/eye-gaze-is-not-unique-automatic-orienting-in-response-to-47suaglils.pdf",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "The 2017 authors note that only one earlier study had tested social cues in banner advertisements and call for more validation. The popular heat-map pair of a baby looking at the viewer and at a headline (recalled as a 2009 blog post by a usability consultant, with 106 viewers) was not found by the search and was never peer-reviewed. A person who looks at the message does not make a weak message stronger.",
+      "appliesTo": [
+        "hero",
+        "emphasis",
+        "sections"
+      ]
+    },
+    {
+      "id": "faces-capture-first-fixations",
+      "topic": "eye-tracking",
+      "principle": "A face takes the first fixations, so a pictured face must carry meaning",
+      "claim": "When people view photographs freely, they fixate a face within their first two fixations (about half a second) with a probability above 80%. On websites, images of people with visible faces raised the appeal of the images and the sense of human warmth in one controlled experiment, while the effect of staff photographs on trust depended on the combination of photograph and site. Eye tracking by Nielsen Norman Group found that people study photographs of real staff and products and ignore stock photographs of generic people.",
+      "mechanism": "The visual system gives faces priority over other content of similar size and contrast. A face therefore spends some of the viewer's first second. The spending pays off when the face tells the viewer something, such as who runs the business, and is wasted when the face is decoration. A face that looks at the viewer holds attention on itself and, in one banner experiment, weakened memory for the brand and message beside it.",
+      "effects": {
+        "cognitiveLoad": "raises \u2014 slightly, when a decorative face competes with the message for the first fixations",
+        "satisfaction": "raises \u2014 in one experiment, faces raised image appeal and perceived warmth",
+        "perceivedIntuitiveness": "none \u2014 no evidence either way"
+      },
+      "designMoves": [
+        "Show the real owner, staff or customers, and say who they are in a caption.",
+        "Place a face next to the message it supports, and prefer a frame in which the person looks toward that message (see gaze-cueing-pictured-people).",
+        "When no real photograph exists, use a photograph of the product, the place or the work instead of a stock face.",
+        "Keep the main heading readable without the photograph: do not put the only statement of the offer on top of a face."
+      ],
+      "antiPatterns": [
+        "A stock photograph of smiling strangers as the largest element of the first screenful.",
+        "A face larger than the headline on a page whose purpose is a task, such as booking.",
+        "The claim that adding any face raises trust."
+      ],
+      "howToCheck": {
+        "machine": "With a face detector, report each face in the first viewport and its share of the viewport area. Flag a face-bearing image that has empty alternative text (the author marked it as decoration) and covers more area than the main heading block. Flag images served from known stock-photograph hosts. Without a face detector, list all first-viewport images and their alternative text for a person to review.",
+        "human": "For each photograph of a person: name the person and their role. If no one can, the photograph is decoration."
+      },
+      "evidence": {
+        "grade": "A-",
+        "kind": "peer-reviewed-experiment",
+        "strengthNote": "All sources were seen only as search summaries. Cerf, Harel, Einh\u00e4user and Koch (NIPS 2007): free viewing of photographs of natural scenes, about two thirds of which contained a person; a face was fixated within the first two fixations with a probability above 80%. These were photographs, not web pages. Cyr, Head, Larios and Pan (2009, MIS Quarterly): three versions of an electronics retailer's site (faces, people without faces, no people), with questionnaire, interviews and eye tracking; the summary confirms support for image appeal and social presence, and does not confirm the result for trust. Riegelsberger, Sasse and McCarthy (CHI 2003): 8 staff photographs on 12 vendor sites with decisions under financial risk; the authors' later paper says that photograph effects depend on interactions between photograph and site. Nielsen (2010): one firm's eye tracking, sample not reported in the summary. Djamasbi, Siegel and Tullis (2010): young adults preferred pages with a large main image, celebrity faces and little text. Grade A- applies to the capture of first fixations; the effect of faces on trust is grade C."
+      },
+      "sources": [
+        {
+          "citation": "Cerf, M., Harel, J., Einh\u00e4user, W., & Koch, C. (2007). Predicting human gaze using low-level saliency combined with face detection. Advances in Neural Information Processing Systems 20.",
+          "url": "https://proceedings.neurips.cc/paper/2007/hash/708f3cf8100d5e71834b1db77dfa15d6-Abstract.html",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Cyr, D., Head, M., Larios, H., & Pan, B. (2009). Exploring human images in website design: A multi-method approach. MIS Quarterly, 33(3), 539-566.",
+          "url": "https://pure.psu.edu/en/publications/exploring-human-images-in-website-design-a-multi-method-approach/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Riegelsberger, J., Sasse, M. A., & McCarthy, J. D. (2003). Shiny happy people building trust? Photos on e-commerce websites and consumer trust. Proceedings of CHI 2003, 121-128.",
+          "url": "https://researchr.org/publication/RiegelsbergerSM03",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Nielsen, J. (2010). Photos as Web Content. Nielsen Norman Group.",
+          "url": "https://www.nngroup.com/articles/photos-as-web-content/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Sajjacholapunt, P., & Ball, L. J. (2014). The influence of banner advertisements on attention and memory. Frontiers in Psychology, 5, 166.",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3941030",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Djamasbi, S., Siegel, M., & Tullis, T. (2010). Generation Y, web design, and eye tracking. International Journal of Human-Computer Studies, 68, 307-323.",
+          "url": "https://users.wpi.edu/~djamasbi/PDFS/2010%20djamasbi%20et%20al-%20IJHCS%20(journal%20version).pdf",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "The existing record real-content-over-stock covers the stock-photograph finding; this record adds the size of the face effect and its cost. The website experiments are 15 to 20 years old and used shop sites. The 2009 study compared cultural groups; its cultural results were not confirmed.",
+      "appliesTo": [
+        "hero",
+        "sections",
+        "emphasis"
+      ]
+    },
+    {
+      "id": "grouping-density-scanpaths",
+      "topic": "eye-tracking",
+      "principle": "Meaningful groups shorten the search, and sparse groups are searched first",
+      "claim": "In an eye-tracking experiment, a tool panel whose items were arranged in meaningful groups was searched with fewer fixations than a panel whose items were placed at random within groups. In a second line of experiments, people searched sparse groups of words before dense groups and found targets in sparse groups faster; a follow-up reports that people go to sparse regions first even when the dense regions could be searched faster. No eye-tracking study was found that isolates the amount of white space between groups on real web pages.",
+      "mechanism": "A scanpath is the sequence of fixations and jumps the eyes make. When items that belong together sit together, one or two fixations tell the reader whether the group is relevant, and the rest of the group can be skipped. Large, widely spaced items can be read from further away from the point of fixation than small, tightly packed ones, so the eyes go to them first.",
+      "effects": {
+        "cognitiveLoad": "lowers \u2014 fewer fixations are needed to find an item",
+        "satisfaction": "unknown \u2014 not measured in the experiments seen",
+        "perceivedIntuitiveness": "raises \u2014 the grouping shows what belongs together"
+      },
+      "designMoves": [
+        "Group items by meaning (services, contact details, opening hours) and separate the groups with more space than the items within a group have.",
+        "Put what most visitors need in a sparse group: few items, larger type, more space.",
+        "Keep small, dense text for reference content that few visitors need, such as legal notices."
+      ],
+      "antiPatterns": [
+        "The phone number inside the densest block of small text on the page.",
+        "Navigation items ordered by when they were added instead of by meaning.",
+        "Equal gaps everywhere, so that no groups are visible."
+      ],
+      "howToCheck": {
+        "machine": "From bounding boxes, assert that gaps within a group are smaller than gaps between groups (the Catalog sets the ratio). For each visual group compute a density score: items divided by the group's area, together with the font size. Flag must-see items that sit in the group with the highest density score or the smallest font size on the page. Flag groups with more items than the Catalog limit.",
+        "human": "Ask a first-time viewer to find one fact, for example the opening hours on Saturday, and watch where they look or point first. They should go to the right group at once."
+      },
+      "evidence": {
+        "grade": "B",
+        "kind": "peer-reviewed-experiment",
+        "strengthNote": "All sources were seen only as search summaries. Goldberg and Kotval (1999, International Journal of Industrial Ergonomics): a drawing-tool panel with eleven components in three functional groups against a version randomized within groups; the randomized version produced more fixations of similar duration and less efficient search. The sample size was not confirmed and is remembered as small. Halverson and Hornof (2004, a human-factors conference paper): sparse groups held five words in 18-point type and dense groups ten words in 9-point type; sparse groups were searched first and their targets found faster; the authors say that other densities, and font size and spacing separately, still need testing. Tarling and Brumby (2010) is known only by its title and one sentence. The stimuli were tool panels and word lists, not web pages, and the density experiments changed type size and spacing together. Grade B reflects small laboratory studies whose transfer to web pages is an inference."
+      },
+      "sources": [
+        {
+          "citation": "Goldberg, J. H., & Kotval, X. P. (1999). Computer interface evaluation using eye movements: Methods and constructs. International Journal of Industrial Ergonomics, 24(6), 631-645.",
+          "url": "https://www.bohrium.com/paper-details/computer-interface-evaluation-using-eye-movements-methods-and-constructs/813056531619643393-4086",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Halverson, T., & Hornof, A. J. (2004). Local density guides visual search: Sparse groups are first and faster. Proceedings of the Human Factors and Ergonomics Society Annual Meeting. (Venue inferred from the DOI; not confirmed.)",
+          "url": "https://www.cs.uoregon.edu/Activities/Poster_Contest/2004/Halverson04visual.pdf",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Tarling, B., & Brumby, D. P. (2010). Density guides visual search: Sparse groups are first even when slower. Proceedings of the Human Factors and Ergonomics Society Annual Meeting.",
+          "url": "https://www.bohrium.com/paper-details/density-guides-visual-search-sparse-groups-are-first-even-when-slower/813339454650449923-19959",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "The existing records proximity-and-common-region, density-organised and whitespace-comprehension cover grouping and space in general; this record adds the eye-movement evidence and the search-order finding. 'Sparse is searched first' does not mean 'sparse is always better': a page of only sparse groups has no order of priority.",
+      "appliesTo": [
+        "density",
+        "sections",
+        "nav",
+        "size-scale"
+      ]
+    },
+    {
+      "id": "heat-map-limits",
+      "topic": "eye-tracking",
+      "principle": "A heat map shows where eyes rested, not what people understood, and a stable one needs about 30 or more people",
+      "claim": "A heat map is a picture that colors each part of a page by how much people looked at it. Nielsen Norman Group advises about 39 participants for a stable eye-tracking heat map, so that about 30 usable recordings remain. A 2025 methods paper states that no clear sample-size guideline exists for eye-tracking studies of scene viewing and shows that each further gain in precision needs many more people. A mouse cursor is a weak stand-in for the eyes: in one study the cursor trailed the gaze by 700 milliseconds on average. Attention maps predicted by software agree only partly with real eye tracking, and less on real pages than on artificial ones.",
+      "mechanism": "A heat map adds up many people and many moments. It hides the order in which people looked, the differences between people, and the task they had. A fixation shows that the eyes rested on a spot; it does not show that the person read, understood or believed what was there. With few participants, one person's long look changes the picture.",
+      "effects": {
+        "cognitiveLoad": "none \u2014 the record concerns the quality of evidence, not the page",
+        "satisfaction": "none \u2014 the record concerns the quality of evidence",
+        "perceivedIntuitiveness": "none \u2014 the record concerns the quality of evidence"
+      },
+      "designMoves": [
+        "Treat a heat map as a prompt for questions, and settle the questions with tasks: can five first-time visitors find the phone number?",
+        "Before acting on a heat map, record how many people it shows, what task they had, and whether it shows real eye tracking, cursor movement or a software prediction.",
+        "Prefer a first-click test or a five-second test for a one-person project; both need no eye tracker."
+      ],
+      "antiPatterns": [
+        "Changing a layout because of a heat map from five people.",
+        "Presenting a software-predicted attention map or a cursor map as eye tracking.",
+        "Reading a red spot as 'people liked this' or 'people understood this'."
+      ],
+      "howToCheck": {
+        "machine": null,
+        "human": "No check on a web page exists; the check applies to any heat map used as a reason for a design choice. Record four facts: the number of participants (flag fewer than 30), the task, the measure (fixation count or duration), and the source (eye tracker, cursor, or model prediction). Flag a design rationale that cites a heat map without these facts."
+      },
+      "evidence": {
+        "grade": "B",
+        "kind": "large-practitioner-study",
+        "strengthNote": "All sources were seen only as search summaries. Sample size: a Nielsen Norman Group article says to test 39 users for stable heat maps, and a trade article quotes the firm's 2009 methodology report as asking for 30 users per heat map and recruiting about 39; this is one firm's rule of thumb, and its statistical basis was not seen. Hoogerbrugge and colleagues (2025, Behavior Research Methods) state that no clear guideline exists for scene-viewing studies and report that each 25% reduction in outcome variance required growth from 13 to 24 to 44 participants in one of their comparisons. A usability magazine article calls 'thirty participants' an oversimplification. Cursor: Huang, White and Buscher (CHI 2012; 36 participants, 32 search tasks) found that the cursor trails the gaze by at least 250 ms and by 700 ms on average, and that alignment depends on time, behavior, user and task. Predicted maps: one vendor reports 84% agreement by a correlation measure on its own data for the first seconds of viewing; an academic model reached about 80% on artificial pages and about 60% on real pages (its citation was not confirmed); a public data set for such models holds 149 pages viewed freely by 11 people. No independent test of any vendor's accuracy claim was found."
+      },
+      "sources": [
+        {
+          "citation": "Nielsen, J. How Many Test Users in a Usability Study? Nielsen Norman Group. (Title recalled. States 39 users for stable heat maps.)",
+          "url": "https://nngroup.com/articles/how-many-test-users",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Pernice, K., & Nielsen, J. (2009). Eyetracking Methodology: How to Conduct and Evaluate Usability Studies Using Eyetracking. Nielsen Norman Group. (Seen through a quotation in a trade article.)",
+          "url": "https://searchengineland.com/eyetracking-seo-fad-fact-or-fiction-98799",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Hoogerbrugge, A. J., et al. (2025). Sample size for eye-tracking studies of scene viewing. Behavior Research Methods. (Title paraphrased; not confirmed.)",
+          "url": "https://research-portal.uu.nl/ws/files/269011664/s13428-025-02754-8.pdf",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Huang, J., White, R., & Buscher, G. (2012). User see, user point: Gaze and cursor alignment in web search. Proceedings of CHI 2012, 1341-1350.",
+          "url": "https://www.microsoft.com/en-us/research/?p=163078",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Shen, C., & Zhao, Q. (2014). Webpage saliency. Proceedings of ECCV 2014, 33-46.",
+          "url": "https://www-users.cse.umn.edu/~qzhao/webpage_saliency.html",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "VisualEyes. How accurate are Attention Maps? (vendor page).",
+          "url": "https://visualeyes.notion.site/How-accurate-are-Attention-Maps-5414ce38221e492d9f28f885b786ca8e",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "User Experience Magazine. More than Just Eye Candy: Top Ten Misconceptions about Eye Tracking.",
+          "url": "https://oldmagazine.uxpa.org/?p=4539",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "Small eye-tracking sessions are still useful for watching one person at a time (a gaze replay); the limit applies to drawing conclusions from the summed picture. Every eye-tracking figure in this knowledge base comes from summed data and inherits these limits. The existing record goals-beat-salience explains why predictions from visual loudness alone fail during tasks.",
+      "appliesTo": [
+        "hero",
+        "sections",
+        "emphasis"
+      ]
+    },
+    {
+      "id": "curvature-cross-culture-and-interfaces",
+      "topic": "shape",
+      "principle": "The preference for curves appears in three cultures, is small per choice, and has not been shown to change what people do",
+      "claim": "When people in Spain, Mexico and Ghana chose between a curved and a sharp-angled version of the same object, they chose the curved one 59%, 55% and 58% of the time. People judged rooms with curved outlines beautiful more often than rooms with straight outlines, yet the outline did not change their decision to enter or leave the room. In two 2025 interface studies, rounded corners raised ratings of beauty and warmth, and moderately rounded buttons were preferred over fully angular ones.",
+      "mechanism": "Two explanations exist. Sharp angles may signal a possible threat: one brain-imaging study found more activity in the amygdala, a structure involved in fear and arousal, for sharp objects than for curved ones. Or curves may be liked for themselves. Either way the effect is a tilt in rated liking, measured on objects and rooms more than on screens.",
+      "effects": {
+        "cognitiveLoad": "none \u2014 no evidence that corner shape changes effort",
+        "satisfaction": "raises \u2014 slightly, in ratings of beauty and warmth",
+        "perceivedIntuitiveness": "unknown \u2014 one study reports higher rated ease of use through warmth; no performance was measured"
+      },
+      "designMoves": [
+        "Use rounding to set a warm or soft tone, and sharp corners to set a precise or formal tone; state the choice in the Prescription.",
+        "Where no tone is specified, a moderate radius is the lower-risk default: fully angular buttons were the least liked in the one button study.",
+        "Expect a small effect on ratings and none on results."
+      ],
+      "antiPatterns": [
+        "Promising that rounding will raise sales or sign-ups (see folklore-rounded-buttons-click-more).",
+        "Calling the preference universal: it was 55% to 59% in forced choices, and the meta-analysis in the existing record curvature-preference calls it reliable but not universal.",
+        "Maximum rounding on every element as a substitute for a decision."
+      ],
+      "howToCheck": {
+        "machine": "Collect the computed border-radius of every button, input and card. For each, report the radius as a share of the element's shorter side and class it as angular (0), moderate (above 0 and below 50%) or pill (50% or more). Compare the dominant class with the tone words in the Prescription: flag angular with 'warm', 'friendly' or 'gentle', and pill with 'precise', 'formal' or 'technical'. The research gives no best radius in pixels.",
+        "human": "Show the page to someone from the audience and ask for three words. Check the words against the intended tone."
+      },
+      "evidence": {
+        "grade": "A-",
+        "kind": "peer-reviewed-experiment",
+        "strengthNote": "All sources were seen only as search summaries. G\u00f3mez-Puerto and colleagues (2018, Psychology of Aesthetics, Creativity, and the Arts): participants in Mallorca, Oaxaca and Bawku chose between photographs of curved and sharp versions of real objects; the proportions choosing curved were .59, .55 and .58 and did not differ significantly. Vartanian and colleagues (2013, PNAS): curved rooms were more often judged beautiful and activated the anterior cingulate cortex; contour did not affect approach-avoidance decisions. Bar and Neta (2006, 2007): liking was higher for curved everyday objects, and the amygdala was more active for sharp ones; a secondary source gives 14 participants and 140 object pairs for the 2006 study, figure not confirmed. Interfaces: Zhuo and colleagues (2025, Journal of User Experience; online experiment, N = 187) varied corner shape in a bill-splitting app and found higher rated aesthetics and warmth, which in turn predicted rated ease of use and satisfaction; all measures were self-reports. Gleichauf and colleagues (2025, Applied System Innovation) compared five corner radii on buttons shown without context, using gaze time as a sign of preference; sample size not confirmed. Each interface result rests on one study."
+      },
+      "sources": [
+        {
+          "citation": "G\u00f3mez-Puerto, G., Rossell\u00f3, J., Corradi, G., Acedo-Carmona, C., Munar, E., & Nadal, M. (2018). Preference for curved contours across cultures. Psychology of Aesthetics, Creativity, and the Arts, 12(4), 432-439.",
+          "url": "https://riuma.uma.es/xmlui/handle/10630/33237?show=full",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Vartanian, O., et al. (2013). Impact of contour on aesthetic judgments and approach-avoidance decisions in architecture. PNAS, 110(Suppl. 2), 10446-10453.",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/23754408/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Bar, M., & Neta, M. (2006). Humans prefer curved visual objects. Psychological Science, 17(8), 645-648.",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/16913943/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Bar, M., & Neta, M. (2007). Visual elements of subjective preference modulate amygdala activation. Neuropsychologia, 45(10), 2191-2200.",
+          "url": "https://www.nmr.mgh.harvard.edu/publications/journal_articles/882",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Zhuo, S., et al. (2025). How a rounded aesthetic translates beauty to function and prosociality: The persuasive effects of warmth. Journal of User Experience, 20(3).",
+          "url": "https://uxpajournal.org/?p=6656",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Gleichauf, K., Wagner-Hartl, V., Ackner, G., & Pfeffer, S. (2025). [Study of button corner radii with eye tracking; title not confirmed]. Applied System Innovation, 8(2), 27.",
+          "url": "https://mdpi.com/2571-5577/8/2/27",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "This record adds cross-cultural, behavioral and interface evidence to the existing record curvature-preference, which holds the meta-analysis. Three cultures are not all cultures. The amygdala finding does not show that users feel threatened by square buttons. Volume and page numbers for the 2006 paper now come from a search summary and agree with the existing record.",
+      "appliesTo": [
+        "radius",
+        "signature",
+        "border-weight"
+      ]
+    },
+    {
+      "id": "folklore-rounded-buttons-click-more",
+      "topic": "shape",
+      "principle": "Folklore: 'rounded buttons get more clicks' and 'rounded corners are easier for the eye to process'",
+      "claim": "A 2024 paper in a leading consumer-research journal reported that rounded buttons raise click-through rates, including a 55% rise in one test. That test had 919 visits. A 2025 replication with more than 7.1 million users in three tests found minimal to no effect. The older claim that rounded corners are easier for the eye to process traces back to a design blog's reading of a laboratory study about how noticeable corners are, which drew no conclusion about design.",
+      "mechanism": "A small test can show a large effect by chance, and a surprising positive result is more likely to be published and repeated than a null result. An effect of 55% from the shape of a corner is far larger than what careful online tests usually find for a visual detail.",
+      "effects": {
+        "cognitiveLoad": "none \u2014 no reliable evidence that corner shape changes effort",
+        "satisfaction": "unknown \u2014 rated liking rises slightly with rounding (see curvature-cross-culture-and-interfaces); behavior did not change in the large tests",
+        "perceivedIntuitiveness": "unknown \u2014 not measured in the large tests"
+      },
+      "designMoves": [
+        "Choose the corner radius for tone and consistency, not for conversion.",
+        "When a source promises a conversion gain from a visual detail, ask for the number of visitors in the test and for a replication."
+      ],
+      "antiPatterns": [
+        "Writing 'rounded buttons convert better' or 'rounded corners reduce cognitive load' in a design rationale.",
+        "Citing the 55% figure without the sample size."
+      ],
+      "howToCheck": {
+        "machine": "A program can measure corner rounding (border-radius above 0 on buttons), but no reliable evidence links that value to clicks, so no pass-or-fail check on the value exists. Scan written rationale, Prescription text and Catalog records for the phrases 'convert better', 'more clicks', 'easier on the eyes' or 'easier to process' attached to rounding, and flag them.",
+        "human": "Check that any reason given for the corner radius is about tone or consistency."
+      },
+      "evidence": {
+        "grade": "D",
+        "kind": "folklore",
+        "strengthNote": "Grade D applies to the two popular claims. All sources were seen only as search summaries. Biswas, Abell and Chacko (2024, Journal of Consumer Research) report several field experiments and an eye-tracking study in favor of rounded elements; a news report counts 16 experiments. Kohavi, Linowski, Vermeer and colleagues (2025 preprint, revised 2026) state that the 55% result (p = .037) rests on 919 visits, that one of the original field studies lacked random assignment because the advertising platform chose who saw which version, and that three new tests found minimal to no effect: the SeaWorld Orlando website with 2.89 million users and two Coop Norway websites with about 2.25 million and 1.95 million users. A third-party summary gives a pooled lift of 0.21% with p = .08; that figure was not confirmed against the preprint. The replication is a preprint; whether a journal has published it was not confirmed. On 'easier on the eyes': a design blog cites a neurological institute's study that found that the noticeability of a corner varies with its angle, and adds its own conclusion; a critic points out that the study says nothing about design."
+      },
+      "sources": [
+        {
+          "citation": "Biswas, D., Abell, A., & Chacko, R. (2024). Curvy digital marketing designs: Virtual elements with rounded shapes enhance online click-through rates. Journal of Consumer Research, 51(3), 552-570.",
+          "url": "https://econpapers.repec.org/RePEc:oup:jconrs:v:51:y:2024:i:3:p:552-570.",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Kohavi, R., Linowski, J., Vermeer, L., et al. (2025). Power analysis is essential: High-powered tests suggest minimal to no effect of rounded shapes on click-through rates. arXiv:2512.24521 (preprint).",
+          "url": "https://arxiv.org/abs/2512.24521",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "UX Movement. Why Rounded Corners Are Easier on the Eyes (blog).",
+          "url": "https://uxmovement.com/thinking/why-rounded-corners-are-easier-on-the-eyes/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Bjarnason, B. Design Pseudoscience (note).",
+          "url": "https://baldurbjarnason.com/notes/Design-Pseudoscience",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "The replication does not show that rounding harms anything, and it does not touch the finding that people rate curved shapes as slightly more pleasant. The new tests are registered in a public trial registry.",
+      "appliesTo": [
+        "radius",
+        "forms",
+        "emphasis"
+      ]
+    },
+    {
+      "id": "symmetry-preference-limits",
+      "topic": "symmetry",
+      "principle": "Most people prefer symmetric patterns; trained designers and artists often do not",
+      "claim": "People without art training rate symmetric abstract patterns as more beautiful than asymmetric ones, and a preference for symmetry is reported in infants. On website start pages, asymmetric layouts were rated less beautiful, but only by men. Artists and art historians rated asymmetric, simple patterns as the most beautiful, the reverse of people without training.",
+      "mechanism": "A symmetric pattern holds less information than an asymmetric one of the same size, because one half predicts the other, so it is easier to take in; ease of perception raises liking (see the existing record processing-fluency-liking). Training changes what a viewer finds easy and what a viewer finds dull.",
+      "effects": {
+        "cognitiveLoad": "lowers \u2014 slightly; one half of a symmetric layout predicts the other",
+        "satisfaction": "raises \u2014 for most viewers without design training; the reverse for some trained viewers",
+        "perceivedIntuitiveness": "unknown \u2014 not measured"
+      },
+      "designMoves": [
+        "For a general audience, balance the first screenful around its vertical axis: a centered composition, or two columns of similar visual weight.",
+        "Use asymmetry on purpose, for emphasis or for an audience with design training, and keep the rest of the page orderly.",
+        "Judge balance on the rendered page with real content, not on the wireframe."
+      ],
+      "antiPatterns": [
+        "An accidental imbalance: a heavy image on one side and a short line of text on the other.",
+        "Forcing mirror symmetry on content that is not symmetric, such as a long text beside a small image.",
+        "Using the designer's own taste as the measure when the audience has no design training."
+      ],
+      "howToCheck": {
+        "machine": "Take a screenshot of the first viewport at 1440 px. Convert it to a small grey-scale grid (for example 32 by 18 cells). Compute the mean absolute difference between the left half and the mirror image of the right half, on a scale from 0 (mirror-symmetric) to 1. Report the score and the horizontal offset of the center of visual mass from the midline. The Catalog sets the threshold; the research gives none.",
+        "human": "Fold a printed screenshot down the middle, or flip the image. Does one side look much heavier than the other, and is that intended?"
+      },
+      "evidence": {
+        "grade": "A-",
+        "kind": "peer-reviewed-experiment",
+        "strengthNote": "All sources were seen only as search summaries. Tuch, Bargas-Avila and Opwis (2010, Computers in Human Behavior): 60 participants (30 men, 30 women) rated 20 website start pages; asymmetric pages were rated less beautiful, and the effect appeared only among men. Leder and colleagues (2019, Empirical Studies of the Arts): artists and art historians rated asymmetric and simple patterns most beautiful, and people without training showed the usual preference for symmetry; a follow-up with Japanese participants found the usual preference for symmetry, so the reversal is tied to training, not to that culture. Reviews by Bertamini, Makin and colleagues (2014 to 2023) report that reflection symmetry is detected fast and automatically, that a preference is present in infants, and that tests of automatic association link symmetry with positive words. Only the 2010 study used web pages, and it found the effect in half of its sample."
+      },
+      "sources": [
+        {
+          "citation": "Tuch, A. N., Bargas-Avila, J. A., & Opwis, K. (2010). Symmetry and aesthetics in website design: It's a man's business. Computers in Human Behavior, 26(6), 1831-1837.",
+          "url": "https://datalearner.com/academic/journal-papers/0747-5632/volumes-and-issues/121/paper-detail/33975",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Leder, H., Tinio, P. P. L., Brieber, D., Kr\u00f6ner, T., Jacobsen, T., & Rosenberg, R. (2019). Symmetry is not a universal law of beauty. Empirical Studies of the Arts, 37(1), 104-114.",
+          "url": "https://journals.sagepub.com/doi/abs/10.1177/0276237418777941",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Bertamini, M., & Makin, A. D. J. (2014). Brain activity in response to visual symmetry. Symmetry, 6, 975-996.",
+          "url": "https://www.research.unipd.it/bitstream/11577/3454390/1/BertaminiMakin2014.pdf",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Bertamini, M., Rampone, G., Makin, A. D. J., & Jessop, A. (2019). Symmetry preference in shapes, faces, flowers and landscapes. PeerJ, 7, e7078.",
+          "url": "https://peerj.com/articles/7078.pdf",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "The grid measure is a rough stand-in for perceived balance; a layout can be balanced without being mirror-symmetric. The gender difference comes from one study with 60 people and should not drive a decision. The existing record processing-fluency-liking cites the 2010 study in one sentence; this record adds the reversal for trained viewers and a measurable check.",
+      "appliesTo": [
+        "hero",
+        "sections",
+        "signature"
+      ]
+    },
+    {
+      "id": "complexity-inverted-u-not-a-target",
+      "topic": "complexity",
+      "principle": "The inverted-U curve of liking against complexity is an average over different people, not a target",
+      "claim": "Berlyne proposed in the 1970s that people like a medium level of visual complexity best, which gives a curve shaped like an upside-down U. A 2016 experiment found that the curve appeared only in the average: one group of participants liked images less as complexity rose and the other group liked them more. A 2020 review calls the evidence on order, complexity and liking diffuse and contradictory, and related work finds that the link between order and liking is more stable across people and cultures than the link between complexity and liking. For websites, the studies seen find that lower or moderate complexity is preferred.",
+      "mechanism": "Researchers define complexity in different ways: the number of elements, their variety, or how disorderly their arrangement is. These behave differently, which explains part of the conflict between studies. People also differ: some want richness and some want calm. An average of opposite trends can form a hump that describes nobody.",
+      "effects": {
+        "cognitiveLoad": "raises \u2014 as the number and variety of elements grow",
+        "satisfaction": "unknown \u2014 depends on the person; order raises it more dependably than a particular amount of complexity",
+        "perceivedIntuitiveness": "lowers \u2014 at high complexity, in the website studies seen"
+      },
+      "designMoves": [
+        "Aim for order first: alignment, consistent spacing and a clear hierarchy raise liking more dependably than a chosen amount of content.",
+        "For a general audience keep the first screenful simple; add richness lower on the page.",
+        "Offer the owner a choice between a calmer and a richer direction, and test with members of the audience."
+      ],
+      "antiPatterns": [
+        "Tuning a page toward a 'medium complexity sweet spot' taken from a chart.",
+        "Adding decoration to a simple page because 'moderate complexity is optimal'.",
+        "One complexity score that mixes amount, variety and disorder."
+      ],
+      "howToCheck": {
+        "machine": "Report two separate measures for the first viewport: amount (count of visible elements, distinct colors and distinct font sizes; compressed size of a screenshot) and order (share of elements that sit on shared alignment lines; number of distinct gap sizes). Flag the high extreme of amount against a Catalog cap and the low extreme of order. Do not score closeness to a midpoint: no evidence-based optimum exists.",
+        "human": "Show two versions, one calmer and one richer, to members of the audience and ask which fits the business."
+      },
+      "evidence": {
+        "grade": "C",
+        "kind": "peer-reviewed-experiment",
+        "strengthNote": "Grade C applies to the inverted-U as a design rule; the statement that findings conflict is well documented. All sources were seen only as search summaries. G\u00fc\u00e7l\u00fct\u00fcrk, Jacobs and van Lier (2016, Frontiers in Human Neuroscience): 30 participants rated computer-generated grey-scale images; automatic clustering found two groups with opposite trends, and the inverted-U appeared only when they were combined. One study, 30 people, abstract images. Van Geert and Wagemans (2020, Psychology of Aesthetics, Creativity, and the Arts): a review that describes the literature as diffuse and contradictory; a 2021 study by the same authors found that order and complexity each related to liking independently. Nadal and colleagues (2010) attribute the conflicting results mainly to different definitions of complexity and identify three forms; the third form's name was not confirmed. Websites: secondary sources report that Geissler, Zinkhan and Watson (2006) found the most favorable responses at moderate perceived complexity of home pages, and that Tuch and colleagues (2009) found a negative link between complexity and pleasure and worse search and memory at high complexity. The existing record low-complexity-high-prototypicality reports that low complexity wins at first sight."
+      },
+      "sources": [
+        {
+          "citation": "G\u00fc\u00e7l\u00fct\u00fcrk, Y., Jacobs, R. H. A. H., & van Lier, R. (2016). Liking versus complexity: Decomposing the inverted U-curve. Frontiers in Human Neuroscience, 10, 112.",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4796011",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Van Geert, E., & Wagemans, J. (2020). Order, complexity, and aesthetic appreciation. Psychology of Aesthetics, Creativity, and the Arts, 14(2), 135-154.",
+          "url": "https://elinevg.github.io/publications/2020_PACA_ReviewOrdCompl.html",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Van Geert, E., & Wagemans, J. (2021). Order, complexity, and aesthetic preferences for neatly organized compositions. Psychology of Aesthetics, Creativity, and the Arts.",
+          "url": "https://elinevg.github.io/publications/2021_PACA_NeatlyOrganized.html",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Nadal, M., Munar, E., Marty, G., & Cela-Conde, C. J. (2010). Visual complexity and beauty appreciation: Explaining the divergence of results. Empirical Studies of the Arts, 28(2), 173-191.",
+          "url": null,
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Geissler, G. L., Zinkhan, G. M., & Watson, R. T. (2006). The influence of home page complexity on consumer attention, attitudes, and purchase intent. Journal of Advertising, 35(2), 69-80.",
+          "url": "https://www.scinapse.io/papers/2011101335",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Tuch, A. N., Bargas-Avila, J. A., Opwis, K., & Wilhelm, F. H. (2009). Visual complexity of websites: Effects on users' experience, physiology, performance, and memory. International Journal of Human-Computer Studies, 67(9), 703-715.",
+          "url": null,
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Berlyne, D. E. (1971). Aesthetics and Psychobiology. Appleton-Century-Crofts.",
+          "url": null,
+          "verified": "from-memory-unverified"
+        }
+      ],
+      "caveats": "A moderate level may still suit a given audience; the point is that no study gives a number to aim at. Whether the 2009 website study tested a straight line against a curve was not confirmed. Very low complexity can read as cheap (see the existing record simplicity-can-read-as-cheap).",
+      "appliesTo": [
+        "density",
+        "sections",
+        "hero",
+        "color-strategy"
+      ]
+    },
+    {
+      "id": "color-preference-ecological-valence",
+      "topic": "color-preference",
+      "principle": "People like the colors of things they like; blue leads in industrialised countries, and the pattern is not universal",
+      "claim": "The ecological valence theory of Palmer and Schloss says that a person likes a color to the degree that the person likes the objects that have that color: blues recall clear sky and clean water, browns recall rot and feces. A measure built on this idea predicted 80% of the variation in average color preferences in a United States sample. In a 2015 survey of ten countries on four continents, blue was the most-named favorite color in every country, chosen by 23% to 33% of people. Himba adults in rural Namibia showed none of these patterns.",
+      "mechanism": "Preferences are learned from experience with colored objects, so they shift with culture, age and personal history. In China, symbolic meanings such as red for good fortune explain part of the preferences. In several samples the liking for blue declines with age. A color on a website also takes meaning from what it is the color of, so a preference measured on plain color patches is a weak guide to a whole design.",
+      "effects": {
+        "cognitiveLoad": "none \u2014 the record concerns liking",
+        "satisfaction": "raises \u2014 when the main colors are ones the audience likes and that fit the product",
+        "perceivedIntuitiveness": "none \u2014 no evidence"
+      },
+      "designMoves": [
+        "Treat blue as a safe choice for a broad audience in industrialised countries, and as the least distinctive one for the same reason.",
+        "Choose colors from the objects and places the business is about (the product, the material, the landscape); the theory predicts that liked objects lend their liking to their colors.",
+        "Check large areas of brown, olive or dark yellow with members of the audience before committing; in the United States data these hues recall disliked objects, unless the product itself gives them a good meaning (coffee, leather, wood).",
+        "For an audience outside the countries studied, ask the audience instead of trusting the published ranking."
+      ],
+      "antiPatterns": [
+        "The claim that blue is everyone's favorite color: it was the top choice of about a quarter to a third of people.",
+        "Choosing a color because a chart of 'color meanings' assigns it a trait.",
+        "Applying a ranking of plain color patches to a whole page."
+      ],
+      "howToCheck": {
+        "machine": "Convert the accent color and every color that covers more than a Catalog share of the first viewport to a perceptual color space (OKLCH: lightness, chroma, hue). Report the hue family of each. Raise a note, not a failure, when a color with hue between about 70 and 110 degrees and lightness below about 0.55 (dark yellow, olive, brown) covers a large area. Report whether the accent equals a framework's default blue. The research gives no pass-or-fail value for liking.",
+        "human": "Show the palette to five members of the audience beside two alternatives and ask which fits the business and which they like."
+      },
+      "evidence": {
+        "grade": "A-",
+        "kind": "peer-reviewed-experiment",
+        "strengthNote": "All sources were seen only as search summaries. Palmer and Schloss (2010, PNAS) state the theory and report a better fit than rival theories; the 80% figure comes from a companion conference paper by the same authors. The exact ranking of colors in that study (remembered as saturated blue highest and dark yellow lowest) was not confirmed; the abstract's own examples are blues liked and browns disliked. Taylor, Clifford and Franklin (2013, Journal of Experimental Psychology: General): British and Himba adults shared few preferences, the Himba showed none of the supposed universal patterns or sex differences, and no single model explained both groups; a later paper says that the Himba mostly preferred saturated colors. YouGov (2015): an online poll of about 10,866 people in Britain, Germany, the United States, Australia, China, Hong Kong, Malaysia, Singapore, Thailand and Indonesia; blue led by 8 to 18 points. A poll measures a named favorite, not a response to a design. Hurlbert and Ling (2007): a sex difference in a paired-comparison task, similar in British participants and in 37 Chinese participants. Age: several studies, most of them small, report that the liking for blue falls with age and the liking for red or green rises; sources disagree on details. Hall and Hanna (2004, 136 participants): on web pages, color pairs with more contrast were more readable, color did not affect memory for the content, and preferred colors (blues and other chromatic colors) raised ratings of beauty and stated intention to buy."
+      },
+      "sources": [
+        {
+          "citation": "Palmer, S. E., & Schloss, K. B. (2010). An ecological valence theory of human color preference. PNAS, 107(19), 8877-8882.",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2889342",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Palmer, S. E., & Schloss, K. B. (2010). Human preference for individual colors. Proceedings of SPIE 7527.",
+          "url": "https://www.spiedigitallibrary.org/conference-proceedings-of-spie/7527/752718/Human-preference-for-individual-colors/10.1117/12.849110.full",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Taylor, C., Clifford, A., & Franklin, A. (2013). Color preferences are not universal. Journal of Experimental Psychology: General, 142(4), 1015-1027.",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/23148465/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "YouGov (2015). Why is blue the world's favourite colour? (online poll in ten countries).",
+          "url": "https://yougov.com/en-gb/articles/12331-blue-worlds-favourite-colour",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Hurlbert, A. C., & Ling, Y. (2007). Biological components of sex differences in color preference. Current Biology, 17(16), R623-R625.",
+          "url": "https://www.sciencedaily.com/releases/2007/08/070820120720.htm",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Palmer, S. E., et al. (2015). Symbolic effects on color preferences in China and the US. Journal of Vision (conference abstract).",
+          "url": "https://bohrium.dp.tech/paper/arxiv/56d8e820dabfae2eee3e74fd",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "[Author not confirmed] (2001). Changing colour preferences with ageing. Gerontology, 47(4), 219.",
+          "url": "https://karger.com/ger/article/47/4/219/146744/Changing-Colour-Preferences-with-Ageing-A",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Hall, R. H., & Hanna, P. (2004). The impact of web page text-background colour combinations on readability, retention, aesthetics and behavioural intention. Behaviour & Information Technology, 23, 183-195.",
+          "url": "https://scholarsmine.mst.edu/bio_inftec_facwork/103",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "The theory explains averages; individuals differ widely. The hue range in the machine check is this record's own translation of 'brown and dark yellow' into numbers, not a value from the research. The existing records color-emotion-partly-universal and color-fit-and-brand-personality cover what colors mean; this record covers which colors people like and why.",
+      "appliesTo": [
+        "color-strategy",
+        "accent",
+        "neutral",
+        "theme"
+      ]
+    },
+    {
+      "id": "hue-arousal-modest",
+      "topic": "color-emotion",
+      "principle": "Saturation and brightness raise felt arousal more dependably than a warm hue does",
+      "claim": "Arousal is how activated or excited a person feels, as opposed to calm. In an experiment with 62 people who looked at full-screen colors for 30 seconds each, saturated colors and bright colors raised self-reported arousal, and red raised it more than green or blue. The three properties interacted, so the effect of hue depended on saturation. A later review describes bodily measures of arousal as less conclusive about hue. The claim that the color red harms thinking has not held up: a meta-analysis found no trustworthy effect after correcting for the selective publication of positive results.",
+      "mechanism": "A vivid color is a stronger stimulus than a pale one, whatever its hue. Hue adds learned meaning: red is tied to warning and excitement, blue and green to calm, in many cultures. Learned meaning shifts what people say they feel more than it shifts their bodies or their performance.",
+      "effects": {
+        "cognitiveLoad": "none \u2014 the effect of red on performance did not survive correction for publication bias",
+        "satisfaction": "unknown \u2014 saturated and bright colors were also rated more pleasant in the experiment; preferred levels differ by audience",
+        "perceivedIntuitiveness": "none \u2014 no evidence"
+      },
+      "designMoves": [
+        "To make a page calmer, lower the saturation and the area of vivid color before changing the hue.",
+        "To make a page more energetic, raise the saturation of a small accent area; a warm hue adds a little.",
+        "Use a calm, light background on a page where people must wait: in one set of experiments, blue and lighter screens felt more relaxing and the wait felt shorter.",
+        "Expect small effects on feeling and none on results."
+      ],
+      "antiPatterns": [
+        "Statements such as 'red creates urgency and makes people buy' or 'blue lowers the heart rate' presented as facts.",
+        "Changing only the hue of a vivid page to make it calmer.",
+        "Large areas of full-saturation color behind text."
+      ],
+      "howToCheck": {
+        "machine": "Convert sampled pixels of the first viewport to OKLCH. Report the share of the viewport whose chroma is above the Catalog's 'vivid' threshold, the mean lightness of the background, and the hue family of the accent. Compare with the tone words in the Prescription: flag a large vivid share with 'calm', 'quiet' or 'gentle', and a share near zero with 'energetic' or 'bold'. The research gives no thresholds.",
+        "human": "Look at the page from arm's length for a few seconds. Does it feel calm or loud, and is that the intended tone?"
+      },
+      "evidence": {
+        "grade": "A-",
+        "kind": "peer-reviewed-experiment",
+        "strengthNote": "All sources were seen only as search summaries. Wilms and Oberfeld (2018, Psychological Research): 62 participants; 27 chromatic colors (blue, green, red by three saturations by three brightness levels) and 3 grey controls on a light-emitting display, 30 seconds each; self-rated arousal was higher for saturated and bright colors and rose from blue and green to red; several interactions; skin conductance and heart rate were recorded, and their results were not found in the summary. A later review states that bodily studies have been less conclusive about hue. Gorn and colleagues (2004, Journal of Marketing Research): blue screens were rated more relaxing than yellow or red and download waits felt shorter; lightness had the largest effect; a secondary source calls the effect weak. Gnambs (2020, Psychonomic Bulletin & Review): 67 effect sizes from 38 samples; after correction for publication bias, no evidential value for an effect of red on test performance, and early studies showed much larger effects than later ones. A 2025 systematic review of 128 years of research (seen through the journal society's summary) links red with high-arousal emotions and blue, green and white with low-arousal positive emotions; these are associations people report. This record extends the existing record lightness-saturation-over-hue, which rests on color chips rated in 1994, with a screen-based experiment."
+      },
+      "sources": [
+        {
+          "citation": "Wilms, L., & Oberfeld, D. (2018). Color and emotion: Effects of hue, saturation, and brightness. Psychological Research, 82, 896-914. (Volume and pages recalled.)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/28612080/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Gorn, G. J., Chattopadhyay, A., Sengupta, J., & Tripathi, S. (2004). Waiting for the web: How screen color affects time perception. Journal of Marketing Research, 41, 215-225.",
+          "url": "https://research.polyu.edu.hk/en/publications/waiting-for-the-web-how-screen-color-affects-time-perception/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Gnambs, T. (2020). Limited evidence for the effect of red color on cognitive performance: A meta-analysis. Psychonomic Bulletin & Review.",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7704521/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Psychonomic Society (2025). Color me impressed! Psychology research links colors and emotions for over a century (summary of a systematic review; authors recalled as Jonauskaite and Mohr).",
+          "url": "https://featuredcontent.psychonomic.org/color-me-impressed-psychology-research-links-colors-and-emotions-for-over-a-century/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Elliot, A. J. (2015). Color and psychological functioning: A review of theoretical and empirical work. Frontiers in Psychology, 6, 368.",
+          "url": "https://www.frontiersin.org/articles/10.3389/fpsyg.2015.00368/full",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "Thirty seconds of a full-screen color is not a web page with content on it. Self-reports follow learned meanings. The studies used calibrated displays; uncalibrated screens show the same color values differently. See folklore-red-button-converts for the conversion claim.",
+      "appliesTo": [
+        "color-strategy",
+        "accent",
+        "neutral",
+        "states"
+      ]
+    },
+    {
+      "id": "folklore-red-button-converts",
+      "topic": "color-emotion",
+      "principle": "Folklore: 'a red button converts 21% better than a green one'",
+      "claim": "The figure comes from one test that a software company ran on one of its own pages in 2011, with about 2,000 visits. The page's own colors were green, so the red button stood out and the green button did not. The test shows that a button that contrasts with its page can win; it does not show that red beats green.",
+      "mechanism": "An element that differs from everything around it on one basic feature is found at a glance (see the existing record preattentive-popout). On a green page, red differs and green blends in. On a red page the result would be expected to reverse. One test with about 2,000 visits also has wide uncertainty.",
+      "effects": {
+        "cognitiveLoad": "lowers \u2014 when the primary action stands out from its surroundings, whatever its hue",
+        "satisfaction": "none \u2014 not measured",
+        "perceivedIntuitiveness": "raises \u2014 when the primary action is the one element with its color"
+      },
+      "designMoves": [
+        "Give the primary action a color that nothing else in the same view uses.",
+        "Check the contrast of the button against its surroundings and of the label against the button.",
+        "Choose the hue for fit with the brand and for conventional meaning (red often signals danger or deletion)."
+      ],
+      "antiPatterns": [
+        "Choosing red for the primary action because 'red converts 21% better'.",
+        "A primary action in the same color as headings, links and decoration.",
+        "A red primary action beside red error messages."
+      ],
+      "howToCheck": {
+        "machine": "In each view, assert that the primary action's fill color differs from the dominant page hue and is used by no other element that is not a primary action. Assert a contrast ratio of at least 3 to 1 between the button's fill and the adjacent background (the WCAG 2.2 non-text contrast value) and at least 4.5 to 1 between label and fill. Scan written rationale for a hue justified by a conversion percentage and flag it.",
+        "human": "Show the view for a few seconds and ask what the viewer would click first."
+      },
+      "evidence": {
+        "grade": "D",
+        "kind": "folklore",
+        "strengthNote": "Grade D applies to the popular claim. The test is known here only through secondary articles, seen as search summaries; the company's original post could not be reached, and one reviewer reports that its old address now shows unrelated content. The secondary articles agree on the company (Performable, later bought by HubSpot), the year 2011 and the 21% figure; they give the traffic as 'over 2,000 users' or 'roughly 2,000 visits over a few days'. The explanation by contrast with a green page is an interpretation by later writers, not a tested result. No replication is known. The contrast values in the check come from the accessibility standard, which the existing records text-contrast and non-text-contrast-and-focus cover."
+      },
+      "sources": [
+        {
+          "citation": "[Secondary account] Patel, N. 100 Conversion Optimization Case Studies (cites the HubSpot post on the Performable button test).",
+          "url": "https://neilpatel.com/blog/100-conversion-optimization-case-studies/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "[Secondary account] Poper. CTA button color and conversion (critical review of the 2011 test).",
+          "url": "https://www.poper.ai/blog/cta-button-color-conversion/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Porter, J. (2011). The Button Color A/B Test: Red Beats Green. HubSpot blog. (Author and title recalled.)",
+          "url": null,
+          "verified": "from-memory-unverified"
+        }
+      ],
+      "caveats": "A contrasting primary action is well supported by research on visual search; only the claim about the hue red is folklore. The existing record folklore-brand-color-statistics covers other color statistics of the same kind.",
+      "appliesTo": [
+        "accent",
+        "emphasis",
+        "forms",
+        "color-strategy"
+      ]
+    },
+    {
+      "id": "beauty-reward-brain-no-design-rule",
+      "topic": "neuroaesthetics",
+      "principle": "Experienced beauty goes with activity in the brain's valuation areas; this tells a designer nothing about which design is beautiful",
+      "claim": "In brain-imaging studies, the things a person rates as beautiful, whether paintings or music, go with stronger activity in the medial orbitofrontal cortex, an area at the front of the brain that also responds to food, money and other rewards. The activity rises with the strength of the reported experience. The finding describes what happens in the brain after a person finds something beautiful. It does not say what makes a design beautiful, and it cannot be used to choose between two designs without scanning the audience.",
+      "mechanism": "The brain appears to place many kinds of value on one common scale, so that it can compare them. Beauty uses that scale. The scale responds to the person's own judgment: the studies select the stimuli by each participant's own ratings, so the same painting is 'beautiful' for one participant and 'ugly' for another.",
+      "effects": {
+        "cognitiveLoad": "none \u2014 the finding says nothing about effort",
+        "satisfaction": "unknown \u2014 the finding confirms that beauty is rewarding and gives no design choice that produces it",
+        "perceivedIntuitiveness": "none \u2014 not addressed"
+      },
+      "designMoves": [
+        "Take one thing from this research: people differ in what they find beautiful, so ask the audience instead of looking for a universal formula.",
+        "Use ratings and preference tests with members of the audience; they measure the same judgment that the scanner studies start from, at no cost.",
+        "Leave brain-based language out of design rationale."
+      ],
+      "antiPatterns": [
+        "Statements such as 'this layout activates the brain's reward center' as a reason for a design choice.",
+        "The inference 'reward area active, therefore people will buy'.",
+        "Treating a finding about paintings and music in a scanner as a finding about web pages."
+      ],
+      "howToCheck": {
+        "machine": null,
+        "human": "No measurable check on a web page exists. Check written rationale: flag any design choice justified by brain activity, 'reward centers', 'dopamine' or 'neuroaesthetics'."
+      },
+      "evidence": {
+        "grade": "A-",
+        "kind": "peer-reviewed-experiment",
+        "strengthNote": "Grade A- applies to the brain finding; it gives no support to any design choice, and a record that used it to justify one would be grade D. All sources were seen only as search summaries. Ishizu and Zeki (2011, PLoS ONE): 21 participants rated paintings and musical excerpts before scanning; one area in the medial orbitofrontal cortex was active for both visual and musical beauty, and its activity was proportional to the declared intensity; the authors call their theory tentative, and press coverage notes that the area is large and has many roles. Vartanian and Skov (2014, Brain and Cognition): a meta-analysis of 15 experiments on viewing paintings (a secondary source gives 330 participants) found activity in visual areas, in the anterior insula, which is tied to emotion, and in the posterior cingulate cortex. Chatterjee and Vartanian (2014, Trends in Cognitive Sciences) describe aesthetic experience as the interaction of three systems: sensation and movement, emotion and valuation, and meaning and knowledge. Vartanian and colleagues (2013) found that the shape of a room changed beauty ratings and brain activity without changing the decision to enter. Skov and Nadal are cited by an encyclopedia entry for the view that aesthetic emotions are general emotions, with no special beauty circuit. The samples are small, the stimuli are art and music, and the participants lay in a scanner. That the same area responds to food, money and other rewards is background knowledge recalled from memory, not checked in this session."
+      },
+      "sources": [
+        {
+          "citation": "Ishizu, T., & Zeki, S. (2011). Toward a brain-based theory of beauty. PLoS ONE, 6(7), e21852.",
+          "url": "https://discovery-pp.ucl.ac.uk/id/eprint/1317077",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Wellcome Trust (2011). Beauty is in the medial orbitofrontal cortex of the beholder, study finds (press release).",
+          "url": "https://wellcome.org/press-release/beauty-medial-orbitofrontal-cortex-beholder-study-finds",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Vartanian, O., & Skov, M. (2014). Neural correlates of viewing paintings: Evidence from a quantitative meta-analysis of functional magnetic resonance imaging data. Brain and Cognition, 87, 52-56. (Volume and pages recalled.)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/24704947/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Chatterjee, A., & Vartanian, O. (2014). Neuroaesthetics. Trends in Cognitive Sciences, 18(7), 370-375. (Volume and pages recalled.)",
+          "url": "https://neuroaesthetics.med.upenn.edu/assets/user-content/documents/publications/chatterjee-vartanian-2014-01.pdf",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Vartanian, O., et al. (2013). Impact of contour on aesthetic judgments and approach-avoidance decisions in architecture. PNAS, 110(Suppl. 2), 10446-10453.",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/23754408/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Kawabata, H., & Zeki, S. (2004). Neural correlates of beauty. Journal of Neurophysiology, 92(4), 1699-1705.",
+          "url": null,
+          "verified": "from-memory-unverified"
+        }
+      ],
+      "caveats": "The same area responds to many rewards, so its activity does not identify beauty as such. Inferring a mental state from activity in an area is weak evidence (see neuromarketing-claims). Nothing here says that beauty is unimportant: the existing records on first impressions and the aesthetic-usability effect measure its consequences directly.",
+      "appliesTo": [
+        "signature",
+        "hero",
+        "color-strategy"
+      ]
+    },
+    {
+      "id": "neuromarketing-claims",
+      "topic": "neuroaesthetics",
+      "principle": "Claims that brain or body measurements reveal what customers 'really' want are mostly unproven",
+      "claim": "Neuromarketing is the use of brain scans, brain-wave recordings, eye tracking and body sensors to predict what people will buy. A 2010 review in a leading neuroscience journal concluded that brain imaging is unlikely to become cheaper than ordinary research methods soon and may be most useful before a product exists. In the strongest published test, brain scans improved the prediction of how well television advertisements worked in the market, while brain-wave recordings, eye tracking and body sensors added nothing beyond what viewers said in a questionnaire. The saying that '95% of purchase decisions are subconscious' is one professor's estimate, not a measurement.",
+      "mechanism": "The common error is called reverse inference: a brain area is active, the area has been linked to an emotion, so the person must feel that emotion. Most areas take part in many functions, so the conclusion does not follow. A newspaper opinion piece of 2011 claimed that people 'love' their phones because an area called the insula was active. Neuroscientists objected in a letter to the newspaper, and commentators pointed out that the insula is active in about a third of all imaging studies and is more often tied to negative feelings.",
+      "effects": {
+        "cognitiveLoad": "none \u2014 the record concerns the quality of evidence",
+        "satisfaction": "none \u2014 the record concerns the quality of evidence",
+        "perceivedIntuitiveness": "none \u2014 the record concerns the quality of evidence"
+      },
+      "designMoves": [
+        "For a one-person project, use the cheap methods that the published comparison found hard to beat: ask members of the audience what they understand, like and intend, and watch them try a task.",
+        "When a tool or article cites neuroscience for a design rule, look for the study, its sample size, what was measured, and whether anyone repeated it.",
+        "Record such claims in the Catalog as folklore until a source is found."
+      ],
+      "antiPatterns": [
+        "'Neuroscience proves' followed by a design rule with no study named.",
+        "Percentages about the subconscious ('95% of decisions', 'processed 60,000 times faster').",
+        "Paying for attention or emotion scores from a vendor that publishes no validation."
+      ],
+      "howToCheck": {
+        "machine": null,
+        "human": "No measurable check on a web page exists. For each neuroscience-based claim in a rationale or a Catalog record, ask four questions: Is a study named? How many people took part? Was the outcome a behavior or a brain signal? Did the measurement predict better than asking people? Flag the claim when any answer is missing."
+      },
+      "evidence": {
+        "grade": "D",
+        "kind": "folklore",
+        "strengthNote": "Grade D applies to the popular and vendor claims; the critiques themselves are peer-reviewed. All sources were seen only as search summaries. Poldrack (2006, Trends in Cognitive Sciences) is the standard reference on reverse inference; its content is known here through later commentary. Lindstrom's 2011 newspaper opinion piece and the reply are described by neuroscientists' blogs; one account says 45 neuroscientists signed the letter, figure not confirmed. Ariely and Berns (2010, Nature Reviews Neuroscience): the summary quotes that imaging is unlikely to be cheaper than other tools in the near future and may give hidden information, most promisingly before a product is released. Venkatraman and colleagues (2015, Journal of Marketing Research): six methods compared on 30-second television advertisements; brain-scan measures explained the most additional variation in market response, and activity in the ventral striatum was the strongest single predictor; a secondary source gives the explained variation as 0.65 for self-reports alone and 0.87 with brain scans added (p = .034), and says the other body-based methods added nothing; those figures were not checked against the paper, and one commentator warns that no independent replication exists. One study, about television advertisements, not web design. The '95%' saying is attributed to Gerald Zaltman; a market-research firm's blog and a business magazine describe it as his estimate from an interview or book of about 2003, with no study behind it."
+      },
+      "sources": [
+        {
+          "citation": "Poldrack, R. A. (2006). Can cognitive processes be inferred from neuroimaging data? Trends in Cognitive Sciences, 10(2), 59-63.",
+          "url": null,
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Yarkoni, T. (2011). The New York Times blows it big time on brain imaging (blog post on the Lindstrom opinion piece).",
+          "url": "https://talyarkoni.org/blog/2011/10/01/the-new-york-times-blows-it-big-time-on-brain-imaging/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Poldrack, R. A. (2011). Signers of letter to the editor of the New York Times (blog post).",
+          "url": "https://poldrack.github.io/blog/posts/signers-of-letter-to-editor-of-new-york/index.html",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Ariely, D., & Berns, G. S. (2010). Neuromarketing: The hope and hype of neuroimaging in business. Nature Reviews Neuroscience, 11(4), 284-292.",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/pmid/20197790",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Venkatraman, V., Dimoka, A., Pavlou, P. A., et al. (2015). Predicting advertising success beyond traditional measures: New insights from neurophysiological methods and market response modeling. Journal of Marketing Research, 52(4), 436-452.",
+          "url": "https://stanford.edu/~knutson/nfc/venkatraman15.pdf",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Scholte, H. S., van der Leij, A., & Lamme, V. A. F. (2022). [Vendor-affiliated paper that summarises the 2015 study's figures; title not confirmed].",
+          "url": "https://www.neurensics.com/hubfs/ScholteEtAl2022.pdf?hsLang=nl",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Inc. magazine. Harvard Professor Says 95% of Purchasing Decisions Are Subconscious.",
+          "url": "https://inc.com/logan-chierotti/harvard-professor-says-95-of-purchasing-decisions-are-subconscious.html",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "The 2015 study does show that brain scans can carry information that questionnaires miss, so the field is not empty. Eye tracking used to see where people look is a sound method with its own limits (see heat-map-limits); the criticism here concerns eye tracking sold as a measure of emotion or intention.",
+      "appliesTo": [
+        "signature",
+        "hero",
+        "copy"
+      ]
+    },
+    {
+      "id": "typeface-congruence",
+      "topic": "typography",
+      "principle": "A typeface that fits the product is chosen more often than one that does not",
+      "claim": "When people chose between two brands of the same product, they chose the brand set in a typeface judged appropriate for that product about twice as often as the brand set in an inappropriate typeface, across ten product categories. In a small field test, people took chocolates from the box with the appropriate typeface three times out of four. Fit depends on how well the feeling of the typeface (how strong and how lively it seems) matches the feeling of the product.",
+      "mechanism": "A typeface carries associations before a word is read: heavy or light, formal or playful, old or new. When those associations match what the reader expects of the product, the name is processed with less friction and the brand seems more believable. A mismatch makes the reader hesitate.",
+      "effects": {
+        "cognitiveLoad": "lowers \u2014 slightly; a fitting typeface does not have to be explained away",
+        "satisfaction": "raises \u2014 fitting typefaces were chosen more often in the experiments",
+        "perceivedIntuitiveness": "raises \u2014 the look matches what the visitor expects from this kind of business"
+      },
+      "designMoves": [
+        "Write down three tone words for the business before choosing a typeface, and choose a typeface whose character matches them.",
+        "Test the business name in two or three candidate typefaces with a few members of the audience.",
+        "Apply the expressive typeface to the name and the headings; keep body text in a typeface chosen for legibility."
+      ],
+      "antiPatterns": [
+        "A playful rounded display typeface for a law firm, or a severe condensed one for a nursery, with no intent behind the contrast.",
+        "Choosing a typeface because it is fashionable, with no thought for the product.",
+        "The claim that one typeface (for example Baskerville) makes statements more believable, taken as a rule."
+      ],
+      "howToCheck": {
+        "machine": "A program cannot derive the character of a typeface from its file. The Catalog must hold character tags for each typeface it offers (for example 'formal', 'warm', 'technical', 'playful'). Report the heading and body typefaces of the page and compare the heading typeface's tags with the tone words in the Prescription; flag a heading typeface that shares no tag with them.",
+        "human": "Show the business name in the chosen typeface to five people and ask which of three kinds of business it belongs to. More than chance (one in three) should name the right kind."
+      },
+      "evidence": {
+        "grade": "A-",
+        "kind": "peer-reviewed-experiment",
+        "strengthNote": "All sources were seen only as search summaries. Doyle and Bottomley (2004, Journal of Business Research): forced choices in 10 product categories; brands in an appropriate typeface were chosen about twice as often, even when the brand names carried strong meaning of their own; in a small field study people chose chocolates from the box with the appropriate typeface 75% of the time. Doyle and Bottomley (2006, Journal of Consumer Psychology): judged appropriateness depends partly on the match between typeface and product on perceived strength and activity. Henderson, Giese and Cote (2004, Journal of Marketing): the design of typefaces reduces to six dimensions (elaborate, harmony, natural, flourish, weight, compressed) that shape the impressions people form; the number of typefaces studied (remembered as 210) was not confirmed. All are laboratory choices and ratings of brand names, not of websites, and sample sizes were not confirmed. The Baskerville claim comes from a 2012 newspaper experiment by Errol Morris: readers saw a statement in one of six typefaces and Baskerville drew slightly more agreement; the size of the sample (remembered as about 45,000) and of the effect (remembered as about 1.5 percentage points) were not confirmed, and a secondary blog gives the lead over the next typeface as 5 in 1,000. It was not peer-reviewed."
+      },
+      "sources": [
+        {
+          "citation": "Doyle, J. R., & Bottomley, P. A. (2004). Font appropriateness and brand choice. Journal of Business Research, 57(8), 873-880.",
+          "url": "https://econpapers.repec.org/RePEc:eee:jbrese:v:57:y:2004:i:8:p:873-880",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Doyle, J. R., & Bottomley, P. A. (2006). Dressed for the occasion: Font-product congruity in the perception of logotype. Journal of Consumer Psychology, 16(2), 112-123.",
+          "url": "https://orca.cardiff.ac.uk/2571",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Henderson, P. W., Giese, J. L., & Cote, J. A. (2004). Impression management using typeface design. Journal of Marketing, 68(4), 60-72.",
+          "url": "https://bvbvf1.bib-bvb.de/vufind/PrimoRecord/cdi_proquest_journals_227805135",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Morris, E. (2012). Hear, All Ye People; Hearken, O Earth (two-part article on the Baskerville experiment). The New York Times.",
+          "url": null,
+          "verified": "from-memory-unverified"
+        }
+      ],
+      "caveats": "The existing records personality-vs-legibility and typography-mood-and-impression show that typefaces have personalities and affect mood; this record adds the effect on choice. Associations shift with culture and fashion. A deliberate mismatch can work as a signature when the rest of the design supports it.",
+      "appliesTo": [
+        "typeface",
+        "heading-treatment",
+        "signature"
+      ]
+    },
+    {
+      "id": "rounded-angular-type-associations",
+      "topic": "typography",
+      "principle": "Rounded letterforms and logos read as soft, sweet and warm; angular ones as hard, sharp and durable; a link to trust is not established",
+      "claim": "People match rounded typefaces with the word 'sweet' and angular typefaces with 'sour', 'bitter' and 'salty', and they like rounded typefaces more and judge them easier to read. A circular logo made a shoe seem more comfortable and a company seem more caring; an angular logo made the same shoe seem more durable. No study was found that shows that a rounded typeface raises trust.",
+      "mechanism": "People carry associations from touch and taste over to sight: round things are soft and safe to handle, angular things are hard and can cut. The shape of letters and logos borrows these meanings. The associations describe what a brand seems to be like (gentle or tough), which is different from whether people believe it.",
+      "effects": {
+        "cognitiveLoad": "none \u2014 no measured effect on reading performance; rounded faces were only judged easier to read",
+        "satisfaction": "raises \u2014 slightly; rounded typefaces were liked more in one study",
+        "perceivedIntuitiveness": "none \u2014 no evidence"
+      },
+      "designMoves": [
+        "Use rounded letterforms, logos and corners together when the business should seem gentle, friendly or comforting: childcare, bakery, wellness.",
+        "Use angular or sharp-cornered forms when the business should seem precise, strong or durable: tools, engineering, security.",
+        "Keep the shape language the same across typeface, logo and corner radius, so that the signals do not cancel out.",
+        "Earn trust by other means: clear contact details, real photographs, no errors (see the existing records on trust)."
+      ],
+      "antiPatterns": [
+        "Rounded typeface, sharp logo and square buttons mixed without intent.",
+        "The claim that rounded typefaces make a site more trustworthy.",
+        "A very soft look for a business whose customers want proof of strength, or the reverse."
+      ],
+      "howToCheck": {
+        "machine": "The Catalog tags each typeface it offers as 'rounded', 'neutral' or 'angular'. Read the heading typeface's tag and the dominant corner class of buttons and cards (angular, moderate, pill). Flag a rounded typeface combined with 'precise', 'durable', 'technical' or 'strong' in the Prescription's tone words, and an angular one combined with 'warm', 'gentle', 'friendly' or 'comforting'. Flag a rounded typeface with fully angular corners, or the reverse, as an inconsistency to confirm. No measurable check for trust exists.",
+        "human": "Ask three people whether the page feels soft or hard, and whether that suits the business."
+      },
+      "evidence": {
+        "grade": "A-",
+        "kind": "peer-reviewed-experiment",
+        "strengthNote": "All sources were seen only as search summaries. Velasco, Woods, Hyndman and Spence (2015, i-Perception): twelve typefaces from round to angular (two versions of Arial and ten drawn for the study); rounder typefaces were matched with 'sweet' and angular ones with 'bitter', 'salty' and 'sour'; a second experiment found that rounder typefaces were liked more and judged easier to read; these are ratings, and reading speed was not measured. Jiang, Gorn, Galli and Chattopadhyay (2016, Journal of Consumer Research): a circular logo raised rated comfort and an angular logo raised rated durability of the same shoe, and a round logo made a company seem more caring, warm and sensitive to customers; the effect held when participants memorised a number at the same time. Zhuo and colleagues (2025): rounded corners in an app raised rated warmth. On trust the search found only shape studies outside typography: a review of product design states that rounded forms express warmth, which includes seeming friendly and trustworthy, while one draft study of medical devices found no effect of angularity on rated trust. Grade A- applies to the soft-hard association; the trust claim is grade C at best."
+      },
+      "sources": [
+        {
+          "citation": "Velasco, C., Woods, A. T., Hyndman, S., & Spence, C. (2015). The taste of typeface. i-Perception, 6(4).",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4934647",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Jiang, Y., Gorn, G. J., Galli, M., & Chattopadhyay, A. (2016). Does your company have the right logo? How and why circular- and angular-logo shapes influence brand attribute judgments. Journal of Consumer Research, 42(5), 709-726.",
+          "url": "https://research.polyu.edu.hk/en/publications/does-your-company-have-the-right-logo-how-and-why-circular-and-an/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Zhuo, S., et al. (2025). How a rounded aesthetic translates beauty to function and prosociality: The persuasive effects of warmth. Journal of User Experience, 20(3).",
+          "url": "https://uxpajournal.org/?p=6656",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "[Authors not confirmed] (2021). [Review of angular and rounded shapes, warmth and competence in product design]. Frontiers in Psychology, 12, 615647.",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8514985",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "One of the authors of the typeface study designed ten of its typefaces. Taste words are a laboratory way to reveal associations; nobody tastes a website. The associations were measured in a few countries.",
+      "appliesTo": [
+        "typeface",
+        "radius",
+        "signature",
+        "heading-treatment"
+      ]
+    },
+    {
+      "id": "dark-theme-for-whom",
+      "topic": "display-polarity",
+      "principle": "A dark theme is a comfort and preference option; for most people it reads no better than a light theme, and worse for small text and in dark rooms",
+      "claim": "Polarity is the relation of text to background: positive polarity is dark text on a light background, negative polarity is light text on a dark background. For glance-reading of single words, negative polarity in near-darkness gave the worst legibility of all combinations tested; positive polarity in near-darkness and both polarities in daylight-like lighting were significantly better. The advantage of positive polarity is largest for small characters. Some people with clouded lenses, as in cataract, are reported to read better with negative polarity. Data on how many people prefer a dark theme are weak: a poll of 115 phone users found about a third using dark, a third light and a third both.",
+      "mechanism": "A bright screen makes the pupil smaller. A smaller pupil gives a sharper image on the retina, as a small aperture does in a camera, so fine detail is easier to see. A dark screen in a dark room leaves the pupil wide, and the image is blurrier. In an eye with a clouded lens, the light of a bright background scatters inside the eye and washes out the letters, so a dark background can help.",
+      "effects": {
+        "cognitiveLoad": "raises \u2014 slightly, for small text in a dark theme and for people with normal vision",
+        "satisfaction": "raises \u2014 for people who prefer a dark theme or find a bright screen glaring in a dark room",
+        "perceivedIntuitiveness": "none \u2014 no evidence"
+      },
+      "designMoves": [
+        "Make the light theme the default and offer a dark theme that follows the visitor's system setting.",
+        "In the dark theme, do not use small or thin text: keep body text at or above the size and weight used in the light theme.",
+        "Keep long reading text (terms, articles) comfortable in both themes, and check contrast in both.",
+        "Describe the dark theme as a preference and comfort option, not as healthier or easier to read."
+      ],
+      "antiPatterns": [
+        "A dark-only site with small, light-weight grey text.",
+        "Claims that a dark theme 'reduces eye strain', 'is better for your eyes' or 'is what most users prefer'.",
+        "Ignoring the visitor's system setting for light or dark."
+      ],
+      "howToCheck": {
+        "machine": "Detect polarity from the luminance of body text and background. If the default is negative polarity, flag the absence of a light theme. Emulate prefers-color-scheme light and dark and assert that the page responds when the Prescription asks for two themes. In the dark theme, flag text smaller than the Catalog minimum (for example 16 CSS pixels for body text) or with font-weight below 400, and run the text contrast check (4.5 to 1) in both themes.",
+        "human": "Read a paragraph of the smallest text in the dark theme in a dim room, on a phone held at normal distance. Then do the same in the light theme in a bright room."
+      },
+      "evidence": {
+        "grade": "A-",
+        "kind": "peer-reviewed-experiment",
+        "strengthNote": "Grade A- applies to the legibility findings; the preference figures are grade C. All sources were seen only as search summaries. Dobres, Chahine and Reimer (2017, Applied Ergonomics): a word-recognition task that measured the display time needed to read a word, with two type sizes, two polarities and near-dark against daylight-like lighting; the thresholds were highest (worst) for negative polarity in the dark, and positive polarity in the dark and all conditions in bright light were significantly better; the study was aimed at car displays, and whether the two polarities differed from each other in bright light was not confirmed. Piepenbrock, Mayr and Buchner (2014, Ergonomics): smaller pupils and better proofreading with positive polarity; the same authors' 2014 paper in Human Factors is summarised by an index page as showing that negative polarity should be avoided with small type; its abstract was not seen. Low vision: Legge and colleagues (1985) found no effect of polarity for normal vision in their reading studies; the finding that readers with clouded lenses read faster with reversed polarity is remembered from the low-vision paper and was not confirmed by the search. A Nielsen Norman Group review (Budiu, 2020), known through secondary articles and an interview, says that people with conditions such as cataract may do better with a dark theme and that no full agreement exists. Preference: the Nielsen Norman Group poll of 115 phone users (about a third each); a figure that 22% of web traffic in December 2021 came from browsers set to prefer dark, attributed second-hand to a browser maker; a 2024 preprint in which 61.7% of surveyed students preferred dark in learning platforms; a technology website's reader poll with more than 2,500 self-selected respondents. These samples are small or self-selected and disagree. Myopia: Aleman, Wang and Schaeffel (2018, Scientific Reports) found that reading light text on dark thickened a layer of the eye in young adults within about 30 minutes, a short-term stand-in for eye growth; the authors say that the effect on myopia in children remains to be verified."
+      },
+      "sources": [
+        {
+          "citation": "Dobres, J., Chahine, N., & Reimer, B. (2017). Effects of ambient illumination, contrast polarity, and letter size on text legibility under glance-like reading. Applied Ergonomics, 60, 68-73.",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/28166901/",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Piepenbrock, C., Mayr, S., & Buchner, A. (2014). Smaller pupil size and better proofreading performance with positive than with negative polarity displays. Ergonomics, 57(11).",
+          "url": "https://informahealthcare.com/doi/abs/10.1080/00140139.2014.948496",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Piepenbrock, C., Mayr, S., & Buchner, A. (2014). Positive display polarity is particularly advantageous for small character sizes. Human Factors, 56(5), 942-951.",
+          "url": null,
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Legge, G. E., Rubin, G. S., Pelli, D. G., & Schleske, M. M. (1985). Psychophysics of reading II: Low vision. Vision Research, 25, 253-266.",
+          "url": "https://legge.dl8.umn.edu/sites/legge.psych.umn.edu/files/2020-08/Psychophysics%20of%20Reading%20II%20Low%20Vision%20Legge%20Rubin%20Pelli%20Schleske%201985.pdf",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Budiu, R. (2020). Dark Mode vs. Light Mode: Which Is Better? Nielsen Norman Group. (Seen through secondary articles and an interview in Fast Company.)",
+          "url": "https://www.fastcompany.com/90421232",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Nielsen Norman Group. Dark Mode: How Users Think About It and Issues to Avoid. (Title recalled; poll of 115 mobile users.)",
+          "url": "https://nngroup.com/articles/dark-mode-users-issues",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "[Authors not confirmed] (2024). An exploration of effects of dark mode on university students: A human computer interface analysis. arXiv:2409.10895 (preprint).",
+          "url": "https://arxiv.org/pdf/2409.10895",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Android Authority. Dark mode survey results (reader poll).",
+          "url": "https://androidauthority.com/dark-mode-survey-results-3682352",
+          "verified": "search-snippet"
+        },
+        {
+          "citation": "Aleman, A. C., Wang, M., & Schaeffel, F. (2018). Reading and myopia: Contrast polarity matters. Scientific Reports, 8, 10840. (Article number recalled.)",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6052140",
+          "verified": "search-snippet"
+        }
+      ],
+      "caveats": "This record extends the existing records light-vs-dark-polarity (the 2013 proofreading study) and folklore-dark-mode-premium. The glance-reading study used single words on a car-style display, not paragraphs on a phone. The 1985 finding of no polarity effect for normal vision differs from the later proofreading findings; the tasks and displays differ. A bright screen in a dark room can be uncomfortable even when it is more legible; comfort and legibility are different outcomes. The search found no evidence for or against the common claim that light text on dark blurs more for people with astigmatism. A dark theme saves energy only on screens whose pixels emit their own light.",
+      "appliesTo": [
+        "theme",
+        "neutral",
+        "typeface",
+        "size-scale",
+        "color-strategy"
+      ]
+    }
+  ]
+}
