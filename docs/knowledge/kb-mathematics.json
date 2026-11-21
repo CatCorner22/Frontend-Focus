@@ -1,0 +1,1267 @@
+{
+ "part": "mathematics-of-design",
+ "generated": "2026-11-14",
+ "entries": [
+  {
+   "id": "modular-type-scale",
+   "topic": "type-scale",
+   "principle": "A modular type scale gives consistency; no ratio has evidence behind it",
+   "claim": "A modular scale sets every text size as base size × ratio^n, where n is a whole number (for example 16 px × 1.25^2 = 25 px). The scale limits the number of sizes and keeps the steps between them proportional. No controlled study found in this research shows that a geometric scale, or any one ratio, improves reading, hierarchy or appeal ratings. The support is practitioner argument.",
+   "mechanism": "The formula is size_n = base × ratio^n. The usual ratios borrow their names from musical intervals, because each number is the frequency ratio of that interval: minor second 1.067, major second 1.125, minor third 1.2 (6 to 5), major third 1.25 (5 to 4), perfect fourth 1.333 (4 to 3), augmented fourth 1.414, perfect fifth 1.5 (3 to 2), golden ratio 1.618. A plausible reason for a geometric scale is Weber's law (see type-size-step-jnd): people judge size differences by ratio, so equal ratios give steps that look equally large. That reason is an inference; nobody has tested it on type scales. The traditional print scale (6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 21, 24, 30, 36, 48, 60, 72 points) is not one fixed ratio: it roughly doubles every five steps, which is a ratio of the fifth root of two, about 1.149, per step.",
+   "effects": {
+    "cognitiveLoad": "unknown — no study measured it; fewer distinct sizes plausibly make levels easier to tell apart",
+    "satisfaction": "unknown — no study found",
+    "perceivedIntuitiveness": "unknown — no study found"
+   },
+   "designMoves": [
+    "Pick one base size and one ratio and derive every text size from them. Worked values from a 16 px base: ratio 1.2 gives 13.33, 16, 19.2, 23.04, 27.65, 33.18; ratio 1.25 gives 12.8, 16, 20, 25, 31.25, 39.06; ratio 1.333 gives 12, 16, 21.33, 28.43, 37.9, 50.52.",
+    "Choose a smaller ratio (1.125 to 1.2) where many levels must fit in little room (phones, dense apps) and a larger one (1.25 to 1.5) where few levels need strong contrast (a marketing page). This is convention, not evidence.",
+    "Round to whole pixels only after computing, and keep the rounded set fixed in the tokens."
+   ],
+   "antiPatterns": [
+    "Choosing a ratio because of its name or its link to music or the golden ratio.",
+    "A scale so fine (ratio under about 1.1) that neighbouring sizes look like mistakes.",
+    "Sizes added by hand between scale steps until the scale no longer limits anything."
+   ],
+   "howToCheck": {
+    "machine": "Collect the distinct computed font sizes s. With the declared base b and ratio r, compute n = ln(s / b) / ln(r) for each size. Pass when every n lies within 0.15 of a whole number (the tolerance allows rounding to whole pixels). Also report the count of distinct sizes and compare it with the Catalog cap. The research gives no evidence-based range for r or for the count; the Catalog sets both.",
+    "human": "Look at two neighbouring levels side by side and ask whether each reads as a deliberate level."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Practitioner sources only. The search summary of Tim Brown's 2011 article reported that it defines a modular scale and argues that the base and ratio should be meaningful to the project; its own examples use 1.618. The summary reported no test of any ratio, and a dedicated search found no experiment on type-scale ratios. The classic print scale and the 'doubles every five steps' reading come from a search summary of Spencer Mortensen's essay; the per-step value 1.149 is arithmetic done here. Bringhurst is cited from memory. The interval names and ratios are standard music theory, recalled from memory."
+   },
+   "sources": [
+    {
+     "citation": "Brown, T. (2011). More Meaningful Typography. A List Apart.",
+     "url": "https://alistapart.com/article/more-meaningful-typography",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Mortensen, S. The typographic scale (essay on the classic print scale as a scale that doubles every five sizes).",
+     "url": "https://spencermortensen.com/typographic-scale",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Bringhurst, R. (2012). The Elements of Typographic Style (4th ed.). Hartley & Marks.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "A scale fixes sizes, not hierarchy: weight, colour, case and spacing also signal level, and two levels can share a size. Fluid type (sizes that grow with the viewport) breaks a strict whole-number fit between breakpoints; check the scale at each end of the range. The existing record folklore-golden-ratio already says that any consistent ratio gives order; this record adds the formula, the worked values and the check.",
+   "appliesTo": [
+    "size-scale",
+    "heading-treatment",
+    "typeface",
+    "density"
+   ]
+  },
+  {
+   "id": "type-size-step-jnd",
+   "topic": "type-scale",
+   "principle": "The smallest useful step between two sizes: Weber's law and Stevens' power law",
+   "claim": "People notice a difference in size by its ratio, not by its amount in pixels (Weber's law). In laboratory tasks the smallest ratio that people detect ranges from about 1% to about 14%, depending on the task. Two text sizes less than about 10% apart therefore risk looking like one size set carelessly. Perceived length grows in step with real length, but perceived area grows more slowly than real area (Stevens' power law), so a shape must gain much more than double the area to look twice as big.",
+   "mechanism": "Weber's law: the just-noticeable difference (the smallest change that a person detects reliably) is a constant fraction k of the starting value, so delta S = k × S. For visual length and size, sources give k = 0.01 (a textbook example: 100 mm against 101 mm), about 0.03 (a figure one paper calls commonly agreed), 0.06 (a model of visual size judgment) and 0.07 to 0.14 (circle sizes at 84% correct). These are best-case values: the two items sit side by side and the person is asked to compare them. On a page, the two sizes are apart and nobody is asked, so the useful step must be several times the threshold. Stevens' power law: perceived magnitude = constant × (physical magnitude)^a. The exponent a is about 1.0 for the length of a line and about 0.7 to 0.8 for area. Text height behaves like length. A block or icon behaves like area: doubling its area makes it look about 2^0.7 = 1.62 times as big.",
+   "effects": {
+    "cognitiveLoad": "lowers — levels that differ clearly can be told apart without comparing them side by side; this is an inference from the psychophysics, not a measured result on text",
+    "satisfaction": "unknown — not measured",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Keep neighbouring text sizes at least about 12% apart (a ratio of 1.125 or more), or separate them with weight, colour or case as well.",
+    "Where two sizes differ by under 10%, merge them into one.",
+    "To make a block, badge or icon look twice as big, give it about 2.4 to 2.7 times the area (2^(1/0.8) to 2^(1/0.7)), which is about 1.55 to 1.64 times the width and height.",
+    "Think in ratios: 14 px to 16 px is the same visual step as 28 px to 32 px."
+   ],
+   "antiPatterns": [
+    "Text sizes of 15 px and 16 px used as two levels.",
+    "Adding a fixed 2 px per level at large sizes, where 2 px is a tiny ratio.",
+    "Doubling the area of a 'featured' card and expecting it to look twice as important."
+   ],
+   "howToCheck": {
+    "machine": "Sort the distinct computed font sizes and compute each neighbouring ratio r = larger / smaller. Flag r < 1.10 unless the two text styles also differ in font weight, colour or letter case. Report r between 1.10 and 1.125 as a warning. For paired elements meant to show emphasis by size, report the area ratio A2 / A1 and the predicted perceived ratio (A2 / A1)^0.7. The 1.10 and 1.125 limits are an inference from laboratory thresholds; no study gives a threshold for text hierarchy, so the Catalog owns the number.",
+    "human": "Show two neighbouring levels apart from each other, not adjacent, and ask a person which is larger. A hesitation means the step is too small."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Weber's law and Stevens' power law are long-established psychophysics, but every figure here comes from a search summary, and the figures disagree with each other because the tasks differ. The 1/100 figure is a textbook example. The 0.07 to 0.14 range is attributed to Solomon, Morgan and Chubb (2011); the task details were not read. The 'about 3%' figure was reported second-hand. The exponents 1.0 (length) and 0.7 (area) come from the commonly reproduced table; a search summary of a 1974 paper says Teghtsoonian (1965) found 0.76 for circles and 0.80 to 0.83 for irregular shapes. The step from these thresholds to a minimum text-size ratio is this record's inference; a search for studies of font-size discrimination or perceived typographic hierarchy found none."
+   },
+   "sources": [
+    {
+     "citation": "Gray, P. Psychology (7th ed.), chapter 7.2 Psychophysics (textbook example of a 1/100 Weber fraction for line length).",
+     "url": "https://digfir-published.macmillanusa.com/gray7e/gray7e_ch7_3.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Solomon, J. A., Morgan, M., & Chubb, C. (2011). Efficiencies for the statistics of size discrimination. Journal of Vision, 11(12):13. (Title recalled from memory; the search summary gave the authors, year and the Weber fractions.)",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4135075",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Smeets, J. B. J., & Brenner, E. (2008). Grasping Weber's law. Current Biology, 18(23), R1089-R1090. (Authors and title recalled from memory; the search summary gave the 0.06 Weber fraction for visual size.)",
+     "url": "https://personal.fbw.vu.nl/~jsmeets/2008/Webers_law-CUB08.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "A 2012 PLOS ONE article that cites a 'commonly agreed' Weber fraction of about 3% for visual length (title and authors not confirmed).",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3338698",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Wikipedia. Stevens's power law (table of exponents: visual length 1.0, visual area 0.7).",
+     "url": "https://en.wikipedia.org/wiki/Stevens%27s_power_law",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Teghtsoonian, M. (1965). The judgment of size. American Journal of Psychology, 78, 392-402.",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Stevens, S. S. (1957). On the psychophysical law. Psychological Review, 64(3), 153-181.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "Stevens' exponents come from people giving number estimates; they vary between people and with instructions. A search summary notes that when people judge area they often estimate a length and square it, which changes the exponent. Legibility is a separate question: a size can be clearly different and still too small to read (see type-size-and-x-height).",
+   "appliesTo": [
+    "size-scale",
+    "heading-treatment",
+    "emphasis",
+    "hero",
+    "density"
+   ]
+  },
+  {
+   "id": "golden-ratio-rectangle-studies",
+   "topic": "proportion",
+   "principle": "The golden ratio in controlled studies: a weak average preference at best, and large differences between people",
+   "claim": "Fechner's 1876 experiment found that the rectangle closest to the golden ratio (1 to 1.618) was chosen most often, by roughly a third of participants. Later work did not confirm a reliable preference. Replications are mixed, a careful repetition found no preference, and studies of individuals find that each person has a stable favourite proportion that differs from person to person. No study found tests the golden ratio on web layouts.",
+   "mechanism": "The golden ratio is the proportion in which the whole relates to the larger part as the larger part relates to the smaller: (a + b) / a = a / b = 1.618. The belief in its beauty predates the experiments. Three things keep the belief alive. First, Fechner's result is real but depends on his set of ten rectangles: a 1974 study argued that the preferred rectangle depends on its position in the range shown. Second, averaging hides people: one person likes squares, another likes long rectangles, and the average lands in between, near 1.5 to 1.6, without anyone having a special response to 1.618. Third, any admired object contains many possible measurements, so a match can be found after the fact.",
+   "effects": {
+    "cognitiveLoad": "none — no proportion in the normal range changes effort",
+    "satisfaction": "unknown — group preference is weak and unreliable; individual preferences are strong but differ",
+    "perceivedIntuitiveness": "unknown — never tested"
+   },
+   "designMoves": [
+    "Choose the aspect ratio of images, cards and columns from the content (the photographs you have, the line length the text needs) and from the device, not from 1.618.",
+    "Use a small fixed set of aspect ratios across the site so that repeated elements match.",
+    "Treat 1.618 as one acceptable ratio among many between a square and a 2 to 5 rectangle."
+   ],
+   "antiPatterns": [
+    "A sidebar-to-content split set to 38% and 62% and defended as 'proven'.",
+    "Cropping photographs to 1.618 at the cost of their subject.",
+    "A tool that scores a layout higher for containing the golden ratio."
+   ],
+   "howToCheck": {
+    "machine": "No measurable check of quality exists for the golden ratio, and a program must not award points for it. The measurable property is consistency: compute width / height for every image, card and media block of the same role, round to two decimals, and count the distinct values. Flag roles with more distinct ratios than the Catalog allows. The research gives no preferred ratio and no cap.",
+    "human": "Ask whether each image and card shows its content without awkward cropping or empty space."
+   },
+   "evidence": {
+    "grade": "D",
+    "kind": "folklore",
+    "strengthNote": "Grade D applies to the popular claim that 1.618 is specially pleasing. The studies against it are peer-reviewed but were seen only as search summaries. McManus (1980): the search summary quoted the abstract, which concludes that all the effects in the earlier literature were dubious and reports stable but idiosyncratic individual preferences with two factors, one centred on the square and one on a proportion near the golden section. McManus, Cook and Hunt (2010): 79 participants; weak group preference, strong and stable individual preferences that personality measures did not explain. Höge (1997) repeated Fechner's method and found no preference (reported by secondary sources). A 2010 paper calls the replication record 'a terribly mixed bag'. Fechner's own figure is given as 35% by one secondary source and 34.5% by another: figure not confirmed. Green's (1995) review was not opened; from memory it concludes that real effects may exist but are fragile, which is a milder verdict than 'myth'. The existing record folklore-golden-ratio cites Stieger and Swami (2015) for art pictures."
+   },
+   "sources": [
+    {
+     "citation": "Fechner, G. T. (1876). Vorschule der Aesthetik. Breitkopf & Härtel.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    },
+    {
+     "citation": "McManus, I. C. (1980). The aesthetics of simple figures. British Journal of Psychology, 71, 505-524.",
+     "url": "https://scilit.com/publications/589b07503f9538cc40236536c52d17eb",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "McManus, I. C., Cook, R., & Hunt, A. (2010). Beyond the golden section and normative aesthetics: Why do individuals differ so much in their aesthetic preferences for rectangles? Psychology of Aesthetics, Creativity, and the Arts, 4(2), 113-126. (Seen through a 2016 article that summarises it.)",
+     "url": "https://frontiersin.org/articles/10.3389/fnhum.2016.00350/full",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Green, C. D. (1995). All that glitters: A review of psychological research on the aesthetics of the golden section. Perception, 24, 937-968.",
+     "url": "https://journals.sagepub.com/doi/10.1068/p240937",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Höge, H. (1997). The golden section hypothesis: Its last funeral. Empirical Studies of the Arts, 15(2), 233-255.",
+     "url": "https://doi.org/10.2190/2PNH-8TT0-EMC5-FTW5",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Phillips, F., Norman, J. F., & Beers, A. M. (2010). Fechner's aesthetics revisited. Seeing and Perceiving, 23(3), 263-271. (Journal details recalled from memory.)",
+     "url": "https://flipphillips.com/bloggery/fechners-aesthetics-revisited/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Godkewitsch, M. (1974). The 'golden section': An artifact of stimulus range and measure of preference. American Journal of Psychology, 87, 269-277. (Seen only as a mention in a search summary; journal details recalled from memory.)",
+     "url": null,
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The studies used plain rectangles and art, not pages with content. They show that the special status of 1.618 lacks support; they do not show that proportion is unimportant. The search could not open Green's review, the most thorough one, so its exact conclusion is unconfirmed.",
+   "appliesTo": [
+    "content-width",
+    "sections",
+    "hero",
+    "size-scale"
+   ]
+  },
+  {
+   "id": "rule-of-thirds-evidence",
+   "topic": "proportion",
+   "principle": "The rule of thirds: tests do not support it; centre and 'facing inward' fit the data better",
+   "claim": "The rule of thirds says that a picture looks best when its subject sits on one of the lines that divide the frame into thirds. A study of photographs and paintings found no preference for images that follow the rule, and highly rated photographs followed it no more than photographs that ignore it. Experiments on single objects found that people prefer the object at or near the centre, and prefer an object that faces sideways to face into the frame.",
+   "mechanism": "The rule places the subject at one third or two thirds of the width or height, which is an offset of one third of the half-width from the centre. Palmer and colleagues propose two simpler tendencies. Centre bias: a front-facing object is liked best at the centre, and liking falls evenly on both sides. Inward bias: an object that faces left is liked best when it sits right of centre, so that it faces into the picture, and the reverse for an object that faces right. An off-centre subject that faces inward will often land near a thirds line, which may explain why the rule seems to work.",
+   "effects": {
+    "cognitiveLoad": "none — the studies measured preference only",
+    "satisfaction": "unknown — no preference for rule-following images was detected",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "For a hero image, place a front-facing subject near the centre of the space the image actually occupies, or place a side-facing subject so that it looks toward the text or the centre.",
+    "Choose the crop so that the subject stays visible at every breakpoint; set the focal point explicitly (CSS object-position).",
+    "Use the thirds grid as a prompt to try an off-centre crop, not as a test of quality."
+   ],
+   "antiPatterns": [
+    "A subject that looks or moves out of the frame, away from the headline.",
+    "Rejecting a centred composition because it 'breaks the rule of thirds'.",
+    "An automated crop that puts the subject on a thirds line and cuts off part of it."
+   ],
+   "howToCheck": {
+    "machine": "No measurable check of quality exists for the rule of thirds. A program can compute the subject's horizontal offset o = (x_subject - W / 2) / (W / 2), which runs from -1 to 1 with the thirds lines at about ±0.33, but only when a person or an image model marks the subject, and the offset does not predict ratings. The checks that a program can run are: the marked focal point stays inside the visible crop at every breakpoint, and no text overlaps it.",
+    "human": "Look at each hero image and ask: is the subject whole, and does it face toward the content?"
+   },
+   "evidence": {
+    "grade": "D",
+    "kind": "folklore",
+    "strengthNote": "Grade D applies to the rule as a predictor of quality. Amirshahi, Hayn-Leichsenring, Denzler and Redies (2014, Art & Perception): the search summary reported no detected preference for rule-following images, ratings from 30 participants, and low computed rule-of-thirds values for highly rated photographs and for a large set of paintings. Palmer, Gardner and Wickens (2008, Spatial Vision): centre bias and inward bias for single objects, reported through secondary sources. The Palmer laboratory's own page states that results contradicted the rule's main claims; a 2014 conference abstract from the same group calls the rule 'empirically incorrect' but possibly useful as a nudge away from dead centre. All sources were seen as search summaries. No study on web hero images was found."
+   },
+   "sources": [
+    {
+     "citation": "Amirshahi, S. A., Hayn-Leichsenring, G. U., Denzler, J., & Redies, C. (2014). Evaluating the rule of thirds in photographs and paintings. Art & Perception, 2(1-2), 163-182.",
+     "url": "https://doi.org/10.1163/22134913-00002024",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Palmer, S. E., Gardner, J. S., & Wickens, T. D. (2008). Aesthetic issues in spatial composition: Effects of position and direction on framing single objects. Spatial Vision, 21, 421-449. (Seen through a search summary of J. S. Gardner's 2011 dissertation, which draws on it.)",
+     "url": "https://escholarship.org/uc/item/8wf7d7r9",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Palmer Lab, University of California, Berkeley. How the 'Rule of Thirds' is wrong (laboratory web page).",
+     "url": "https://palmerlab.berkeley.edu/spatial.html",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The experiments used single objects on plain backgrounds and collections of photographs; a web page adds text that competes for the same space. One crowdsourcing report found that people often follow the rule when they crop, which shows a habit, not a benefit. The centre preference concerns one object; scenes with several subjects were not covered.",
+   "appliesTo": [
+    "hero",
+    "sections",
+    "signature"
+   ]
+  },
+  {
+   "id": "spacing-base-unit-grid",
+   "topic": "spacing-systems",
+   "principle": "4-point and 8-point spacing grids are convention; the measurable benefit is a small, consistent set of values",
+   "claim": "A spacing grid restricts every margin, padding and gap to multiples of one base unit, usually 4 or 8 pixels. No study found tests 8 against any other number. The grid's value is that it forces a small set of spacing values and keeps related gaps equal, which supports grouping by proximity.",
+   "mechanism": "With base unit u, every spacing value is k × u for a whole number k. Google's Material Design states that components align to an 8 dp grid and that small elements may use 4 dp. Practitioner articles give an arithmetic reason: multiples of 8 stay whole numbers of device pixels at the common screen scale factors 0.75, 1.5, 2 and 3 (8 × 0.75 = 6, 8 × 1.5 = 12), so edges stay sharp. That reason was found only in informal articles, not in Google's documentation. The perceptual argument is indirect: people group elements by nearness (see proximity-and-common-region), and a short list of clearly different gap sizes makes 'near' and 'far' easy to tell apart. Any base unit gives this benefit.",
+   "effects": {
+    "cognitiveLoad": "unknown — no study isolates a spacing grid; consistent gaps plausibly make groups easier to see",
+    "satisfaction": "unknown — not measured",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Define a short spacing scale in tokens (for example 4, 8, 12, 16, 24, 32, 48, 64) and use nothing else.",
+    "Make neighbouring steps of the scale clearly different: apply the same ratio thinking as for type sizes (see type-size-step-jnd).",
+    "Keep the space inside a group smaller than the space between groups.",
+    "Allow documented exceptions for optical corrections (for example aligning an icon with text) instead of bending the scale."
+   ],
+   "antiPatterns": [
+    "Spacing values of 13, 15, 17 and 22 pixels scattered through a stylesheet.",
+    "Claiming that 8 is 'scientifically' the right unit.",
+    "A gap inside a card that is larger than the gap between cards."
+   ],
+   "howToCheck": {
+    "machine": "Collect every computed margin, padding and gap value above zero. (1) On-grid share = count of values where value mod u = 0, divided by the count of all values, with u from the Prescription (4 by default). Flag a share below the Catalog limit (0.95 is a reasonable start; the research gives no number). (2) Report the count of distinct spacing values and flag a count above the Catalog cap. (3) For each visual group, compute the largest gap inside the group divided by the smallest gap between that group and its neighbours; flag a result of 1 or more.",
+    "human": "Squint at the page: do the groups separate cleanly, and do equal relationships have equal gaps?"
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Vendor guidance and practitioner articles, all seen as search summaries. Material Design's 8 dp grid with 4 dp increments is documented by Google. The device-pixel argument appears only in informal articles. One aggregator traces the 8-point system to Apple and Google guidelines; sources disagree about whether 4 or 8 is the core unit. No experiment comparing base units, and none comparing a grid with free spacing, was found. The grouping argument borrows the evidence of proximity-and-common-region (grade A-), which supports consistent, clearly different gaps but says nothing about the number 8."
+   },
+   "sources": [
+    {
+     "citation": "Google. Material Design 2: Understanding layout, and Spacing methods (8 dp grid, 4 dp increments).",
+     "url": "https://m2.material.io/design/layout",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Spec.fm. 8-Point Grid (practitioner article).",
+     "url": "https://spec.fm/specifics/8-pt-grid",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Cieden. How can I choose the right spacing system? (practitioner article).",
+     "url": "https://cieden.com/book/sub-atomic/spacing/choosing-a-spacing-system",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "CSS pixels are not device pixels, and browsers round fractional values, so the sharp-edge argument is weaker on the web than in native apps. Text does not sit on the grid by itself: line boxes add space above and below letters (see baseline-grid-convention). A grid can make spacing tidy and still wrong if the group structure is wrong.",
+   "appliesTo": [
+    "density",
+    "sections",
+    "forms",
+    "tables",
+    "nav",
+    "content-width"
+   ]
+  },
+  {
+   "id": "baseline-grid-convention",
+   "topic": "spacing-systems",
+   "principle": "Baseline grids and 'vertical rhythm' are print craft; no reading study supports them on screens",
+   "claim": "A baseline grid places every line of text on evenly spaced horizontal lines, so that lines in neighbouring columns align. Articles assert that this improves readability; the search found no controlled study that measures any effect, on paper or on screen. Treat it as an optional craft detail for multi-column text.",
+   "mechanism": "The grid sets one unit, usually the body line height (for example 24 px for 16 px text at a ratio of 1.5). Every line height and every vertical space is a whole multiple of that unit, so the baselines (the lines on which letters sit) of all text fall on the grid. In print the grid stops text on the two sides of a thin sheet from showing through between lines and keeps columns level. Neither reason applies to a single-column web page. In CSS the baseline's position inside a line box depends on the font's internal metrics, so text of two typefaces or two sizes does not land on a shared grid without per-font corrections.",
+   "effects": {
+    "cognitiveLoad": "unknown — no study found",
+    "satisfaction": "unknown — no study found",
+    "perceivedIntuitiveness": "none — a baseline grid does not change how a reader understands the page"
+   },
+   "designMoves": [
+    "Set line heights and vertical spacing as multiples of the spacing base unit; this gives most of the tidiness at no cost.",
+    "Align baselines explicitly only where text sits side by side: a label next to a field value, a price next to a product name, columns of body text.",
+    "Do not spend effort forcing headings onto the body grid."
+   ],
+   "antiPatterns": [
+    "Awkward heading line heights chosen only to stay on the grid.",
+    "Promising better readability from vertical rhythm.",
+    "Text in adjacent columns that starts at visibly different heights."
+   ],
+   "howToCheck": {
+    "machine": "Two checks exist, and neither is tied to a measured benefit. (1) Unit check: every computed line-height in pixels mod u = 0, and every vertical margin and padding mod u = 0, where u is the base unit. (2) Side-by-side check: for text elements in the same row (same flex or grid row), compare the first-baseline y positions and flag differences from 1 to 3 pixels, which read as mistakes. Report the result; do not fail a build on check 1.",
+    "human": "Look across each row of side-by-side text for lines that almost align."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "One search aimed at reading studies of baseline grids returned only tutorials and practitioner articles; they assert a readability benefit without data, and several admit that a grid-aligned layout can still feel wrong. The absence is what this search surfaced, not proof that no study exists. The print origin and the CSS font-metric problem were reported by the same articles. Evidence on line spacing itself (which does matter) is in the existing record spacing-and-justification."
+   },
+   "sources": [
+    {
+     "citation": "Liew, Z. Why is vertical rhythm an important typography practice? (practitioner article).",
+     "url": "https://zellwk.com/blog/why-vertical-rhythms/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "SitePoint. Typography: Baseline rhythm deciphered (practitioner article).",
+     "url": "https://www.sitepoint.com/typography-baseline-rhythm-deciphered/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Webiano. Baseline grid (knowledge-base article that notes the font-dependent baseline offset).",
+     "url": "https://webiano.digital/knowledge-base/design/layout-grids/baseline-grid/",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Near-miss misalignment of side-by-side text is a visible flaw whether or not a grid exists (see alignment-points-and-near-misses). Newer CSS features for trimming the space above and below text may make strict grids easier; browser support was not checked here.",
+   "appliesTo": [
+    "typeface",
+    "size-scale",
+    "density",
+    "tables",
+    "forms"
+   ]
+  },
+  {
+   "id": "alignment-points-and-near-misses",
+   "topic": "layout-metrics",
+   "principle": "Alignment is countable: fewer shared edges and no near misses",
+   "claim": "The number of distinct edge positions on a screen is a measurable property. Screens whose elements share few edge positions (good alignment) and form clear groups were searched faster and preferred in an experiment, and a computed layout score predicted search time. Published interface-aesthetics formulas use the count of alignment points as a term.",
+   "mechanism": "An alignment point is a distinct x position where at least one element starts (a vertical alignment point) or a distinct y position (a horizontal one). If 20 elements start at 4 x positions, the eye can follow 4 lines; if they start at 17 positions, there are no lines to follow. Aligned edges form lines by good continuation (see alignment-continuity), which lets a person scan down a column. A near miss, where two edges differ by 1 to 3 pixels, is worse than a clear offset: it reads as an error. One published formula, Ngo's 'simplicity', is 3 / (vertical alignment points + horizontal alignment points + number of objects), so fewer points give a higher score.",
+   "effects": {
+    "cognitiveLoad": "lowers — search times were shorter on well aligned, well grouped screens",
+    "satisfaction": "raises — alignment and grouping raised stated preference in the same experiment",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Give every section the same left edge for text, and reuse a small set of column edges across the page.",
+    "Remove near misses: two edges that differ by 1 to 3 pixels must either match or differ clearly.",
+    "Align labels, fields and buttons in a form to one or two vertical lines.",
+    "When something must be offset, make the offset a full step of the spacing scale."
+   ],
+   "antiPatterns": [
+    "Cards whose text starts 2 pixels to the right of the heading above them.",
+    "A different left margin in each section.",
+    "Centred, left-aligned and right-aligned blocks mixed on one screen without a reason."
+   ],
+   "howToCheck": {
+    "machine": "Take the bounding boxes of visible text blocks, images and controls in one viewport. (1) Count distinct left-edge x values, distinct right-edge x values and distinct top-edge y values, after merging values within 0.5 pixel. Report alignment ratio = distinct left edges / number of elements; lower is more aligned. The Catalog sets the limit; the research gives no cutoff. (2) Near-miss check: flag every pair of elements in the same container whose left edges (or top edges within a row) differ by 1 to 3 pixels. Check 2 is a firm defect check; check 1 is a comparison between Options.",
+    "human": "Hold a ruler or a window edge against the screen and look for edges that almost line up."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Parush, Nadir and Shtub (1998, International Journal of Human-Computer Interaction): a numerical model built from element size, local density, alignment and grouping; well designed screens gave shorter search times and higher preference; model predictions correlated with search times; poor alignment combined with poor local density hurt search time most, and alignment and grouping mainly influenced preference. Seen as a search summary of the abstract and of a secondary summary, which disagree in detail; effect sizes not retrieved. Miniukovich and De Angeli (2015) include layout metrics among eight automatic metrics; the search summary did not list them, and 'grid quality' as one of them is recalled from memory. The Ngo simplicity formula is recalled from memory, not checked. The near-miss rule is a craft rule with no study of its own."
+   },
+   "sources": [
+    {
+     "citation": "Parush, A., Nadir, R., & Shtub, A. (1998). Evaluating the layout of graphical user interface screens: Validation of a numerical computerized model. International Journal of Human-Computer Interaction, 10(4), 343-360.",
+     "url": "https://dblp.org/rec/journals/ijhci/ParushNS98",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Ngo, D. C. L., Teo, L. S., & Byrne, J. G. (2003). Modelling interface aesthetics. Information Sciences, 152, 25-46.",
+     "url": "https://shdl.mmu.edu.my/2562",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Miniukovich, A., & De Angeli, A. (2015). Computation of interface aesthetics. Proceedings of CHI 2015, 1163-1172.",
+     "url": "https://iris.unitn.it/handle/11572/116796",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The 1998 experiment used desktop application screens of its time, not web pages. A low alignment-point count can also describe a monotonous page. Centred layouts create few shared left edges by design; compare like with like. The existing record alignment-continuity covers the perceptual principle; this record adds the counts.",
+   "appliesTo": [
+    "sections",
+    "forms",
+    "tables",
+    "nav",
+    "density",
+    "content-width"
+   ]
+  },
+  {
+   "id": "balance-and-symmetry-metrics",
+   "topic": "layout-metrics",
+   "principle": "Balance and symmetry can be computed; they predict ratings of simple images better than ratings of real pages",
+   "claim": "Formulas for balance (equal visual weight on both sides of an axis) and symmetry (one half mirrors the other) exist and are easy to compute from element boxes or pixels. In experiments, people preferred symmetric abstract images, and left-right symmetry raised beauty ratings of website start pages. The formulas track what people call 'balanced' in simple pictures; their link to how much people like a real page is weaker and depends on other properties.",
+   "mechanism": "Balance treats each element as a weight on a seesaw. Ngo's balance formula gives each side of the screen a weight w = sum of (element area × distance from the element's centre to the screen's centre line). Horizontal balance is then 1 - |w_left - w_right| / max(w_left, w_right): 1 means perfectly balanced, 0 means all weight on one side. The same is done for top against bottom, and the two results are averaged. A pixel version measures how far the centre of 'visual mass' (the darkness-weighted average position of all pixels) lies from the centre of the frame. Mirror symmetry compares the left half with the flipped right half. Symmetric patterns are quick to process, which people tend to experience as pleasant (see processing-fluency-liking).",
+   "effects": {
+    "cognitiveLoad": "unknown — the cited studies measured ratings, not effort",
+    "satisfaction": "raises — symmetric images and pages received higher beauty ratings on average; the effect on real pages differs between groups of people",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Balance each viewport: a heavy image on one side needs text, a form or another image of similar weight on the other, or a centred arrangement.",
+    "Use left-right symmetry for simple, formal pages (a landing hero, a sign-in page); use balanced asymmetry (text one side, image the other) where content differs.",
+    "Reduce the number of separate groups before tuning balance: in one experiment more groups lowered appeal."
+   ],
+   "antiPatterns": [
+    "All content pushed to one side with an empty other side at desktop width, with no intent behind it.",
+    "Treating a balance score as a quality score.",
+    "Forcing symmetry on content that is not symmetric, such as a long text beside a short one."
+   ],
+   "howToCheck": {
+    "machine": "From the element boxes in one viewport (or from a blurred greyscale screenshot, using darkness as weight): (1) horizontal balance B = 1 - |w_left - w_right| / max(w_left, w_right), with w = sum of area × distance to the vertical centre line; range 0 to 1. (2) Centre-of-mass offset = distance between the weighted centroid and the viewport centre, divided by half the viewport diagonal; range 0 to 1, 0 is centred. (3) Mirror symmetry S = 1 - mean(|I(x, y) - I(W - x, y)|) / 255 on the blurred screenshot; range 0 to 1. Report all three and compare Options within one Template. No validated pass mark exists; flag only extreme values (for example B below 0.5) for a person to look at.",
+    "human": "Squint or blur the screenshot and ask whether one side feels heavier, and whether that is intended."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "All sources were seen as search summaries. Ngo, Teo and Byrne (2003) define 14 layout measures, including balance, equilibrium and symmetry; the repository abstract says their own study 'suggested' that the measures matter to viewers, and no correlation values were retrieved. The balance formula above is recalled from memory of that paper, not checked. Bauerly and Liu (2006): 16 participants per experiment; with 30 abstract black-and-white images, more symmetric images were preferred; with realistic web layouts, more groups lowered appeal. Tuch, Bargas-Avila and Opwis (2010): 60 participants rated 20 website start pages; vertical (left-right) symmetry affected intuitive beauty and classical and expressive aesthetics ratings; the title states a gender difference, and from memory the effect held for men only. Hübner and Fillinger (2016): objective balance measures match balance ratings of simple pictures; preference also depends on homogeneity. Purchase and colleagues (2011) applied the 14 measures to web pages; their results were not retrieved."
+   },
+   "sources": [
+    {
+     "citation": "Ngo, D. C. L., Teo, L. S., & Byrne, J. G. (2003). Modelling interface aesthetics. Information Sciences, 152, 25-46.",
+     "url": "https://shdl.mmu.edu.my/2562",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Bauerly, M., & Liu, Y. (2006). Computational modeling and experimental investigation of effects of compositional elements on interface and design aesthetics. International Journal of Human-Computer Studies, 64(8), 670-682.",
+     "url": "https://doi.org/10.1016/j.ijhcs.2006.01.002",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Tuch, A. N., Bargas-Avila, J. A., & Opwis, K. (2010). Symmetry and aesthetics in website design: It's a man's business. Computers in Human Behavior, 26(6), 1831-1837.",
+     "url": "https://doi.org/10.1016/j.chb.2010.07.016",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Hübner, R., & Fillinger, M. G. (2016). Comparison of objective measures for predicting perceptual balance and visual aesthetic preference. Frontiers in Psychology, 7, 335.",
+     "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4786554/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Purchase, H. C., Hamer, J., Jamieson, A., & Ryan, O. (2011). Investigating objective measures of web page aesthetics and usability. Proceedings of the Australasian User Interface Conference (CRPIT vol. 117).",
+     "url": "https://crpit.scem.westernsydney.edu.au/abstracts/CRPITV117Purchase.html",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Samples are small (16 to 60 people) and most stimuli were abstract or static. Area is a crude stand-in for visual weight: a small saturated button can outweigh a large pale panel. A page that scrolls has no single frame; compute per viewport. Responsive layouts change balance at each width.",
+   "appliesTo": [
+    "hero",
+    "sections",
+    "content-width",
+    "density",
+    "signature"
+   ]
+  },
+  {
+   "id": "computed-aesthetics-ceiling",
+   "topic": "layout-metrics",
+   "principle": "Formulas computed from a screenshot explain at most about half of how people rate a page",
+   "claim": "Several research teams built automatic metrics of web-page appearance (complexity, colour, symmetry, layout) and tested them against human ratings. The best models explain roughly half of the variation in ratings for web pages and about a third for phone apps. A computed score is useful for comparing versions and for flagging outliers. It cannot certify that a page looks good.",
+   "mechanism": "Each team turns a screenshot into numbers: amount of detail, number and spread of colours, count of text and image areas, symmetry, alignment. A regression then weights the numbers to fit average human ratings. The share of variation that the fitted model reproduces is called variance explained (R squared); 0.5 means that half of the differences between pages' ratings follow the model and half do not. The unexplained half includes content, imagery, brand, the viewer's own taste and culture, and whatever the metrics fail to capture. Because the weights are fitted to one set of pages from one period, they fit new pages and newer styles less well.",
+   "effects": {
+    "cognitiveLoad": "unknown — the models predict appeal ratings, not effort",
+    "satisfaction": "unknown — the models predict first-impression ratings of screenshots, not satisfaction after use",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Use computed metrics to compare Options within one Template and to catch extremes, and say so in the Honest receipt.",
+    "Report each metric separately (complexity, colour count, symmetry) instead of one blended 'beauty score'.",
+    "Keep a person's judgment as the final step for visual appeal."
+   ],
+   "antiPatterns": [
+    "A single aesthetic score presented as a verdict.",
+    "Optimising a page toward a metric until it looks empty.",
+    "Applying weights fitted to websites from 2013 to a modern design as if they were constants of nature."
+   ],
+   "howToCheck": {
+    "machine": "Compute each metric on the same viewport sizes for every Option and for the Template baseline, then report the difference from the baseline in standard deviations: z = (value - baseline mean) / baseline standard deviation. Flag |z| above 2 for a person to review. Do not convert the metrics into a pass or fail for appeal: with R squared near 0.5, the prediction error for a single page stays large (the unexplained share of variation is 1 - R squared, about half).",
+    "human": "Collect a quick rating from the owner or a few people on the Catalog's appeal question; that rating, not the formula, decides."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Three independent groups report similar ceilings; all were seen as search summaries that quoted the abstracts. Miniukovich and De Angeli (CHI 2015): eight automatic metrics; best models explained up to 49% of variance in web-page aesthetics and up to 32% for iPhone apps when app genre was included. Miniukovich and De Angeli (2014): metrics explained 51% of aesthetics ratings and 50% of complexity ratings on 140 web pages; the summary gives ten participants, a number that was not confirmed. Reinecke and colleagues (CHI 2013), already in the knowledge base: about half of the variance, with demographics in the model. Zheng and colleagues (CHI 2009): symmetry, balance and equilibrium computed from a quadtree decomposition of 30 pages correlated with ratings given after 150 ms; the abstract calls several correlations 'quite large', values not retrieved. Altaboli and Lin (2011): a regression on balance, unity and sequence correlated with questionnaire scores for real pages; R squared not retrieved."
+   },
+   "sources": [
+    {
+     "citation": "Miniukovich, A., & De Angeli, A. (2015). Computation of interface aesthetics. Proceedings of CHI 2015, 1163-1172.",
+     "url": "https://iris.unitn.it/handle/11572/116796",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Miniukovich, A., & De Angeli, A. (2014). Quantification of interface visual complexity. Proceedings of AVI 2014. (Venue recalled from memory.)",
+     "url": "https://www.academia.edu/11396872/Quantification_of_Interface_Visual_Complexity",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Zheng, X. S., Chakraborty, I., Lin, J. J.-W., & Rauschenberger, R. (2009). Correlating low-level image statistics with users' rapid aesthetic and affective judgments of web pages. Proceedings of CHI 2009.",
+     "url": "https://www.microsoft.com/en-us/research/?p=693099",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Reinecke, K., Yeh, T., Miratrix, L., Mardiko, R., Zhao, Y., Liu, J., & Gajos, K. Z. (2013). Predicting users' first impressions of website aesthetics with a quantification of perceived visual complexity and colorfulness. Proceedings of CHI 2013, 2049-2058.",
+     "url": "https://kgajos.seas.harvard.edu/papers/reinecke13aesthetics.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Altaboli, A., & Lin, Y. (2011). Investigating effects of screen layout elements on interface and screen design aesthetics. Advances in Human-Computer Interaction, 2011, 659758.",
+     "url": "https://core.ac.uk/download/194576732.pdf",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "All studies rate static screenshots after a short look; none measures a person using the page. Ratings were averaged over people, so the models predict the average viewer better than any one viewer, and this tool serves one owner. Newer deep-learning predictors exist; their accuracy was not researched here. See low-complexity-high-prototypicality for what the strongest predictors are.",
+   "appliesTo": [
+    "hero",
+    "sections",
+    "density",
+    "color-strategy",
+    "signature"
+   ]
+  },
+  {
+   "id": "birkhoff-aesthetic-measure",
+   "topic": "complexity",
+   "principle": "Birkhoff's formula (beauty = order ÷ complexity) is famous and failed its tests",
+   "claim": "In 1933 the mathematician George Birkhoff proposed that aesthetic measure M equals order O divided by complexity C. Experiments from the 1930s onward found little or no agreement between M and what people actually prefer. The formula should not drive any check. The useful remainder is the idea that both order and complexity matter.",
+   "mechanism": "Birkhoff reasoned that complexity costs the viewer effort and order rewards it, so pleasure is the reward per unit of effort: M = O / C. For polygons he defined C as the number of distinct straight lines that contain the sides, and O as a sum of points for vertical symmetry, balance, rotational symmetry and fit to a horizontal-vertical grid, minus points for awkward features. The formula makes the simplest ordered figure the best; the square scores highest among polygons. People do not judge that way: very simple figures bore them. Eysenck tested the formula, found low correlations with ratings, and proposed the opposite relation, M = O × C, in which complexity adds to appeal when order is present.",
+   "effects": {
+    "cognitiveLoad": "unknown — the formula was tested against preference only",
+    "satisfaction": "unknown — the formula's predictions correlated poorly with ratings",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Treat order (alignment, repetition, symmetry, consistency) and complexity (amount and variety of elements) as two separate dials, and report them separately.",
+    "Raise order first; then decide how much complexity the content and the genre need.",
+    "Do not divide one by the other."
+   ],
+   "antiPatterns": [
+    "An 'aesthetic score' computed as order divided by complexity.",
+    "Citing Birkhoff as proof that the simplest design is the most beautiful.",
+    "Removing content to raise a ratio."
+   ],
+   "howToCheck": {
+    "machine": "No measurable check should use M = O / C or M = O × C; neither predicts ratings reliably. Compute order measures (see alignment-points-and-near-misses, balance-and-symmetry-metrics) and complexity measures (see complexity-measures-and-preference-curve) and report them side by side.",
+    "human": "Ask two separate questions: is the page orderly, and is there enough on it to be interesting and useful?"
+   },
+   "evidence": {
+    "grade": "D",
+    "kind": "expert-opinion",
+    "strengthNote": "Grade D applies to the formula as a predictor of preference. Birkhoff's formula is a theoretical proposal. A 2023 paper by Hübner and Ufken states that later empirical studies found little support for M and cites Davis (1936), Beebe-Center and Pratt (1937), Wilson (1939) and McWhinnie (1968); a 2010 paper by Nadal and colleagues reports that Eysenck (1941) found considerably low correlations between predicted M and beauty ratings; another secondary source reports Eysenck's alternative M = O × C. All of this was seen as search summaries of secondary sources; none of the original papers was opened, and no correlation values were retrieved. The polygon definitions of O and C and the square's top score are recalled from memory."
+   },
+   "sources": [
+    {
+     "citation": "Birkhoff, G. D. (1933). Aesthetic Measure. Harvard University Press.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    },
+    {
+     "citation": "Hübner, R., & Ufken, E. S. (2023). Article in Frontiers in Psychology, 14, 1114793, which reviews tests of Birkhoff's measure for polygons. (Title not confirmed.)",
+     "url": "https://www.frontiersin.org/articles/10.3389/fpsyg.2023.1114793",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Eysenck, H. J. (1941). The empirical determination of an aesthetic formula. Psychological Review, 48(1), 83-92. (Citation details recalled from memory; the finding was reported by secondary sources.)",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Douchová, V. (2016). Birkhoff's aesthetic measure. Acta Universitatis Carolinae: Philosophica et Historica, issue 1/2015. (Pages not retrieved.)",
+     "url": "https://karolinum.cz/data/clanek/5184/PheH_1_2015_03_Douchova.pdf",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The tests used polygons, vases and similar simple objects, not interfaces. Later information-theory versions of the formula exist (they replace O and C with measures of compressibility); their empirical record was not researched here. The failure of the ratio does not mean that order and complexity are irrelevant: both appear, separately, in the models that do predict ratings (see computed-aesthetics-ceiling).",
+   "appliesTo": [
+    "density",
+    "sections",
+    "signature",
+    "hero"
+   ]
+  },
+  {
+   "id": "complexity-measures-and-preference-curve",
+   "topic": "complexity",
+   "principle": "Visual complexity can be measured by compressed file size; on websites, liking mostly falls as complexity rises",
+   "claim": "The size of a compressed screenshot is a cheap, valid measure of how complex people judge a page to be: in one study, JPEG file size correlated 0.80 with complexity ratings. Classic theory predicts that people like a medium level of complexity best (an inverted U). Studies of websites mostly find a simpler pattern: the less complex page is liked more. One study with three levels found the inverted U.",
+   "mechanism": "Compression removes repetition. A screenshot with large flat areas and repeated shapes compresses to few bytes; one with many different edges, textures and colours does not. So bytes per pixel after compression estimates the amount of non-repeating visual detail. Other measures count edges directly (edge density: the share of pixels that an edge detector marks) or measure how much local variation in colour, contrast and orientation a new item would have to compete with (feature congestion; see clutter-and-crowding). Berlyne's theory says liking rises with complexity up to an optimum and then falls. A common explanation for the mostly downward results on websites is that real web pages already sit past the optimum, on the falling side of the curve. A second explanation is that people differ: some like simple and some like complex, and the average hides both.",
+   "effects": {
+    "cognitiveLoad": "raises — more complex pages are harder to search (see clutter-and-crowding)",
+    "satisfaction": "lowers — higher complexity went with lower appeal ratings in most website studies; one study found a medium level best",
+    "perceivedIntuitiveness": "unknown — not measured in the cited sources"
+   },
+   "designMoves": [
+    "Measure complexity for every Option and prefer the lower value when the content is the same.",
+    "Lower complexity by removing variety (fewer colours, fewer type styles, fewer box treatments) before removing content.",
+    "Watch the low end as well: a near-empty first viewport can look unfinished or cheap (see simplicity-can-read-as-cheap)."
+   ],
+   "antiPatterns": [
+    "Photographic backgrounds, gradients and textures stacked under text.",
+    "Treating 'less is always better' as a law; the evidence is an average trend with exceptions.",
+    "Comparing file sizes of screenshots taken at different sizes, formats or quality settings."
+   ],
+   "howToCheck": {
+    "machine": "Render the first viewport at a fixed size (for example 1280 by 800 and 390 by 844), save it as JPEG at one fixed quality setting, and compute complexity = file bytes / (width × height). Optionally add edge density = edge pixels / all pixels from a Canny edge detector with fixed thresholds. Compare with the Template baseline: flag values more than 2 standard deviations above it as 'busy' and more than 2 below as 'possibly empty'. No absolute threshold exists in the research; the settings must stay identical between runs, because the number depends on them.",
+    "human": "Ask whether anything on the page could be removed or made the same as its neighbours without losing meaning."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen as search summaries, one of which quoted the abstract. Tuch, Bargas-Avila, Opwis and Wilhelm (2009): 36 website screenshots, 48 participants; complexity was set by JPEG file size, which correlated r = .80 with complexity ratings in a preliminary study. Forsythe and colleagues (2011, art images): GIF compression was the best predictor of judged complexity, and with familiarity controlled the relation between beauty and complexity was closer to linear than to Berlyne's curve. Donderi (2006) proposed compressed file size as a complexity measure; its coefficient was not retrieved. Shape of the curve: Geissler, Zinkhan and Watson (2006) found an inverted U across three complexity levels; Pandir and Knight (2006) found no support for Berlyne on home pages; Tuch and colleagues (2012, already in the knowledge base) found a negative relation. These three were reported by secondary sources. The 'falling side of the curve' explanation is the secondary sources' reading, not a tested result."
+   },
+   "sources": [
+    {
+     "citation": "Tuch, A. N., Bargas-Avila, J. A., Opwis, K., & Wilhelm, F. H. (2009). Visual complexity of websites: Effects on users' experience, physiology, performance, and memory. International Journal of Human-Computer Studies, 67(9), 703-715. (Volume and pages recalled from memory.)",
+     "url": "https://bvbvf1.bib-bvb.de/vufind/PrimoRecord/cdi_proquest_miscellaneous_34840411",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Forsythe, A., Nadal, M., Sheehy, N., Cela-Conde, C. J., & Sawey, M. (2011). Predicting beauty: Fractal dimension and visual complexity in art. British Journal of Psychology, 102(1), 49-70.",
+     "url": "https://doi.org/10.1348/000712610X498958",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Donderi, D. C. (2006). An information theory analysis of visual complexity and dissimilarity. Perception, 35(6), 823-835. (Volume and pages recalled from memory.)",
+     "url": "https://doi.org/10.1068/p5249",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Geissler, G. L., Zinkhan, G. M., & Watson, R. T. (2006). The influence of home page complexity on consumer attention, attitudes, and purchase intent. Journal of Advertising, 35(2), 69-80. (Seen as a citation in a later eye-tracking paper; journal details recalled from memory.)",
+     "url": "https://www.jku.at/fileadmin/gruppen/115/Jois_Vol.5/Complexity_and_aesthetic_pleasure_in_websites_an_eye_tracking_study.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Pandir, M., & Knight, J. (2006). Homepage aesthetics: The search for preference factors and the challenges of subjectivity. Interacting with Computers, 18(6), 1351-1370. (Seen as a citation in a later paper; volume and pages recalled from memory.)",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Güçlütürk, Y., Jacobs, R. H. A. H., & van Lier, R. (2016). Liking versus complexity: Decomposing the inverted U-curve. Frontiers in Human Neuroscience, 10, 112. (Title recalled from memory.)",
+     "url": "https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2016.00112/epub",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "File size depends on format, quality setting, image size and photographic content: one large photograph can dominate the number. Text renders as many small edges, so a text-heavy but well ordered page can score as complex. The measure knows nothing about order. The existing records low-complexity-high-prototypicality and clutter-and-crowding cover the perceptual findings; this record adds the formula, the 0.80 figure and the dispute about the curve.",
+   "appliesTo": [
+    "density",
+    "hero",
+    "sections",
+    "color-strategy",
+    "performance"
+   ]
+  },
+  {
+   "id": "perceptual-color-space-math",
+   "topic": "color-math",
+   "principle": "Perceptual colour spaces (CIELAB, OKLab): equal numeric steps look roughly equal; HSL steps do not",
+   "claim": "CIELAB and OKLab are colour spaces built so that the straight-line distance between two colours approximates how different they look. In these spaces an even ramp of lightness values looks even, and two colours with the same lightness number look equally light. HSL and HSV lack this property: pure yellow and pure blue both have HSL lightness 50%, but their OKLab lightness is 0.97 and 0.45.",
+   "mechanism": "Screen colours are stored as sRGB numbers, which describe the signal sent to the display, not the sensation. A perceptual space converts them in four steps: undo the display curve to get linear light; convert to estimates of the three cone responses of the eye; apply a compressive curve (a cube root) because sensation grows more slowly than light; then recombine into one lightness axis L and two colour axes a (green to red) and b (blue to yellow). OKLab does exactly this: a matrix to cone space, a cube root, a second matrix. OKLCH is the same space written as lightness L, chroma C = square root of (a² + b²), and hue h = the angle of (a, b). The colour difference is the distance: delta E = square root of (delta L² + delta a² + delta b²). CIELAB (1976) uses the same idea with a cube-root formula on CIE XYZ values, and is known to bend hues, most visibly blue toward purple, when chroma or lightness changes. OKLab (2020) was fitted to reduce that.",
+   "effects": {
+    "cognitiveLoad": "unknown — no user study of ramps built in a perceptual space was found",
+    "satisfaction": "unknown — not measured",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Build every colour ramp in OKLCH: fix the hue, step the lightness L evenly, and adjust chroma to stay inside the screen's gamut (the range of colours it can show).",
+    "Give the same step number the same L across hues, so that 'blue 500' and 'green 500' carry equal visual weight.",
+    "Make tokens that should look different differ by a clear delta E, and merge tokens that differ by less than the eye can see.",
+    "After building a ramp perceptually, still verify text pairs with the WCAG contrast formula (see wcag-contrast-formula-anatomy)."
+   ],
+   "antiPatterns": [
+    "Ramps made by changing HSL lightness in equal steps.",
+    "Two grey tokens one hex digit apart.",
+    "Assuming equal OKLCH lightness guarantees equal WCAG contrast; the two use different formulas."
+   ],
+   "howToCheck": {
+    "machine": "Convert every colour token from sRGB to OKLab (linearise each channel; convert to cone space with the published matrix; take cube roots; apply the second published matrix). For each ramp: (1) L must rise or fall monotonically; (2) evenness = largest L step / smallest L step, flag above 1.5 (the Catalog owns this limit; the research gives none); (3) hue drift = largest h - smallest h in degrees, report it. For all tokens: (4) delta E OK = square root of (delta L² + delta a² + delta b²) between every pair; flag pairs below 0.02 as indistinguishable duplicates. Example: #f5f5f5 against #f4f4f4 gives 0.003. (5) Across hues at the same step number, flag an L spread above 0.05.",
+    "human": "View each ramp as a row of swatches and look for a step that jumps or two steps that look the same."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "expert-opinion",
+    "strengthNote": "The OKLab construction, matrices and comparison table were read in the author's own post (its source file on GitHub; the last 3% of the file was not read). In the author's test, OKLab's lightness error (root mean square 0.20) and chroma error (0.81) were lower than CIELAB's (1.70 and 1.84) and far lower than HSV's (11.59 and 3.38); hue error was 0.49 against CIELAB's 0.69. Two limits apply: the author ran the comparison himself, and the lightness and chroma test data were generated by another colour model (CAM16), not collected from people, as the post states. A 2026 preprint, seen as a search summary, argues that a different space is more uniform than OKLab. The CSS Color 4 specification, read in part, defines delta E OK as the plain distance in OKLab. The 0.02 just-noticeable value for delta E OK is recalled from that specification's gamut-mapping text and was not found in the part read: figure not confirmed. For CIELAB, a just-noticeable difference of about 1 by design, and about 2.3 in a 1994 study by Mahy and colleagues, come from a search summary of encyclopaedia mirrors: figures not confirmed. CIELAB's hue shift in blues is reported by secondary sources seen in a search summary. The yellow and blue example values were computed here from the published matrices and the standard sRGB conversion matrix, which is recalled from memory."
+   },
+   "sources": [
+    {
+     "citation": "Ottosson, B. (2020). A perceptual color space for image processing (the OKLab post; read as the page's source file in the author's GitHub repository).",
+     "url": "https://raw.githubusercontent.com/bottosson/bottosson.github.io/master/posts/oklab/index.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "W3C CSS Working Group. CSS Color Module Level 4, editor's draft source (sections on colour difference read; most of the file not read).",
+     "url": "https://raw.githubusercontent.com/w3c/csswg-drafts/main/css-color-4/Overview.bs",
+     "verified": "read-page"
+    },
+    {
+     "citation": "Wikipedia. Color difference (CIE76, CIEDE2000, just-noticeable difference figures; seen through mirrors in a search summary).",
+     "url": "https://en.wikipedia.org/wiki/Color_difference",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Mahy, M., Van Eycken, L., & Oosterlinck, A. (1994). Evaluation of uniform color spaces developed after the adoption of CIELAB and CIELUV. Color Research & Application, 19(2), 105-121. (Citation details recalled from memory.)",
+     "url": null,
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "No colour space is perfectly uniform; all of them assume one viewing condition (OKLab assumes a standard daylight white and a well lit surround). A colour's look also changes with its neighbours (see simultaneous-contrast). Equal lightness steps do not give equal contrast-ratio steps. The existing record lightness-does-the-work says to build ramps in OKLCH; this record adds the conversion, the distance formula and the numeric checks.",
+   "appliesTo": [
+    "color-strategy",
+    "neutral",
+    "accent",
+    "theme",
+    "states"
+   ]
+  },
+  {
+   "id": "wcag-contrast-formula-anatomy",
+   "topic": "color-math",
+   "principle": "The WCAG 2 contrast ratio: the exact formula, where its constants come from, and where it misleads",
+   "claim": "The WCAG 2 contrast ratio is (L1 + 0.05) / (L2 + 0.05), where L1 and L2 are the relative luminance of the lighter and the darker colour. It runs from 1 to 21. It is the legal and standard measure and the project's floor. It is also a simple model: it gives the same result when text and background swap, it ignores text size and weight except for one large-text rule, and critics report that it overstates the contrast of very dark pairs. No peer-reviewed comparison of the formula with people's reading performance was found.",
+   "mechanism": "Relative luminance is the brightness of a colour on a scale from 0 (black) to 1 (white). To compute it, divide each 8-bit sRGB channel by 255; if the result c is 0.04045 or less use c / 12.92, otherwise use ((c + 0.055) / 1.055)^2.4; then L = 0.2126 × R + 0.7152 × G + 0.0722 × B. The weights reflect that the eye is most sensitive to green and least to blue. The power curve undoes the encoding of sRGB. The 0.05 added to both colours stands for stray light reflected by the screen ('viewing flare'); it also keeps the ratio finite for black, which is why the maximum is 1.05 / 0.05 = 21. The thresholds: 3 to 1 comes from older display standards for people with normal vision; 4.5 is 3 multiplied by 1.5, the contrast-sensitivity loss the W3C associates with 20/40 vision. Because the formula is a ratio of two luminances, it has no term for which colour is the text, for letter thickness, or for the surrounding page.",
+   "effects": {
+    "cognitiveLoad": "lowers — text that passes is easier to resolve for most readers; the formula itself is a proxy, not a measurement of effort",
+    "satisfaction": "unknown — not measured",
+    "perceivedIntuitiveness": "none — contrast decides whether text can be read, not whether the interface is understood"
+   },
+   "designMoves": [
+    "Keep the WCAG 2 ratio as the floor: 4.5 for body text, 3 for large text and for control boundaries, 7 for long reading where possible.",
+    "Add margin where the formula is weakest: thin or small text, dark themes with dark-grey text on near-black, and mid-tone coloured buttons. Check those pairs by eye on a real phone.",
+    "For a mid-tone background, test both white and black text and look at both; the formula and the eye can disagree there.",
+    "Record the measured ratio in the Honest receipt as 'measured', and readability of the weak cases as 'still needs a person'."
+   ],
+   "antiPatterns": [
+    "Treating 4.51 as readable and 4.49 as unreadable.",
+    "Thin 12 px text that passes 4.5 and is declared fine.",
+    "Dark-grey text on black that meets a ratio and is hard to read in daylight.",
+    "Skipping the standard formula because a newer model disagrees with it."
+   ],
+   "howToCheck": {
+    "machine": "For each text and background pair: linearise the channels (c / 12.92 if c ≤ 0.04045, else ((c + 0.055) / 1.055)^2.4), compute L = 0.2126 R + 0.7152 G + 0.0722 B, then ratio = (L_lighter + 0.05) / (L_darker + 0.05). Range 1 to 21. Fail below 4.5 for body text, below 3 for large text (24 px, or about 18.67 px bold) and for control boundaries. Reference values: #767676 on white = 4.54 (pass), #777777 on white = 4.48 (fail), white on #ff8000 = 2.52, black on #ff8000 = 8.34. Additional warning with no validated threshold: list passing pairs in which both colours have L below 0.18, and passing pairs with text under 16 px or font weight under 400, for a person to check.",
+    "human": "Read the listed weak pairs on a phone outdoors and on a dim screen. Confirm white-on-colour buttons by eye."
+   },
+   "evidence": {
+    "grade": "A",
+    "kind": "law-or-standard",
+    "strengthNote": "Grade A covers the formula and thresholds as a standard: the WCAG definitions of relative luminance and contrast ratio and the explanation of criterion 1.4.3 were read from the W3C source repository. They state the coefficients, the 0.04045 threshold (0.03928 before May 2021, with no practical effect), the 0.05 flare term 'based on Typical Viewing Flare' from a draft of the sRGB standard, the origin of the ratio in ISO 9241-3 and ANSI/HFES 100-1988, and the 3 × 1.5 = 4.5 derivation. The weaknesses have weaker support (grade C): they come from a W3C issue thread, a university blog, and a 2022 article by Sam Waller of the Cambridge Engineering Design Centre, all seen as search summaries. Waller reports that he found no traceable empirical or theoretical evidence for the formula as a predictor of legibility, and that for mid-grey backgrounds (levels of about 118 to 168) the WCAG formula and the newer APCA model disagree about whether black or white text is better. That is a comparison of two formulas, not a test with readers. A search for a peer-reviewed study that compares either formula with reading speed found none. The symmetry of the ratio and the reference values were computed here."
+   },
+   "sources": [
+    {
+     "citation": "W3C. WCAG 2.2, definition of 'relative luminance'.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/terms/20/relative-luminance.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, definition of 'contrast ratio'.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/terms/20/contrast-ratio.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "W3C. Understanding Success Criterion 1.4.3: Contrast (Minimum).",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/understanding/20/contrast-minimum.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "Waller, S. (2022). Does the contrast ratio actually predict the legibility of website text? Engineering Design Centre, University of Cambridge. (Seen through a mirror and a W3C mailing-list thread.)",
+     "url": "https://www.cedc.tools/article.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C WCAG repository, issue 695 (critique of the contrast formula for mid-range and dark colours).",
+     "url": "https://github.com/w3c/wcag/issues/695",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "University of Bath, Digital content and development blog (2024). The times they are a-changin' (for how we measure colour contrast).",
+     "url": "https://blogs.bath.ac.uk/digital-content-and-development/2024/11/08/the-times-they-are-a-changin-for-how-we-measure-colour-contrast/",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Most published criticism of the formula comes from the developer and supporters of the alternative APCA model, so treat it as a position, not as a neutral finding. This project does not use the apca-w3 package (its licence prohibits commercial use), and WCAG 2 remains the standard that laws cite. The weights 0.2126, 0.7152 and 0.0722 are the standard luminance weights for sRGB primaries; that statement is from memory. The existing record text-contrast covers the thresholds and their prevalence; this record adds the arithmetic and the limits.",
+   "appliesTo": [
+    "neutral",
+    "accent",
+    "color-strategy",
+    "theme",
+    "states",
+    "typeface"
+   ]
+  },
+  {
+   "id": "color-harmony-models",
+   "topic": "color-math",
+   "principle": "Colour harmony: experiments favour similar hue and a clear lightness difference, not colour-wheel geometry",
+   "claim": "Colour-wheel schemes (complementary, triadic, analogous) are design tradition. When experiments ask people to rate pairs of colours, harmony rises as the two hues become more similar, and with a moderate difference in lightness; lighter pairs rate higher. Complementary pairs give strong contrast, which people do not rate as harmonious. Harmony and preference are different judgments, and people differ widely.",
+   "mechanism": "A colour-wheel scheme picks hues by angle: complementary 180 degrees apart, triadic 120 degrees, analogous within about 30 degrees. Moon and Spencer (1944) turned the tradition into mathematics: pairs are harmonious when their difference in hue, lightness or chroma falls in zones called identity, similarity or contrast, and unpleasant when it falls in the 'ambiguous' zones between; they also proposed a balance rule for areas. Later tests questioned those zones. Ou and Luo (2006) instead fitted a model to ratings of 1,431 colour pairs. Its terms are a chromatic-difference term, a lightness-sum term (lighter pairs harmonise more), a lightness-difference term (a moderate difference helps; very small differences hurt) and a hue term. Schloss and Palmer (2011) separated three questions: how much people like a pair, how harmonious they find it, and how much they like a figure on a background. Harmony followed hue similarity most closely.",
+   "effects": {
+    "cognitiveLoad": "none — harmony ratings are not a measure of effort",
+    "satisfaction": "raises — similar-hue pairs with a clear lightness difference are rated more harmonious and, on average, liked more; liking depends more on whether the person likes each colour",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Build the neutral and surface colours from one hue family (or one hue plus greys), and separate them by lightness.",
+    "Use a contrasting or complementary hue for one job only: the accent that must stand out. Contrast serves attention, not harmony.",
+    "Keep background pairs light; the tested models rate lighter combinations as more harmonious.",
+    "Ask the owner whether they like each colour by itself; liking for the parts strongly affects liking for the pair."
+   ],
+   "antiPatterns": [
+    "A triadic palette used at equal strength because a colour-wheel tool called it harmonious.",
+    "Two adjacent surfaces that differ slightly in lightness and also in hue, which looks like an error.",
+    "Citing a harmony formula as proof that a palette is good."
+   ],
+   "howToCheck": {
+    "machine": "Convert the palette's main surfaces and brand colours to OKLCH (or CIELAB). For each pair that touches in the layout, report hue difference dh = the smaller angle between the two hues (0 to 180 degrees; ignore it when either chroma is near zero) and the lightness difference dL. Label pairs with dh up to 30 as 'similar hue', 150 to 180 as 'complementary'. Flag adjacent surface pairs with dh above 30 and a CIELAB lightness difference under about 15 as likely to clash; the 15 figure comes from a secondary summary and is not confirmed. No validated pass or fail exists for harmony; report, do not gate.",
+    "human": "Ask the owner to rate each main colour pair for 'goes together' and, separately, for 'I like it'."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "All seen as search summaries. Ou and Luo (2006, Color Research and Application): 1,431 pairs rated on a 10-category scale; the model was tested on an independent data set with 'satisfactory' performance; the term names and the equal-hue, high-lightness and moderate-lightness-difference principles were reported by citing papers; the model's equations were not retrieved. Schloss and Palmer (2011): 32 colours, 992 pairs; preference and harmony both rose with hue similarity; average ratings of preference and harmony correlated +.79, while the correlation within single participants ranged from -.03 to +.70 (figures from a secondary account). The statement about complementary pairs follows from the hue-similarity result and was not seen stated directly. Moon and Spencer (1944): a study of 390 combinations with 31 participants found their zones 'questionable'; an earlier study found that people followed Munsell's area rule more than theirs. No study of colour-wheel schemes on web pages was found."
+   },
+   "sources": [
+    {
+     "citation": "Ou, L.-C., & Luo, M. R. (2006). A colour harmony model for two-colour combinations. Color Research and Application, 31(3), 191-204. (Volume and pages recalled from memory.)",
+     "url": "https://doi.org/10.1002/col.20208",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Schloss, K. B., & Palmer, S. E. (2011). Aesthetic response to color combinations: Preference, harmony, and similarity. Attention, Perception, & Psychophysics, 73(2), 551-571. (Volume and pages recalled from memory.)",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3037488",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Moon, P., & Spencer, D. E. (1944). Aesthetic measure applied to color harmony. Journal of the Optical Society of America, 34(4), 234-242.",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Chuang, M.-C., & Ou, L.-C. (2001). Influence of a holistic color interval on color harmony. Color Research and Application, 26(1), 29-39. (Authors and title recalled from memory; the search summary gave the 390 combinations, the 31 participants and the conclusion.)",
+     "url": "https://ir.lib.nycu.edu.tw/bitstream/11536/29880/1/000166123300002.pdf",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The experiments rated two flat patches side by side, not a page with text, images and proportions. Ratings are averages; individual taste and culture vary (see preferences-vary-by-audience). The models describe 'harmony', which is not the same as 'appropriate for this business' (see color-fit-and-brand-personality).",
+   "appliesTo": [
+    "color-strategy",
+    "accent",
+    "neutral",
+    "theme",
+    "signature"
+   ]
+  },
+  {
+   "id": "folklore-60-30-10",
+   "topic": "color-math",
+   "principle": "Folklore: 'the 60-30-10 rule makes a palette balanced'",
+   "claim": "The 60-30-10 rule says to give a dominant colour 60% of the area, a secondary colour 30% and an accent 10%. It comes from interior-decorating advice. No study, and no documented origin, was found for the numbers. The structure behind it (one quiet dominant colour, a supporting colour, a sparing accent) agrees with evidence about attention; the percentages are arbitrary.",
+   "mechanism": "The rule works as a memory aid for hierarchy among colours. Its sound core rests on other findings: an accent attracts the eye only when it is rare (see preattentive-popout), and pages with fewer competing colours are rated better at first sight (see low-complexity-high-prototypicality). Neither finding gives 60, 30 or 10. On a typical web page the neutral background and text already take far more than 60% of the area, and an accent used for calls to action takes far less than 10%.",
+   "effects": {
+    "cognitiveLoad": "unknown — the rule itself was never tested; a rare accent does make the main action easier to find",
+    "satisfaction": "unknown — no study found",
+    "perceivedIntuitiveness": "unknown — no study found"
+   },
+   "designMoves": [
+    "Assign roles, not percentages: one dominant neutral for surfaces, one supporting colour for structure, one accent for the things that must be found.",
+    "Keep the accent rare enough that it stays a signal; measure its share instead of assuming 10%.",
+    "State in the Prescription that the split is a convention."
+   ],
+   "antiPatterns": [
+    "Adding a coloured band to a page only to bring the secondary colour up to 30%.",
+    "An accent colour used on so many elements that none of them stands out.",
+    "Telling the owner that the 60-30-10 split is proven."
+   ],
+   "howToCheck": {
+    "machine": "No measurable check exists for the 60-30-10 numbers. A program can measure the roles: take a screenshot of each main viewport, assign every pixel to the nearest palette token by OKLab distance, and report each role's share of pixels. Flag an accent share above the Catalog limit (the research gives no number; 10% is the convention) and report when no single colour role exceeds 50%.",
+    "human": "Ask whether the accent still points to the most important action on each screen."
+   },
+   "evidence": {
+    "grade": "D",
+    "kind": "folklore",
+    "strengthNote": "Grade D applies to the specific percentages. One search aimed at the rule's origin and at any empirical test returned only decorating magazines and marketing articles; they assert that the rule comes from interior design and has been used 'for decades', cite no source, and call it a guide. Its transfer to interfaces is presented in those articles as advice, without tests. The absence of a study is what one search surfaced. The supporting evidence about rare accents and few colours belongs to other records and has higher grades."
+   },
+   "sources": [
+    {
+     "citation": "Livingetc. A decorator's guide to the 60-30-10 rule and how to use it to create your color scheme (magazine article).",
+     "url": "https://www.livingetc.com/ideas/60-30-10-rule",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Apartment Therapy. How design pros use the 60-30-10 rule to create balance (magazine article).",
+     "url": "https://www.apartmenttherapy.com/interior-design-rule-60-30-10-explained-37504313",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Moon and Spencer (1944) and Munsell proposed formulas that balance colour areas against their strength; tests of those were mixed (see color-harmony-models), and neither produces 60-30-10. Pixel shares depend on the viewport and on photographs, which do not belong to any palette role; exclude image areas or report them separately.",
+   "appliesTo": [
+    "color-strategy",
+    "accent",
+    "neutral",
+    "emphasis"
+   ]
+  },
+  {
+   "id": "fitts-law-formula",
+   "topic": "motor-math",
+   "principle": "Fitts's law as a formula: what it computes, typical values, and why touch needs a correction",
+   "claim": "Movement time to a target is MT = a + b × log2(D / W + 1), where D is the distance to the target and W is its width along the direction of movement. The log term is the index of difficulty, in bits. The formula predicts well for a mouse or stylus. For a finger on a touchscreen it under-predicts the difficulty of small targets, because a finger adds a fixed imprecision that does not shrink when the person slows down.",
+   "mechanism": "The index of difficulty ID = log2(D / W + 1) grows when the target is farther or smaller, and it grows by one bit each time D / W + 1 doubles. The constants a (seconds) and b (seconds per bit) are fitted to data for one device and one person or group; b for a mouse is about 0.1 second per bit in the classic study. Because of the logarithm, gains shrink: at a distance of 400 px, widening a target from 24 to 48 px cuts ID from 4.14 to 3.22 bits (about 0.09 second at b = 0.1), and widening again to 96 px cuts it to 2.37. Researchers compare devices by throughput = ID / MT in bits per second, using an 'effective width' of 4.133 × the standard deviation of where people actually landed. For touch, Bi, Li and Zhai proposed FFitts law: MT = a + b × log2(D / square root of (2 × pi × e × (sigma² - sigma_a²)) + 1), where sigma is the spread of touch points and sigma_a is the finger's fixed imprecision. When the target is small, sigma_a dominates and enlarging the target is the only fix.",
+   "effects": {
+    "cognitiveLoad": "none — the law describes movement, not thinking",
+    "satisfaction": "unknown — not part of the law",
+    "perceivedIntuitiveness": "unknown — not part of the law"
+   },
+   "designMoves": [
+    "Compare two layouts by the summed index of difficulty of a scripted task, not by absolute predicted seconds.",
+    "Spend size on small targets first: the first doubling of a small target saves the most.",
+    "On touch, set a minimum physical size (see target-size-in-millimetres) before applying Fitts's law at all.",
+    "Shorten D for the next likely action by placing it near the current one."
+   ],
+   "antiPatterns": [
+    "Quoting predicted milliseconds as facts without fitted constants for the device and audience.",
+    "Using Fitts's law to justify a very large primary button while small secondary targets stay tiny.",
+    "Applying the mouse form of the law to thumb use on a phone."
+   ],
+   "howToCheck": {
+    "machine": "For each step of a scripted task, take D = centre-to-centre distance in CSS pixels from the previous target and W = the smaller of the target's width and height (a conservative choice). Compute ID = log2(D / W + 1) and sum it over the task. Report the sum per Option; a lower sum is better. Flag single steps with ID above the Catalog limit (the research gives no universal limit; mouse studies commonly test 1 to 6 bits). Do not report absolute times unless a and b were measured; with b = 0.1 to 0.2 second per bit, one bit is roughly 0.1 to 0.2 second. For touch, do not use the FFitts formula in a check: it needs measured touch data and fails mathematically when sigma_a exceeds sigma.",
+    "human": "Time one person performing the scripted task on a phone and on a laptop; compare Options, not predictions."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "The law is among the most replicated results in human-computer interaction; the specifics here were seen as search summaries. The 'Shannon' form with + 1 is MacKenzie's and is the form in ISO 9241-9, which also defines throughput as ID / MT with effective width. MacKenzie's 2003 reanalysis reports that the classic mouse study (Card, English and Burr, 1978) fitted MT = 1.03 + 0.096 ID seconds. The 4.133 factor equals the square root of 2 × pi × e (computed here; a search summary also states it). FFitts law (Bi, Li and Zhai, CHI 2013) and its formula come from a search summary. Ko and colleagues (2021) report that the FFitts formula breaks when the value under the square root is negative and that nominal width sometimes predicts better. The 0.1 to 0.2 second-per-bit range and the 1 to 6 bit range are recalled from memory, not checked. The worked numbers were computed here."
+   },
+   "sources": [
+    {
+     "citation": "MacKenzie, I. S., & Soukoreff, R. W. (2003). Card, English, and Burr (1978): 25 years later. Extended Abstracts of CHI 2003. (Authors and title recalled from memory; the search summary gave the regression equation and the throughput reanalysis.)",
+     "url": "https://www.yorku.ca/mack/chi03a.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Wikipedia. Fitts's law (Shannon formulation, ISO 9241-9 index of difficulty and throughput).",
+     "url": "https://en.wikipedia.org/wiki/Fitts%27s_law",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Bi, X., Li, Y., & Zhai, S. (2013). FFitts law: Modeling finger touch with Fitts' law. Proceedings of CHI 2013, 1363-1372.",
+     "url": "https://research.google.com/pubs/archive/41645.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Ko, Y.-J., Zhao, H., Ramakrishnan, I. V., Zhai, S., & Bi, X. (2021). Issues related to using Finger-Fitts law to model one-dimensional touch pointing tasks. Chinese CHI 2021. (Author list recalled from memory.)",
+     "url": "https://par.nsf.gov/biblio/10337563-issues-related-using-finger-fitts-law-model-one-dimensional-touch-pointing-tasks",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Fitts, P. M. (1954). The information capacity of the human motor system in controlling the amplitude of movement. Journal of Experimental Psychology, 47(6), 381-391.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "The law predicts the movement only; finding the target and deciding take additional time (see hick-hyman-formula). W is the size along the line of approach, and for two-dimensional targets researchers disagree about which dimension to use. The existing record fitts-and-steering covers the design consequences and the steering law; this record adds the arithmetic.",
+   "appliesTo": [
+    "forms",
+    "nav",
+    "mobile",
+    "states",
+    "density"
+   ]
+  },
+  {
+   "id": "hick-hyman-formula",
+   "topic": "motor-math",
+   "principle": "The Hick-Hyman law as a formula: decision time grows with the logarithm of the number of choices, under narrow conditions",
+   "claim": "For a practised person choosing among n equally likely, well known alternatives, decision time is RT = a + b × log2(n + 1). Each doubling of the choices adds a constant time, commonly quoted as about 150 milliseconds. The formula does not describe reading through an unfamiliar menu, where time grows in a straight line with the number of items. By its own arithmetic, the formula favours one broad menu over several narrow levels.",
+   "mechanism": "The term log2(n + 1) is the information in the choice, in bits; the + 1 stands for the uncertainty about whether to respond at all. Hyman's general form is RT = a + b × H, with H = the sum over all alternatives of p × log2(1 / p), where p is how likely each alternative is; frequent choices are faster. The constant b is the time per bit. The law holds when the person already knows where each option is and what it means, as with a familiar keyboard or a menu used daily. A newcomer must read items one by one, which is visual search, not choice among known alternatives. Arithmetic for menus: 16 options in one list cost log2(17) = 4.09 bits; the same 16 in two levels of 4 cost 2 × log2(5) = 4.64 bits plus a second fixed cost a and a second pointing movement. For 64 options: one list 6.02 bits, two levels of 8 6.34 bits, three levels of 4 6.97 bits.",
+   "effects": {
+    "cognitiveLoad": "unknown — the law predicts time, not felt effort",
+    "satisfaction": "unknown — not part of the law",
+    "perceivedIntuitiveness": "unknown — not part of the law"
+   },
+   "designMoves": [
+    "Do not cut useful options to save decision time; the logarithm makes each extra option cheap, and extra levels cost more than extra items.",
+    "Help newcomers search: order lists by a rule people know (alphabet, time, size), group them, and label them clearly.",
+    "Keep positions stable so that repeat visitors can decide from memory.",
+    "Put the most likely choice first or make it the default; likely choices carry less information and are faster."
+   ],
+   "antiPatterns": [
+    "'Hick's law says fewer choices are better' used to hide navigation behind extra clicks.",
+    "Predicting menu times for first-time visitors with the logarithmic formula.",
+    "Reordering menu items between visits."
+   ],
+   "howToCheck": {
+    "machine": "For each decision point on a scripted path, count the visible options n and compute bits = log2(n + 1). Report the path total: total bits and number of decision points. When comparing two navigation structures for the same content, prefer the one with fewer decision points unless its lists are unsorted and ungrouped. No threshold on n comes from this law. Do not convert bits to seconds for first-time visitors; for them, report the item count per list, because search time grows roughly in proportion to it.",
+    "human": "Watch one first-time visitor and one repeat visitor find the same three items; note where each hesitates."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "The law itself rests on classic experiments (Hick 1952; Hyman 1953), cited from memory. The formula with n + 1, Hyman's entropy form, and the slope of about 150 milliseconds per bit (one source gives 150 to 200, varying with task and practice) come from a search summary of encyclopaedia and glossary pages, not from the original papers: figures not confirmed against a primary source, hence grade B. The limits for menus are documented in the existing record hick-hyman-limits (Liu and colleagues 2020; Cockburn, Gutwin and Greenberg 2007). The reading of the + 1 as uncertainty about whether to respond is recalled from memory. The breadth-against-depth arithmetic was computed here from the formula."
+   },
+   "sources": [
+    {
+     "citation": "Wikipedia. Hick's law (formula, entropy form, typical slope).",
+     "url": "https://en.wikipedia.org/wiki/Hick%27s_law",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Usability First glossary. Hick's law (T = k × H with k about 150 ms).",
+     "url": "https://www.usabilityfirst.com/glossary/hicks-law",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Hick, W. E. (1952). On the rate of gain of information. Quarterly Journal of Experimental Psychology, 4(1), 11-26.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    },
+    {
+     "citation": "Hyman, R. (1953). Stimulus information as a determinant of reaction time. Journal of Experimental Psychology, 45(3), 188-196.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "With practice and with natural stimulus-response pairings the slope b falls toward zero, so the law overstates the cost for experts as well. Real choices are rarely equally likely. The law says nothing about the quality of a decision or about regret (see choice-overload). The existing record hick-hyman-limits states the limits; this record adds the formula and the menu arithmetic.",
+   "appliesTo": [
+    "nav",
+    "forms",
+    "onboarding",
+    "density"
+   ]
+  },
+  {
+   "id": "target-size-in-millimetres",
+   "topic": "motor-math",
+   "principle": "Target size is a physical quantity: convert CSS pixels to millimetres before judging a touch target",
+   "claim": "The one target-size study that the W3C lists found that thumb targets of 9.2 mm (single taps) and 9.6 mm (sequences of taps) were large enough. A CSS pixel is 0.26 mm only at the reference viewing distance of a desktop screen; on a phone it is about 0.16 mm. So 24 CSS pixels (the WCAG minimum) is about 3.8 mm on a phone, 44 pixels is about 7 mm, 48 pixels is about 7.6 mm, and the study's 9.2 mm needs about 58 CSS pixels.",
+   "mechanism": "CSS defines 1 px as 1/96 inch at a reference distance of 28 inches (71 cm), which is a visual angle of about 0.0213 degrees. Devices held closer use physically smaller CSS pixels so that content keeps the same apparent size: Android defines its unit (dp) as 1/160 inch, or 0.159 mm, and a typical iPhone shows 163 points per inch, or 0.156 mm per point. Touch accuracy depends on physical size, because the fingertip and its contact patch do not shrink with the screen's pixel density. The formula is size in mm = size in CSS px × k, with k = physical viewport width in mm / viewport width in CSS px (about 0.16 for phones, 0.26 for a desktop monitor at arm's length). Platform minimums of 44 points (Apple) and 48 dp (Google) therefore come to about 7 to 7.6 mm, below the 9.2 mm of the laboratory study.",
+   "effects": {
+    "cognitiveLoad": "lowers — fewer missed taps mean fewer corrections",
+    "satisfaction": "unknown — the study combined participants' ratings with tap accuracy to reach its sizes; no separate satisfaction result was retrieved",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Treat 24 by 24 CSS pixels as the legal floor, 44 to 48 as the working minimum on phones, and about 58 to 60 (roughly 9 to 9.6 mm) as the size for primary actions used with a thumb.",
+    "Where the visible control must stay small, enlarge its tappable area with padding.",
+    "Keep at least the WCAG spacing between small adjacent targets.",
+    "Judge the size at the phone viewport, not at desktop width."
+   ],
+   "antiPatterns": [
+    "Assuming a 44 px button is 11.6 mm because 1 px is 1/96 inch; that conversion holds for the desktop reference pixel only.",
+    "Icon buttons of 24 px placed edge to edge on a phone.",
+    "Quoting finger-width figures (16 to 20 mm) as a requirement; their source is disputed."
+   ],
+   "howToCheck": {
+    "machine": "At a phone viewport, read the bounding box of every interactive element and take s = the smaller of its width and height in CSS pixels. Convert: mm = s × k, with k = 0.16 by default or the device's own value (physical screen width in mm / viewport width in CSS px). Fail below 24 px unless the WCAG 2.5.8 spacing exception applies. Warn below 44 px (about 7 mm). For controls the Prescription marks as primary, report whether mm reaches 9.2. Report the share of all targets in each band.",
+    "human": "Use the page one-handed with a thumb on a real phone; note every missed or doubled tap."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "The CSS definitions (1 px = 1/96 inch; 0.0213 degrees at 28 inches; about 0.26 mm at arm's length) were read in the CSS Values and Units specification source. WCAG's explanation of criterion 2.5.8 was read: it says the working group reviewed research that mostly concerns touch and suggests larger sizes, chose 24 px as a floor for all pointer types, and it lists one study, Parhi, Karlson and Bederson (2006). That study's 9.2 mm and 9.6 mm figures come from a search summary that quoted its abstract; the sample size was not retrieved, and it is a single study of one-handed thumb use on a small device. The phone conversion factors rest on unit definitions and device densities recalled from memory (Android dp = 1/160 inch; iPhone 163 points per inch) and on arithmetic done here. Secondary sources say that 48 dp is 'about 9 mm'; the unit definition gives 7.6 mm, so that statement is not confirmed. Finger-size figures attributed to the MIT Touch Lab (fingertip 8 to 10 mm, finger pad 10 to 14 mm, index finger 16 to 20 mm) appear only in secondary articles that disagree, and one commenter disputes that the cited paper contains them."
+   },
+   "sources": [
+    {
+     "citation": "W3C CSS Working Group. CSS Values and Units Module Level 3, editor's draft source (absolute lengths and the reference pixel; section read).",
+     "url": "https://raw.githubusercontent.com/w3c/csswg-drafts/main/css-values-3/Overview.bs",
+     "verified": "read-page"
+    },
+    {
+     "citation": "W3C. Understanding Success Criterion 2.5.8: Target Size (Minimum).",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/understanding/22/target-size-minimum.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "Parhi, P., Karlson, A. K., & Bederson, B. B. (2006). Target size study for one-handed thumb use on small touchscreen devices. Proceedings of MobileHCI 2006, 203-210.",
+     "url": "https://www.microsoft.com/en-us/research/?p=155150",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C Mobile Accessibility Task Force wiki. Proposed SC Target Size (notes that Apple's point is a density-independent unit, not a physical one).",
+     "url": "https://www.w3.org/WAI/GL/mobile-a11y-tf/wiki/Proposed_SC_Target_Size",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Nielsen Norman Group. Touch targets on touchscreens (cites a 1 cm by 1 cm minimum and an MIT Touch Lab finger-size figure).",
+     "url": "https://www.nngroup.com/articles/touch-target-size/",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The factor k differs between devices and changes when the user zooms or sets a larger display size; 0.16 is a typical value, not a constant. The 2006 study used a small handheld device of its time, and its participants' ages were not retrieved; people with tremor or reduced dexterity need more than its figures. An unpublished replication, seen as a secondary source, reported a smaller minimum (6.8 mm). The existing record touch-target-size covers the WCAG criteria; this record adds the physical conversion.",
+   "appliesTo": [
+    "mobile",
+    "forms",
+    "nav",
+    "states",
+    "density"
+   ]
+  },
+  {
+   "id": "line-height-line-length-ratio",
+   "topic": "type-ratios",
+   "principle": "Line height, line length and font size: ratios are convention, and no formula that links them has support",
+   "claim": "Typographers hold that longer lines need more space between lines, and several published formulas compute an 'ideal' line height from font size and line width, one of them from the golden ratio. The search found no experiment that supports any such formula. What evidence exists is older print research that found one combination best for one type size, plus the accessibility standard's value of 1.5 times the font size.",
+   "mechanism": "Line height is expressed as a ratio: line height / font size (for example 24 px / 16 px = 1.5). The craft argument for linking it to line length is the return sweep: at the end of a line the eye jumps back to the start of the next one, and on a long line a tight gap makes it easy to land on the wrong line. Tinker and Paterson's print studies, as secondary sources report them, found that for 10-point type a line of about 19 picas (80 mm) with 2 points of extra space (a ratio of 1.2) read best, with a wide 'safety zone' of 14 to 31 picas; other researchers of the period disagreed. The golden-ratio formulas multiply the font size by 1.618 and then adjust for width; they give a derivation, not a test. One practitioner analysis argues that the right basis is the x-height (the height of lowercase letters) and the number of characters per line, not the font size.",
+   "effects": {
+    "cognitiveLoad": "unknown — no study tests a formula; very tight spacing on long lines plausibly causes line-skipping",
+    "satisfaction": "unknown — see spacing-and-justification for preference results on line spacing itself",
+    "perceivedIntuitiveness": "none — these ratios do not change how the page is understood"
+   },
+   "designMoves": [
+    "Set body text at a line-height ratio of about 1.4 to 1.6 and keep lines to 50 to 80 characters (see line-length); adjust by eye for the typeface's x-height.",
+    "Tighten the ratio for large headings (about 1.0 to 1.3), because the absolute gap grows with size.",
+    "When the layout widens the line, do not reduce the ratio; raise it slightly if lines exceed about 75 characters. This is convention.",
+    "Use unitless line-height values so that the ratio follows the font size."
+   ],
+   "antiPatterns": [
+    "A line height computed from the golden ratio and presented as optimal.",
+    "One fixed pixel line height applied to every text size.",
+    "Body text at a ratio of 1.2 on lines of 100 characters."
+   ],
+   "howToCheck": {
+    "machine": "For each text style compute ratio = computed line height / computed font size. Body text: warn outside 1.4 to 1.6 and fail below the Prescription floor (WCAG 1.4.8 at level AAA asks for at least 1.5 within paragraphs). Headings above 32 px: warn outside 1.0 to 1.3. Compute characters per line = characters in a paragraph / rendered line count, at each breakpoint; flag any breakpoint where characters per line rises by more than 20% while the ratio falls. No validated formula links the three values, so the tool should check ranges and direction, not an 'ideal' value.",
+    "human": "Read three paragraphs at the widest layout. If the eye lands on the wrong line, raise the ratio or narrow the column."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Search summaries of secondary sources only. Tinker's 1963 book Legibility of Print summarises studies from 1927 to 1959; a secondary page gives the 10-point safety zone of 14 to 31 picas and the 19-pica, 2-point combination, and warns that the methods look questionable; a typography blog that cites the book says 2 points of extra space performed best at each line width tested. Luckiesh and Moss reportedly found the opposite trend for line width. A practitioner series on optimal line height calls the golden-ratio formula 'a conclusion without proof'. The 1.4 to 1.6 body range and the heading range are convention reported by practitioner articles. The WCAG 1.5 value was read for the existing record spacing-and-justification, not again here. No experiment on line height as a function of line length for screen text was found."
+   },
+   "sources": [
+    {
+     "citation": "Tinker, M. A. (1963). Legibility of Print. Iowa State University Press. (Seen through a secondary summary of its safety-zone table.)",
+     "url": "https://rightreading.com/typehead/measure.htm",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Microsoft Typography blog (archived). More on linespacing (cites Tinker on 2 points of line spacing).",
+     "url": "https://learn.microsoft.com/en-gb/archive/blogs/fontblog/more-on-linespacing",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Kudamatsu, M. Optimal line-height reconsidered, parts 1 to 3 (practitioner series; argues for x-height and characters per line as the basis and criticises the golden-ratio formula).",
+     "url": "https://medium.com/@masakudamatsu/optimal-line-height-reconsidered-part-1-web-dev-survey-from-kyoto-a0357d8f6282",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C (2023). WCAG 2.2, Success Criterion 1.4.8 Visual Presentation, Level AAA (line spacing at least space-and-a-half).",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "Print results for 10-point type on paper do not transfer directly to screens, different typefaces and different reading distances. Typefaces with a large x-height need more line spacing than the ratio suggests. Languages with tall accents or non-Latin scripts need more room. The existing records line-length and spacing-and-justification hold the reading evidence; this record covers the claimed formulas.",
+   "appliesTo": [
+    "typeface",
+    "size-scale",
+    "content-width",
+    "heading-treatment",
+    "copy"
+   ]
+  },
+  {
+   "id": "fractal-dimension-preference",
+   "topic": "complexity",
+   "principle": "Fractal dimension: a mid-range preference for patterns in some studies; untested for interfaces",
+   "claim": "A fractal pattern repeats similar detail at many scales, and its fractal dimension D (between 1 and 2 for a flat pattern) says how densely it fills the plane. One line of studies found that people prefer patterns with D of about 1.3 to 1.5, the range common in natural scenes. Later studies found that preference rises steadily with D for some pattern types and that people differ. No study found applies fractal dimension to web pages or interfaces.",
+   "mechanism": "D is measured by box counting: cover the pattern with a grid of boxes of side e, count the boxes N(e) that contain part of the pattern, repeat for smaller e, and take D = the slope of log N(e) plotted against log(1 / e). A smooth line gives 1; a pattern that fills the area gives 2. The proposed explanation for a mid-range preference is that the visual system is tuned to the statistics of natural scenes, which fall in that range, so such patterns are processed easily. An interface is mostly text, boxes and photographs arranged by rules; it is not a self-similar pattern, so its box-counting number mostly reflects how much text and how many edges it has, which complexity measures capture more directly.",
+   "effects": {
+    "cognitiveLoad": "unknown — not measured for interfaces",
+    "satisfaction": "unknown — for interfaces; for abstract and natural patterns, mid-range D was preferred on average in some studies",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Do not tune a layout toward a fractal dimension.",
+    "If the design uses a decorative texture or background pattern, prefer natural-looking, mid-density patterns over very sparse or very dense ones, and keep them behind content with ample contrast.",
+    "Use compressed file size or edge density to measure the complexity of a page (see complexity-measures-and-preference-curve)."
+   ],
+   "antiPatterns": [
+    "Claiming that a page is 'naturally pleasing' because its fractal dimension is 1.4.",
+    "Dense fractal or noise textures behind text.",
+    "Treating the 1.3 to 1.5 range as universal."
+   ],
+   "howToCheck": {
+    "machine": "No validated check exists for interfaces. For a decorative background image or texture only, a program can compute D by box counting on the image's edge map (count occupied boxes at sides of 2, 4, 8, 16, 32 and 64 pixels; fit the slope of log count against log(1 / side)) and report it, with 1.3 to 1.5 as the range that some pattern studies favour. Do not fail a build on it and do not compute it for whole pages.",
+    "human": "Ask whether the texture distracts from the text placed over it."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Grade B describes the pattern studies; for use on interfaces the grade is D, because one targeted search found no study. All sources were seen as search summaries. Spehar, Clifford, Newell and Taylor (2003), as later papers report it: low preference below about 1.2 and above about 1.6, highest at 1.3 to 1.5, for natural, mathematical and painted fractals. Bies and colleagues (2016): for exact (strictly repeating) fractals, preference rose with D for most participants, and symmetry and depth of repetition mattered. Street and colleagues (2016): 443 participants from several countries; mid-range patterns showed the most consistent preference, with individual differences in liking for complexity. Forsythe and colleagues (2011): fractal dimension added to the prediction of beauty in art, but compressed file size predicted more, and fractal dimension alone could not account for beauty judgments."
+   },
+   "sources": [
+    {
+     "citation": "Spehar, B., Clifford, C. W. G., Newell, B. R., & Taylor, R. P. (2003). Universal aesthetic of fractals. Computers & Graphics, 27(5), 813-820. (Seen as reported by later papers; volume and pages recalled from memory.)",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Bies, A. J., Blanc-Goldhammer, D. R., Boydston, C. R., Taylor, R. P., & Sereno, M. E. (2016). Aesthetic responses to exact fractals driven by physical complexity. Frontiers in Human Neuroscience, 10, 210. (Author list recalled from memory.)",
+     "url": "https://www.frontiersin.org/journals/human-neuroscience/articles/10.3389/fnhum.2016.00210/pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Street, N., Forsythe, A. M., Reilly, R., Taylor, R., & Helmy, M. S. (2016). A complex story: Universal preference vs. individual differences shaping aesthetic response to fractals patterns. Frontiers in Human Neuroscience, 10, 213. (Author list recalled from memory.)",
+     "url": "https://frontiersin.org/articles/10.3389/fnhum.2016.00213/full",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Forsythe, A., Nadal, M., Sheehy, N., Cela-Conde, C. J., & Sawey, M. (2011). Predicting beauty: Fractal dimension and visual complexity in art. British Journal of Psychology, 102(1), 49-70.",
+     "url": "https://doi.org/10.1348/000712610X498958",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Box-counting results depend on image size, the edge detector and the range of box sizes, so numbers from different tools do not compare. Studies of installed fractal floor and wall patterns exist for buildings; they concern physical spaces, not screens. The mid-range result may reflect an average over people who prefer different levels.",
+   "appliesTo": [
+    "signature",
+    "hero",
+    "sections",
+    "density"
+   ]
+  }
+ ]
+}

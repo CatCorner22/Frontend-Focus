@@ -1,0 +1,1111 @@
+{
+ "part": "japanese-design",
+ "generated": "2026-11-14",
+ "entries": [
+  {
+   "id": "ma-interval-not-white-space",
+   "topic": "japanese-aesthetics",
+   "principle": "Ma (間): the interval is a designed element, not leftover area",
+   "claim": "In Japanese usage, ma (間, 'interval' or 'between') names the gap between things in space and in time at once, and treats that gap as something the maker shapes and the viewer experiences. The Western layout term 'white space' names a quantity of unprinted area that separates and frames content. The difference is one of framing, described by architects and scholars of religion and art. No experiment found in this session tests whether a page designed 'with ma' performs differently from a page designed 'with white space'.",
+   "mechanism": "The word covers space, pause, room, rest and timing. The architect Arata Isozaki built a 1978 Paris exhibition on the statement that the one word expresses space and time together. The architect and scholar Günter Nitschke describes ma as a sense of place: awareness of form and non-form together, joined to the viewer's experience. On this view an interval has a size, a position and a duration that the maker chooses, in the way a musician chooses a rest. A related term from painting is yohaku no bi (余白の美, 'the beauty of the area left blank'), which the search results trace to Chinese ink landscape painting.",
+   "effects": {
+    "cognitiveLoad": "unknown — the tradition makes no measurable claim; grouping by space is covered by the existing record proximity-and-common-region",
+    "satisfaction": "unknown — not measured for ma; the existing records whitespace-quality-signal and whitespace-prestige-with-limits cover the Western convention that generous space signals quality",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Give every gap a named value from one short spacing scale (for example 8, 16, 32, 64, 128 CSS pixels); allow no gap outside the scale.",
+    "Set the gap between sections to at least three times the gap between paragraphs, so that the pause reads as chosen. This ratio is this record's translation, not a rule from the tradition.",
+    "Leave one side of each key element (headline, lead picture) open: empty area at least as tall or as wide as the element itself.",
+    "Keep the intervals empty: no divider ornaments, background tints or filler icons inside a gap.",
+    "Treat pauses in time the same way: nothing plays, slides or appears by itself after a section comes into view."
+   ],
+   "antiPatterns": [
+    "Equal padding everywhere, so that no interval differs from another.",
+    "Filling a gap because it 'looks empty'.",
+    "Calling any large margin 'ma' in the tool's text as if the word were a synonym for white space.",
+    "A first screen that is empty of content; an interval lies between things."
+   ],
+   "howToCheck": {
+    "machine": "List every distinct margin, padding and gap value in the rendered page and flag values outside the spacing scale. Compute the ratio of the between-section gap to the paragraph gap and flag ratios below 3. Flag any element that starts or animates without user input.",
+    "human": "Cover the content with your hand and look at the empty areas alone: do they look placed, or left over?"
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "This is a concept from an artistic and architectural tradition, explained by practitioners and scholars; it is not an experimental finding. Every source was seen only as a search-engine summary; no page opened in this session. The summaries confirm: Isozaki's exhibition 'MA: Space-Time in Japan' ran at the Musée des Arts Décoratifs in Paris from 12 October to 11 December 1978 for the Festival d'Automne, and the festival programme says he chose seven notions of ma; Pilgrim's 1986 article exists with the stated pages; Nitschke's essay 'MA: Place, Space, Void' appears in Kyoto Journal. Nitschke's 1966 article is recalled from memory. The statement that ma differs from Western white space is this record's summary of those descriptions; no source seen states the contrast in those words. The yohaku material comes from blog-level pages (grade D)."
+   },
+   "sources": [
+    {
+     "citation": "Isozaki, A. (1978). MA: Space-Time in Japan (exhibition and catalogue). Festival d'Automne à Paris, Musée des Arts Décoratifs; later shown in New York.",
+     "url": "https://www.festival-automne.com/storage/medias/Publish__archive_pdf__FAP_1978_AP_01_JP_DDP.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Nitschke, G. MA: Place, Space, Void. Kyoto Journal (date of the essay not confirmed).",
+     "url": "https://kyotojournal.org/culture-arts/ma-place-space-void/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Nitschke, G. (1966). 'Ma': The Japanese sense of place in old and new architecture and planning. Architectural Design, 36 (March).",
+     "url": null,
+     "verified": "from-memory-unverified"
+    },
+    {
+     "citation": "Pilgrim, R. B. (1986). Intervals (ma) in space and time: Foundations for a religio-aesthetic paradigm in Japan. History of Religions, 25(3), 255-277.",
+     "url": "https://openjournals.library.sydney.edu.au/AASR/article/download/16873/14347/52129",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "The Mindful Word. Painting of pine trees by Hasegawa Tohaku (blog page on yohaku no bi).",
+     "url": "https://www.themindfulword.org/empty-space/",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Western design writing often uses 'ma' as an exotic word for 'negative space'; that use drops the time sense and the idea of place. The two search results disagree on the date of Tohaku's pine-tree screens (about 1580 versus about 1680), which shows the quality of the blog-level pages. Space that reads as a meaningful pause on a brand page costs scrolling on a task page; see whitespace-prestige-with-limits.",
+   "appliesTo": [
+    "density",
+    "sections",
+    "hero",
+    "content-width",
+    "motion"
+   ]
+  },
+  {
+   "id": "seven-characteristics-provenance",
+   "topic": "japanese-aesthetics",
+   "principle": "The 'seven principles' are one philosopher's 1958 list about Zen art, and the popular version changes it",
+   "claim": "The list of seven comes from Shin'ichi Hisamatsu (久松真一, 1889-1980), a Kyoto School philosopher and tea practitioner, in 'Zen to bijutsu' (禅と美術, 1958), translated by Gishin Tokiwa as 'Zen and the Fine Arts' (Kodansha International, 1971). He names seven characteristics of Zen art: asymmetry (fukinsei, 不均斉), simplicity (kanso, 簡素), austere sublimity or lofty dryness (kokō, 枯高), naturalness (shizen, 自然), subtle profundity or deep reserve (yūgen, 幽玄), freedom from attachment (datsuzoku, 脱俗) and tranquility (seijaku, 静寂). The list that design blogs repeat replaces kokō with shibui or shibumi (渋い, 渋み) and presents the seven as old rules of Japanese design. Hisamatsu offered a twentieth-century description of art that he tied to Zen; he did not write design rules and did not describe Japanese design in general.",
+   "mechanism": "Hisamatsu derives all seven from one root, the Zen experience that a reviewer quotes as 'Self-Awareness of the Absolutely and Actively Nothing', and says the seven are aspects of one whole, not separate items. A list of seven named qualities is easy to copy, so it travelled into presentation and web design writing without its philosophical frame. One widely linked blog post presents the seven as principles found in the traditional Japanese garden.",
+   "effects": {
+    "cognitiveLoad": "none — this record concerns the origin of a list, not an effect on users",
+    "satisfaction": "none — no effect is claimed",
+    "perceivedIntuitiveness": "none — no effect is claimed"
+   },
+   "designMoves": [
+    "In the tool's own text, name the source: 'Hisamatsu's seven characteristics of Zen art (1958; English edition 1971)'. Never write 'the seven principles of Japanese design' or 'ancient rules'.",
+    "Treat each characteristic as an optional lens that suggests values; do not require a look to satisfy all seven.",
+    "Mark every number that the tool derives from a characteristic (a spacing ratio, a colour limit) as the tool's own translation.",
+    "Keep shibui as a separate term with its own record; do not list it among Hisamatsu's seven."
+   ],
+   "antiPatterns": [
+    "'The seven Zen principles' presented as a checklist that guarantees a calm design.",
+    "Crediting the blog version (with shibui) to Hisamatsu.",
+    "Text that says a characteristic 'requires' a pixel value."
+   ],
+   "howToCheck": {
+    "machine": "Search the tool's text for 'seven principles of Japanese design', 'ancient', 'Zen rules' and 'shibui' next to 'Hisamatsu'; flag each match for review.",
+    "human": "Read each teaching text that mentions the list: does it say whose list it is, when it was written, and what it described?"
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Art-philosophical tradition, not an experiment. Confidence that the list is Hisamatsu's: high; four independent search summaries agree (a 1972 review in The Eastern Buddhist, a 2017 health-psychology paper by Lomas and colleagues, a German philosophy lexicon, and a Japanese paper by Ibuki that gives the year 1958 and the phrase 'seven characters' with 不均斉). Confidence in the English names as given: high; one summary lists them in these words. Confidence in the characters 枯高, 脱俗 and 静寂: medium; they are recalled, and a search for 枯高 did not confirm it. Confidence about who first swapped kokō for shibui: low; no source found. A web page that lists 'shibui/shibumi' and translates it 'lofty dryness' shows the two terms being merged. The popular claim that these are old rules of Japanese design has grade D. No page opened in this session; all of this rests on search summaries."
+   },
+   "sources": [
+    {
+     "citation": "Hisamatsu, S. (1971). Zen and the Fine Arts (G. Tokiwa, Trans.). Tokyo: Kodansha International. (Japanese original: Zen to bijutsu, 1958.)",
+     "url": "https://terebess.hu/zen/mesterek/Zen-and-the-fine-arts.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Review of 'Zen and the Fine Arts'. The Eastern Buddhist, New Series, 5(1), 1972 (reviewer's name not confirmed).",
+     "url": "https://otani.repo.nii.ac.jp/record/9321/files/EB5-1-12.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Lomas, T., Etcoff, N., Van Gordon, W., & Shonin, E. (2017). Zen and the art of living mindfully: The health-enhancing potential of Zen aesthetics. Journal of Religion and Health, 56(5), 1720-1739 (journal, volume and pages recalled, not confirmed).",
+     "url": "https://core.ac.uk/download/219375662.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Ibuki, A. Paper in Kokusai Zen Kenkyū (International Zen Studies), no. 9, Toyo University, pp. 379-417 (title not confirmed).",
+     "url": "https://toyo.repo.nii.ac.jp/record/14252/files/kokusaizenkenkyu9_379-417.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Reynolds, G. 7 Japanese aesthetic principles to change your thinking. Presentation Zen (blog; year recalled as 2009, not confirmed).",
+     "url": "https://presentationzen.com/blog/7-japanese-aesthetic-principles-to-change-your-thinking",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Hisamatsu writes 不均斉 for fukinsei; many web pages write 不均整. Romanised spellings vary (datsuzoku and 'daisuzoku'; kokō, 'koko' and 'kōkō'). The order of the seven differs between sources. The exact wording of the blog post was not seen. A reader who needs the precise definitions must read the 1971 book.",
+   "appliesTo": [
+    "copy",
+    "signature",
+    "theme"
+   ]
+  },
+  {
+   "id": "kanso-simplicity",
+   "topic": "japanese-aesthetics",
+   "principle": "Kanso (簡素): plain and uncluttered, with few kinds of thing",
+   "claim": "Kanso (簡素, 'plain simplicity') is the second of Hisamatsu's seven characteristics of Zen art: a work is sparse and uncomplicated, and its colour is unobtrusive, at the limit black ink on paper. The scholar Donald Keene also names simplicity as one of four headings of Japanese taste, and adds that profusion and exaggeration are 'by no means absent' from Japanese art. The tradition gives no numbers. The measurable consequence below is this record's translation.",
+   "mechanism": "The tradition holds that removing what is not needed lets the remaining things carry more weight. Experiments that the existing knowledge base records point the same way by a different route: content that does not serve the task adds load (extraneous-content), and low visual complexity is liked at first sight (low-complexity-high-prototypicality).",
+   "effects": {
+    "cognitiveLoad": "lowers — by analogy with the existing record extraneous-content; the tradition itself makes no such claim",
+    "satisfaction": "mixed — low complexity is liked at first sight, and a plain design can be valued lower in a direct comparison (simplicity-can-read-as-cheap)",
+    "perceivedIntuitiveness": "unknown — not measured for kanso"
+   },
+   "designMoves": [
+    "Set a budget of kinds: one typeface family, two weights, at most four text sizes, one accent colour beside the neutrals.",
+    "Allow one main action in each screenful.",
+    "Remove every element that carries no content and no function: decorative icons, ornamental dividers, background shapes. The count of such elements is zero.",
+    "Prefer a plain statement to a slogan; one sentence per idea.",
+    "Keep what a visitor needs (what the business does, where, when, how to reach it); kanso removes ornament, not information."
+   ],
+   "antiPatterns": [
+    "Simplicity by hiding: icons without labels, prices behind a click, navigation behind a symbol on a wide screen.",
+    "Default type and default spacing presented as 'minimal' (see simplicity-can-read-as-cheap).",
+    "Five weights and six sizes on one page.",
+    "Decorative illustration added to 'warm up' an empty area."
+   ],
+   "howToCheck": {
+    "machine": "Count the distinct font families, weights, font sizes and hues in the rendered page and compare each count with the budget. Count elements that have no text, no link and no informative picture. Count the primary buttons in each viewport height.",
+    "human": "Point at each element and ask what a visitor loses if it goes. Remove the ones with no answer."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Tradition and expert description, not an experiment. The place of kanso in Hisamatsu's list rests on several agreeing search summaries. Hisamatsu's own explanation of simplicity (sparse; ink monochrome as the simplest colour) is recalled from memory and was not checked. Keene's four headings (suggestion, irregularity, simplicity, perishability) and his remark that the opposites are 'by no means absent' come from a search summary of a later writer who cites him. The budget numbers are this record's choice; no source gives them. The experimental support cited under 'mechanism' belongs to the existing records and concerns interfaces in general, not kanso."
+   },
+   "sources": [
+    {
+     "citation": "Hisamatsu, S. (1971). Zen and the Fine Arts (G. Tokiwa, Trans.). Tokyo: Kodansha International.",
+     "url": "https://terebess.hu/zen/mesterek/Zen-and-the-fine-arts.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Keene, D. (1969). Japanese aesthetics. Philosophy East and West, 19(3), 293-306.",
+     "url": "https://dc2.philarchive.org/rec/KEEJA",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Simplicity in tea rooms and ink painting came from costly skill and material; a web page gets no such credit automatically. For an unknown business, a bare page can read as unfinished (see empty-space-experiments-beyond-prestige). A dense working page is outside this record's scope.",
+   "appliesTo": [
+    "density",
+    "typeface",
+    "size-scale",
+    "color-strategy",
+    "accent",
+    "sections",
+    "hero"
+   ]
+  },
+  {
+   "id": "fukinsei-asymmetry",
+   "topic": "japanese-aesthetics",
+   "principle": "Fukinsei (不均斉): balance without mirror symmetry",
+   "claim": "Fukinsei (不均斉, also written 不均整; 'asymmetry' or 'irregularity') is the first of Hisamatsu's seven characteristics of Zen art: the work avoids mirror symmetry and regular, perfect form. Okakura Kakuzō's 'The Book of Tea' (1906) calls the tea room the 'Abode of the Unsymmetrical' and describes leaving something unfinished for the imagination to complete. Keene lists irregularity as one of four headings of Japanese taste. The tradition states a preference; it reports no test of viewers.",
+   "mechanism": "The tradition holds that a symmetrical, complete form leaves the viewer nothing to do, and that an uneven arrangement invites the eye to move and to finish the composition. Balance comes from unequal weights at unequal distances, with empty area acting as one of the weights. The existing record alignment-continuity explains why such a layout still needs shared edges.",
+   "effects": {
+    "cognitiveLoad": "unknown — not measured for fukinsei; left-aligned text with a ragged right edge reads at least as well as justified text (existing record spacing-and-justification)",
+    "satisfaction": "unknown — the tradition claims interest; research recalled from memory finds that people often prefer symmetry, so the direction is not settled",
+    "perceivedIntuitiveness": "mixed — an uneven layout that keeps shared edges stays easy to scan; one that drops alignment does not"
+   },
+   "designMoves": [
+    "Set text left-aligned with an uneven right edge; do not centre body text and do not justify it.",
+    "Split two-part layouts unequally (for example 5 to 7, or 1 to 2), not half and half.",
+    "Place the headline and the lead picture off the centre line, and let empty area on the other side balance them.",
+    "Keep every element on one shared set of left edges and one column grid; asymmetry applies to weight, not to alignment.",
+    "On a phone, where the layout is one column, keep the asymmetry in the alignment (left, not centred) and in unequal vertical gaps."
+   ],
+   "antiPatterns": [
+    "A centred headline over a centred paragraph over two centred buttons.",
+    "Random offsets that break the grid and call themselves 'organic'.",
+    "A mirror-image row of equal cards as the only layout pattern on the page.",
+    "Asymmetry in navigation or forms, where people expect the usual positions."
+   ],
+   "howToCheck": {
+    "machine": "Flag body text with centred or justified alignment. In each two-column section, compute the column-width ratio and flag ratios between 0.9 and 1.1. Compute the horizontal centre of the text mass in the first viewport and report its distance from the viewport centre. Count the distinct left edges; flag more than the grid allows.",
+    "human": "Squint at the page: does it feel balanced although no half mirrors the other? Does any element look misplaced, as opposed to off-centre on purpose?"
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Tradition and expert description, not an experiment. The wording from Okakura ('Abode of the Unsymmetrical', leaving something unfinished for the play of the imagination) comes from a search summary of a transcription of the chapter 'The Tea-Room'; the book is in the public domain, and the page did not open. Keene's heading 'irregularity' comes from a search summary. The column ratios are this record's choice. The statement that people often prefer symmetry is recalled from the perception literature and was not checked in this session."
+   },
+   "sources": [
+    {
+     "citation": "Okakura, K. (1906). The Book of Tea. Chapter 4, The Tea-Room.",
+     "url": "https://readingdesign.org/the-tea-room",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Hisamatsu, S. (1971). Zen and the Fine Arts (G. Tokiwa, Trans.). Tokyo: Kodansha International.",
+     "url": "https://terebess.hu/zen/mesterek/Zen-and-the-fine-arts.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Keene, D. (1969). Japanese aesthetics. Philosophy East and West, 19(3), 293-306.",
+     "url": "https://dc2.philarchive.org/rec/KEEJA",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Okakura wrote in English for a Western audience in 1906, and scholars treat the book as advocacy as much as description (recalled, not checked). Symmetry is common in Japanese temple and shrine architecture, so asymmetry is one strand, not the whole tradition. Popular advice to group items in odd numbers was seen only on blog-level pages.",
+   "appliesTo": [
+    "hero",
+    "sections",
+    "content-width",
+    "heading-treatment",
+    "mobile"
+   ]
+  },
+  {
+   "id": "shibui-understated-beauty",
+   "topic": "japanese-aesthetics",
+   "principle": "Shibui (渋い): quiet at first sight, detailed at second sight",
+   "claim": "Shibui (渋い, adjective; nouns shibumi 渋み and shibusa 渋さ) describes subdued, unobtrusive beauty: an object looks simple overall and shows fine detail, such as texture, on a closer look; its colours are muted. Shibui is not one of Hisamatsu's seven characteristics; his third characteristic is kokō (枯高, 'austere sublimity' or 'lofty dryness'). American readers met the word through two issues of the magazine House Beautiful in August and September 1960. A list of 'seven elements of shibusa' (simplicity, implicitness, modesty, naturalness, everydayness, imperfection, silence) is credited to the craft thinker Yanagi Sōetsu, and one source disputes that the list appears in his own writing.",
+   "mechanism": "The word's literal sense is recalled as 'astringent', the taste of an unripe persimmon: a quality that does not please at once and holds interest longer. The House Beautiful editor described it as a 'profound, unassuming, quiet feeling'. Tanizaki Jun'ichirō's essay 'In Praise of Shadows' (1933) describes a related preference for low sheen, patina and dim light over gloss and brightness. The existing record simplicity-can-read-as-cheap gives an experimental reason for the 'detail at second sight' half: a plain design needs visible care, or people value it lower.",
+   "effects": {
+    "cognitiveLoad": "unknown — not measured for shibui",
+    "satisfaction": "unknown — the tradition claims lasting appeal; the existing record craftsmanship-facet shows that perceived craft is a measurable part of visual appeal, which fits the 'fine detail' half",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Keep every colour except the one accent at low vividness: neutrals with OKLCH chroma of 0.03 or less.",
+    "Limit the accent to a small share of the screen (about 5% of the first viewport or less) and to a moderate vividness (OKLCH chroma of about 0.17 or less).",
+    "Use matte surfaces: no drop shadows, no gloss or shine gradients, no glass or blur effects.",
+    "Put the care into details that show at second sight: even spacing, well-set type, a hairline of one pixel where a line is needed, real texture in photographs.",
+    "Keep headings modest: the largest heading at most about twice the body size."
+   ],
+   "antiPatterns": [
+    "Saturated colour blocks, glossy buttons or glowing effects.",
+    "Muted colours taken as permission for pale grey text that fails the contrast floor.",
+    "A flat, plain page with no fine detail, which is plain and not shibui.",
+    "Listing shibui as one of Hisamatsu's seven."
+   ],
+   "howToCheck": {
+    "machine": "Compute the OKLCH chroma of every colour in use and flag neutrals above 0.03. Measure the share of first-viewport pixels in the accent colour. Count box-shadow, text-shadow, gradient and backdrop-filter declarations; the target is zero. Check that all text still meets 4.5 to 1.",
+    "human": "Look for five seconds, then for one minute. The first look should feel quiet; the second should find something well made."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Tradition, magazine history and encyclopedia summaries, not an experiment. Search summaries confirm the two 1960 magazine issues (the August issue was titled 'Discover Shibui: The Word for the Highest Level in Beauty'), the editor's wording, and the Wikipedia description (simple overall with subtle details; muted colours with grey added). The 'astringent' sense and the persimmon image are recalled from memory; a search did not confirm them. The credit of the seven elements to Yanagi is contested: one page says he set them out in the magazine Kōgei between 1930 and 1940, and a woodworking magazine says the list never appeared in his writings and that later authors derived it. Tanizaki's essay was seen as a search summary. All numbers are this record's choice."
+   },
+   "sources": [
+    {
+     "citation": "Wikipedia. Shibui.",
+     "url": "https://en.wikipedia.org/wiki/Shibui",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Gordon, E. (Ed.) (1960). Discover Shibui: The word for the highest level in beauty. House Beautiful, August 1960; How to be shibui with American things. House Beautiful, September 1960. (Seen through Wikipedia, Elizabeth Gordon (editor).)",
+     "url": "https://en.wikipedia.org/wiki/Elizabeth_Gordon_(editor)",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Yanagi, S. (1972). The Unknown Craftsman: A Japanese Insight into Beauty (adapted by B. Leach). Tokyo: Kodansha International (year and publisher recalled).",
+     "url": "https://en.wikipedia.org/wiki/Yanagi_S%C5%8Detsu",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Fine Woodworking (2026). In search of shibui.",
+     "url": "https://www.finewoodworking.com/2026/08/11/in-search-of-shibui",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Tanizaki, J. (1933). In'ei raisan (In Praise of Shadows). (Seen through Wikipedia, In Praise of Shadows.)",
+     "url": "https://en.wikipedia.com/wiki/In_Praise_of_Shadows",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The 1960 magazine presentation was an American editor's reading for American homes. Sources disagree on how shibui relates to wabi and sabi; one says many wabi or sabi objects are shibui and not the reverse. Tanizaki's essay is a literary piece with irony, and its praise of dimness does not transfer to screens: dim, low-contrast text fails readers.",
+   "appliesTo": [
+    "color-strategy",
+    "neutral",
+    "accent",
+    "elevation",
+    "border-weight",
+    "heading-treatment",
+    "signature"
+   ]
+  },
+  {
+   "id": "shizen-naturalness",
+   "topic": "japanese-aesthetics",
+   "principle": "Shizen (自然): nothing forced, nothing faked",
+   "claim": "Shizen (自然, 'naturalness') is the fourth of Hisamatsu's seven characteristics of Zen art: the work shows no artifice and no strain. It does not mean accident or raw nature; the maker intends the result fully, and the intention does not show as effort. The tradition gives no measure. The consequences below are this record's translation to a web page.",
+   "mechanism": "The tradition holds that visible contrivance draws attention to the maker and away from the thing. On a web page the nearest equivalents are effects that imitate something they are not (fake textures, stock pictures standing in for the real business, text forced into shapes). The existing record real-content-over-stock records that people look at real, informative pictures and ignore generic ones.",
+   "effects": {
+    "cognitiveLoad": "unknown — not measured for shizen",
+    "satisfaction": "unknown — not measured for shizen; real pictures draw attention where generic ones are ignored (existing record real-content-over-stock)",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Use photographs of the actual business, its people, its goods and its materials; use no stock or generated stand-in pictures.",
+    "Tint the neutrals slightly warm, as paper, wood and cloth are (OKLCH hue between about 60 and 100, chroma 0.005 to 0.02); avoid pure white (#FFFFFF) and pure black (#000000) as the main pair.",
+    "Let text fall naturally: left-aligned, uneven right edge, no justification, no forced line breaks in the middle of phrases.",
+    "Use no imitation effects: zero fake paper or noise textures drawn in code, zero text shadows, zero decorative gradients.",
+    "Let content decide the size of its container; do not pad short text out to match a taller neighbour with filler."
+   ],
+   "antiPatterns": [
+    "A stock picture of a tea bowl on a plumber's website.",
+    "A paper-grain image tiled behind the text to look 'natural'.",
+    "Bamboo, wave or cherry-blossom motifs added as a sign of 'Japan'.",
+    "Justified text with stretched word gaps."
+   ],
+   "howToCheck": {
+    "machine": "Flag a page background of exactly #FFFFFF with text of exactly #000000. Report the hue and chroma of each neutral. Count background-image textures, text-shadow and gradient declarations. Flag justified text.",
+    "human": "For each picture ask: is this the real place, person or thing? For each effect ask: does it pretend to be a material it is not?"
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Tradition, not an experiment. The place of shizen in Hisamatsu's list rests on agreeing search summaries. His explanation (not artificial, unstrained, and also not naive or accidental) is recalled from memory and was not checked. The link from 'no artifice' to 'no fake textures and no stock pictures' is this record's interpretation; no source states it. The hue and chroma ranges are this record's choice."
+   },
+   "sources": [
+    {
+     "citation": "Hisamatsu, S. (1971). Zen and the Fine Arts (G. Tokiwa, Trans.). Tokyo: Kodansha International.",
+     "url": "https://terebess.hu/zen/mesterek/Zen-and-the-fine-arts.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Lomas, T., Etcoff, N., Van Gordon, W., & Shonin, E. (2017). Zen and the art of living mindfully: The health-enhancing potential of Zen aesthetics. Journal of Religion and Health, 56(5), 1720-1739 (journal details recalled).",
+     "url": "https://core.ac.uk/download/219375662.pdf",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The word 自然 in modern Japanese also translates the Western word 'nature'; design blogs often read shizen as 'use natural motifs', which is a different idea. A web page is an artefact throughout, so 'naturalness' can only mean restraint in effects and honesty in content.",
+   "appliesTo": [
+    "neutral",
+    "theme",
+    "color-strategy",
+    "hero",
+    "sections",
+    "copy"
+   ]
+  },
+  {
+   "id": "yugen-subtle-depth",
+   "topic": "japanese-aesthetics",
+   "principle": "Yūgen (幽玄): suggest more than you show",
+   "claim": "Yūgen (幽玄, 'subtle depth'; Hisamatsu's translator writes 'subtle profundity or deep reserve') is a medieval Japanese ideal of beauty that hints at depth and does not display everything. The word came from Chinese, where it named a truth beyond intellectual grasp. The poet Kamo no Chōmei (1155-1216) tied it to feeling expressed in what is colourless, indistinct and restrained; the playwright Zeami applied it to the highest grace in Noh acting. Of the seven characteristics, this one translates least directly to a small-business website, and the translation below is the weakest in this file.",
+   "mechanism": "The tradition holds that a thing partly withheld engages the imagination more than a thing fully shown. Keene's heading 'suggestion' names the same preference. On a website the idea competes with a stronger, tested need: visitors must find what they came for, and labels decide where people go (existing record information-scent-and-labels).",
+   "effects": {
+    "cognitiveLoad": "mixed — showing one idea per screen lowers load; hiding needed facts raises it",
+    "satisfaction": "unknown — not measured for yūgen; the existing record pleasure-interest-balance records that a small challenge that resolves feels interesting",
+    "perceivedIntuitiveness": "lowers — if suggestion replaces clear labels; none if it is confined to pictures and pacing"
+   },
+   "designMoves": [
+    "Give the first viewport one idea: one headline, one supporting line, at most one picture.",
+    "Confine suggestion to pictures and pacing: crop a picture so that it shows a part (a hand at work, the edge of a table), and let the page reveal the rest further down.",
+    "Keep facts plain: name, what the business does, place, hours, price and contact stay in clear text with clear labels.",
+    "Use depth of tone within the neutrals (two or three steps of the same warm grey) in place of extra colours."
+   ],
+   "antiPatterns": [
+    "Pale grey text on off-white 'for subtlety'; it fails the 4.5 to 1 contrast floor.",
+    "Navigation labels that hint (for example 'Journey', 'Essence') where a visitor needs 'Services' and 'Contact'.",
+    "Prices, hours or the address held back to create mystery.",
+    "Fog, blur or darkness effects laid over content."
+   ],
+   "howToCheck": {
+    "machine": "Count headlines, pictures and buttons in the first viewport against the limits above. Verify that the text of the page contains the address, the hours and a contact method within the first two viewport heights or in a labelled navigation target. Verify 4.5 to 1 contrast for all text.",
+    "human": "Ask a first-time visitor after ten seconds: what does this business do, and how would you reach it? Both answers must come without hunting."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Literary and art-historical tradition, not an experiment. The glosses come from search summaries of an online dictionary of Japanese art-historical terms (JAANUS), which lists darkness, depth, mystery, transience, ambiguity, calm, sadness and elegance, and of a museum page. The Stanford Encyclopedia of Philosophy entry on Japanese aesthetics uses the headings 'mysterious profundity' (2005 text) and 'mysterious grace' (2011 revision); only its headings were seen. The design moves are this record's interpretation, and for this characteristic the interpretation is speculative: no source seen connects yūgen to page layout except design blogs (grade D)."
+   },
+   "sources": [
+    {
+     "citation": "JAANUS (Japanese Architecture and Art Net Users System). Yuugen 幽玄.",
+     "url": "https://aisf.or.jp/~jaanus/deta/y/yuugen.htm",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Parkes, G., & Loughnane, A. Japanese aesthetics. Stanford Encyclopedia of Philosophy (first published 2005; second author recalled, not confirmed).",
+     "url": "https://plato.stanford.edu/entries/japanese-aesthetics/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Hisamatsu, S. (1971). Zen and the Fine Arts (G. Tokiwa, Trans.). Tokyo: Kodansha International.",
+     "url": "https://terebess.hu/zen/mesterek/Zen-and-the-fine-arts.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Keene, D. (1969). Japanese aesthetics. Philosophy East and West, 19(3), 293-306.",
+     "url": "https://dc2.philarchive.org/rec/KEEJA",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The meaning of yūgen changed over several centuries and between poetry and theatre; one English gloss cannot cover it. A business website exists to inform, so this characteristic must yield wherever it conflicts with findability. The sources give different years for Zeami's death (1441 or 1443).",
+   "appliesTo": [
+    "hero",
+    "sections",
+    "neutral",
+    "copy",
+    "nav"
+   ]
+  },
+  {
+   "id": "datsuzoku-freedom-from-habit",
+   "topic": "japanese-aesthetics",
+   "principle": "Datsuzoku (脱俗): one deliberate break from the formula",
+   "claim": "Datsuzoku (脱俗, literally 'leaving the worldly behind') is the sixth of Hisamatsu's seven characteristics of Zen art; his translator writes 'freedom from attachment', a later paper writes 'freedom from routine', and design blogs write 'freedom from habit or formula'. It names work that is not bound by convention or rule. For a website the idea meets a tested limit: people rely on convention to use a site (existing records conventions-and-consistency and jakobs-law-mental-models), so the freedom belongs to expression, not to navigation or forms.",
+   "mechanism": "The tradition holds that a maker who follows habit produces dead work, and that freedom from fixed patterns lets the work surprise. The existing record maya-typicality-novelty gives the tested version: people like the most advanced design that is still acceptable, that is, novelty inside a familiar frame. The existing record ai-ui-default-cluster-drifts describes the present-day habit to break: the cluster of defaults that generated pages share.",
+   "effects": {
+    "cognitiveLoad": "raises — if the break touches navigation, forms or link styling; none if it stays in expression",
+    "satisfaction": "mixed — a single distinctive element can make a page memorable; novelty also fades (existing record novelty-fades-usefulness-stays)",
+    "perceivedIntuitiveness": "lowers — wherever a convention is broken; this is the reason to limit the break to one place"
+   },
+   "designMoves": [
+    "Choose exactly one deliberate departure from the Template's default (for example an unusual crop, a vertical label, an unexpected empty band) and make everything else conventional.",
+    "Keep navigation, forms, links and buttons in their usual places with their usual look.",
+    "Compare the page with the tool's list of looks that many generated pages share, and change the page when it matches most of the list.",
+    "Do not take the departure from a stock of 'Japanese' motifs; a borrowed motif is another formula."
+   ],
+   "antiPatterns": [
+    "Novel navigation, hidden menus or unusual scrolling presented as freedom.",
+    "Several signature moves on one page, which cancel one another.",
+    "The standard generated first screen: centred headline, two buttons, three equal cards.",
+    "A red circle, a brush stroke or a wave print used as the 'unexpected' element."
+   ],
+   "howToCheck": {
+    "machine": "Count the elements marked as signature moves; the target is one. Verify that navigation, form fields and links use the standard components. Score the page against the tool's list of shared defaults and flag a high match.",
+    "human": "Ask a viewer to name the one thing they remember about the page. Ask a second viewer to book or call; they must not hesitate."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Tradition, not an experiment. The three English glosses come from search summaries (the 1971 translation as quoted by others, the 2017 paper by Lomas and colleagues, and a German lexicon that writes 'entweltlichte Freiheit'). The characters 脱俗 are recalled; a Japanese-language search query that contained them returned matching pages, which is weak confirmation. The rule of exactly one departure is this record's choice; it follows the project's own idea of one signature element and the existing record maya-typicality-novelty, not the tradition."
+   },
+   "sources": [
+    {
+     "citation": "Hisamatsu, S. (1971). Zen and the Fine Arts (G. Tokiwa, Trans.). Tokyo: Kodansha International.",
+     "url": "https://terebess.hu/zen/mesterek/Zen-and-the-fine-arts.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Lomas, T., Etcoff, N., Van Gordon, W., & Shonin, E. (2017). Zen and the art of living mindfully: The health-enhancing potential of Zen aesthetics. Journal of Religion and Health, 56(5), 1720-1739 (journal details recalled).",
+     "url": "https://core.ac.uk/download/219375662.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Metzler Lexikon Philosophie. Zen-Kunst (hosted by Spektrum.de).",
+     "url": "https://www.spektrum.de/lexikon/philosophie/zen-kunst/2266",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Hisamatsu's sense is religious (freedom from attachment to anything, including rules of art); 'be surprising' is a thin version of it. The tested evidence favours familiarity for anything a visitor must operate.",
+   "appliesTo": [
+    "signature",
+    "hero",
+    "nav",
+    "forms",
+    "ai-ux"
+   ]
+  },
+  {
+   "id": "seijaku-stillness",
+   "topic": "japanese-aesthetics",
+   "principle": "Seijaku (静寂): stillness, with nothing moving unasked",
+   "claim": "Seijaku (静寂, 'stillness' or 'tranquility') is the seventh of Hisamatsu's seven characteristics of Zen art: the work is calm and quiet, and keeps that calm even where it shows energy. A page can state this as measurable limits on motion, sound and interruption. Those limits also follow from experiments that the existing knowledge base records, so this is the best-supported of the seven translations.",
+   "mechanism": "The tradition values composure. The tested mechanism is attention: motion captures attention and costs it (existing record motion-captures-attention), auto-rotating content hides information (auto-rotating-carousels), and interruptions raise stress (interruptions-cost-stress). A still page leaves the visitor's attention with the content.",
+   "effects": {
+    "cognitiveLoad": "lowers — by the existing records on motion and interruption; the tradition itself makes no measured claim",
+    "satisfaction": "raises — fewer interruptions mean less stress (existing record interruptions-cost-stress); calm as an aesthetic quality was not measured",
+    "perceivedIntuitiveness": "raises — when nothing moves or changes unless the visitor acts (existing record predictability-no-surprises)"
+   },
+   "designMoves": [
+    "Allow no motion that starts by itself: no auto-playing video, no carousel, no looping animation, no parallax.",
+    "Limit transitions to changes the visitor causes, in opacity or colour only, of 200 milliseconds or less.",
+    "Show no pop-up, no overlay and no sticky promotional bar on arrival.",
+    "Fix at most one element to the screen while scrolling (the navigation).",
+    "Make hover and focus states quiet and clear: a change of line or tone, never a jump in size or position.",
+    "Respect the visitor's reduced-motion setting by removing even those transitions."
+   ],
+   "antiPatterns": [
+    "Elements that fade or slide in as the visitor scrolls, on every section.",
+    "A background video behind the headline.",
+    "A chat bubble, a cookie wall and a newsletter overlay within the first five seconds.",
+    "Stillness taken to mean no feedback: a button that shows no response to a press."
+   ],
+   "howToCheck": {
+    "machine": "Load the page and record for ten seconds without input: flag any change of pixels after the load completes. List all CSS animations and transitions; flag durations above 200 milliseconds, infinite iteration counts, and animated properties other than opacity and colour. Count fixed or sticky elements. Verify that a reduced-motion media query removes transitions.",
+    "human": "Open the page and keep your hands off for ten seconds. Nothing should move, appear or ask for attention."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "The principle is tradition (grade C, expert opinion). The place of seijaku in Hisamatsu's list rests on agreeing search summaries; the characters 静寂 and his remark about calm within movement are recalled. The design limits stand on firmer ground than the principle: they repeat the existing records motion-captures-attention, auto-rotating-carousels, interruptions-cost-stress and reduced-motion-floor, which carry grades from B to A. The 200-millisecond limit is this record's choice within the range that the existing record transitions-easing-duration describes."
+   },
+   "sources": [
+    {
+     "citation": "Hisamatsu, S. (1971). Zen and the Fine Arts (G. Tokiwa, Trans.). Tokyo: Kodansha International.",
+     "url": "https://terebess.hu/zen/mesterek/Zen-and-the-fine-arts.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Metzler Lexikon Philosophie. Zen-Kunst (hosted by Spektrum.de); gives 'Stille' as the seventh characteristic.",
+     "url": "https://www.spektrum.de/lexikon/philosophie/zen-kunst/2266",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Stillness does not forbid feedback: a pressed button must still respond, and a wait must still show progress. Some audiences read a still, sparse page as lonely or unfinished (see dense-japanese-web-counter-evidence).",
+   "appliesTo": [
+    "motion",
+    "states",
+    "hero",
+    "nav",
+    "performance"
+   ]
+  },
+  {
+   "id": "wabi-sabi-simplified-abroad",
+   "topic": "japanese-aesthetics",
+   "principle": "Wabi and sabi (侘, 寂): two old words that the popular English compound flattens",
+   "claim": "Wabi (侘) first named the loneliness and poverty of life away from society and came to name an austere, humble beauty, chiefly through the tea ceremony. Sabi (寂) meant 'chill', 'lean' or 'withered' and came to name the beauty of age, wear and solitude, chiefly through poetry. The hyphenated single term 'wabi-sabi' is recent: one essay states that the joined term is not ancient, does not appear in standard Japanese dictionaries, and seems to have formed outside Japan. Leonard Koren's 1994 book made it a design word in English, and Koren wrote in 2015 that the book left out how the two words came to be joined and that this 'contributed to numerous misconceptions'. Popular accounts that reduce it to 'embrace imperfection' or to a beige, rough-textured look simplify a contested history.",
+   "mechanism": "The tea masters of the sixteenth century preferred plain, locally made, irregular utensils to costly imported ones (recalled), and poets valued the withered and the lonely; both attach beauty to what is modest, incomplete or aged. A short English compound with a simple slogan travels more easily than two words with five centuries of shifting use.",
+   "effects": {
+    "cognitiveLoad": "none — the idea concerns taste, not effort",
+    "satisfaction": "unknown — not measured; the existing record errors-and-flaws-erode-trust shows that real flaws on a website cost trust, which limits any literal use of 'imperfection'",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Express modesty through real materials in photographs (worn wood, unglazed clay, plain cloth) and through matte, muted colour; do not draw fake wear in code.",
+    "Allow irregularity in one hand-made element at most (a hand-drawn mark, an uneven picture edge); keep type, spacing and alignment exact.",
+    "Use warm, low-vividness neutrals: page background a warm off-white, not pure white; text a soft ink black.",
+    "In the tool's own text, write 'wabi (austere, humble beauty) and sabi (the beauty of age and wear)' and avoid 'wabi-sabi' as the name of a look.",
+    "Never let 'imperfection' excuse a defect: no misaligned text, no broken picture, no spelling error."
+   ],
+   "antiPatterns": [
+    "'Wabi-sabi style' sold as a beige palette with a paper texture.",
+    "Deliberately crooked or sloppy layout presented as philosophy.",
+    "The claim that wabi-sabi is 'the ancient Japanese philosophy of imperfection'.",
+    "Distressed or grunge textures applied to a new business's page."
+   ],
+   "howToCheck": {
+    "machine": "Run a spelling check and a broken-link and broken-picture check; all must pass. Verify that text blocks share the grid's edges. Flag background textures drawn by code or tiled images. Search the tool's text for 'wabi-sabi' and 'ancient'.",
+    "human": "Ask: does the page look modest and cared for, or does it look unfinished? Only the first is intended."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Tradition and secondary scholarship, not an experiment; every source was seen only as a search summary. The older meanings of the two words come from Wikipedia copies. The statement that the compound is recent and absent from standard Japanese dictionaries comes from one essay in a set of university outreach readings; its author was not identified, and no second source confirmed it, so treat it as likely and unproven. Koren's 2015 remark comes from a summary of his 'Wabi-Sabi: Further Thoughts'. Two scholarly works that reading lists name as central, Haga (1989) and Saito (1997), were not seen; their arguments are not represented here. The glosses 'subdued, austere beauty' for wabi and 'rustic patina' for sabi are credited to the Stanford Encyclopedia of Philosophy by a secondary page. The popular claims about a 'wabi-sabi web style' have grade D."
+   },
+   "sources": [
+    {
+     "citation": "Koren, L. (1994). Wabi-Sabi for Artists, Designers, Poets & Philosophers. Berkeley: Stone Bridge Press (publisher recalled).",
+     "url": "https://www.pw.org/best-books/wabisabi_for_artists_designers_poets_philosophers",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Koren, L. (2015). Wabi-Sabi: Further Thoughts. (Seen through a university reading-list page.)",
+     "url": "https://gcdcommunityresourceslist.myblog.arts.ac.uk/?p=3479",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "University of Arizona, community college outreach readings. Background: Wabi-Sabi (author not identified).",
+     "url": "https://communitycollegeoutreach.arizona.edu/sites/communitycollegeoutreach.arizona.edu/files/instructional/8%20Background-%20Wabi-Sabi.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Wikipedia. Wabi-sabi.",
+     "url": "https://en.wikipedia.com/wiki/Wabi-sabi",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Haga, K. (1989). The wabi aesthetic through the ages. In P. Varley & I. Kumakura (Eds.), Tea in Japan. Honolulu: University of Hawaii Press (editors and publisher recalled).",
+     "url": null,
+     "verified": "from-memory-unverified"
+    },
+    {
+     "citation": "Saito, Y. (1997). The Japanese aesthetics of imperfection and insufficiency. Journal of Aesthetics and Art Criticism, 55(4), 377-385 (issue and pages recalled).",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "The history of the compound is not settled by what this session could see. The tea masters' 'poverty' was practised by wealthy men with expensive objects, a point scholars make often (recalled, not checked); the look is not a neutral sign of modesty. A small business that looks worn online risks reading as neglected.",
+   "appliesTo": [
+    "copy",
+    "neutral",
+    "theme",
+    "signature",
+    "color-strategy"
+   ]
+  },
+  {
+   "id": "emptiness-and-plain-goods",
+   "topic": "japanese-aesthetics",
+   "principle": "Emptiness as a container, and the plain-goods approach in retail",
+   "claim": "The graphic designer Kenya Hara (原研哉) separates 'emptiness' (空, kū) from 'simplicity'. In his account, simplicity is a Western idea about 150 to 200 years old that removes things to make a function clear; emptiness is older and works as a container that different people fill with their own meaning. His book 'White' says at the start that it is not a book about colour: white is a way of sensing, 'a color from which color has escaped'. A Japanese retail label applied a related approach from December 1980: about 40 plainly packaged food and household products sold with no brand mark on them, under a first advertisement that read 'cheap for a reason'. Hara became that label's art director in 2001 or 2002 and described its aim as emptiness. These are a designer's ideas and a company's practice, not tested findings.",
+   "mechanism": "In Hara's account, a message that states one meaning excludes people who want another, and an object or image that states little lets each viewer complete it. In the retail approach, removing the brand mark, decoration and extra packaging lowered cost and made the reason for the price the message. The existing record simplicity-can-read-as-cheap shows the risk on the other side: in direct comparison people value a plainer design lower. The retail approach turned that into a stated reason.",
+   "effects": {
+    "cognitiveLoad": "lowers — fewer competing marks and claims; by analogy with the existing record extraneous-content, not measured for this approach",
+    "satisfaction": "mixed — plain presentation is liked at first sight and can be valued lower in a direct comparison (existing record simplicity-can-read-as-cheap)",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Make the page background white or a warm off-white (OKLCH lightness 0.95 or more, chroma 0.02 or less) and treat it as the main material, covering the larger share of each screen.",
+    "Set the business name in plain text in the body typeface, no larger than the page's main heading; use no emblem, slogan lock-up or badge.",
+    "Show each product or service alone on a plain ground: one object per picture, no staged lifestyle scene, no ribbon or 'best seller' sticker.",
+    "State the reason in one plain sentence per item: what it is, what it is made of or how it is done, what it costs. Use no superlatives.",
+    "Use one text colour, one quieter text colour and one accent; use the accent on at most one element in each screen.",
+    "Derive the look from the principle. Copy no company's label colour, typeface or layout, and name no brand in the tool's text."
+   ],
+   "antiPatterns": [
+    "Imitating a known retailer's label (its red-brown, its typeface, its kraft paper) and calling the result a principle.",
+    "An empty first screen with no information; emptiness holds meaning that the visitor brings, and a visitor to a business page brings a question that needs an answer.",
+    "Words such as 'premium', 'luxury' or 'curated' beside a plain look.",
+    "Hiding the price to keep the page clean."
+   ],
+   "howToCheck": {
+    "machine": "Measure the share of each viewport that is background. Measure the height of the business name against the main heading. Count badges, ribbons and stickers; the target is zero. Search the text for superlatives and for brand names from a deny-list. Verify that each listed item has a price or a stated way to get one.",
+    "human": "Show the page to two different customers and ask what kind of business it is for; both should feel it could be for them. Ask whether the plain look reads as chosen or as cheap."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "A designer's own theory and a company's history, not an experiment; every source was seen only as a search summary. Seen in summaries: the publisher's descriptions of 'Designing Design' (2007) and 'White' (the publisher lists 2009; Wikipedia lists 2010); Hara's statement to a journalist that simplicity emerged in the West 150 to 200 years ago; a secondary line 'simplicity removes to clarify; emptiness removes to invite' (a commentator's wording, not confirmed as Hara's); the retail label's start in December 1980 with 40 products, its first advertisement, and Hara's start as art director in 2001 or 2002. Not confirmed: the phrase 'empty vessel' in either book; the phrase 'this will do' as the label's stated aim (recalled); plain or unbleached packaging as a stated principle (recalled). The publisher's description says the character for 'white' is part of a character meaning 'emptiness'; this record could not check which character it means. Background only, not for the tool's text: the label is Mujirushi Ryōhin ('no-brand quality goods', known abroad as Muji), launched by the supermarket chain Seiyu, with Ikko Tanaka as its first art director."
+   },
+   "sources": [
+    {
+     "citation": "Hara, K. (2007). Designing Design. Baden: Lars Müller Publishers.",
+     "url": "https://lars-mueller-publishers.com/designing-design",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Hara, K. (2009). White. Baden: Lars Müller Publishers (Wikipedia gives 2010).",
+     "url": "https://shop.japanhouselondon.uk/product/kenya-hara-white/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Quartz (2017). Emptiness, not minimalism, is the path to creativity, explains MUJI's design philosopher (year recalled; the brand name in this title is background only).",
+     "url": "https://qz.com/quartzy/1140182/mujis-design-philosophy-is-emptiness-not-minimalism-says-kenya-hara",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Wikipedia. Kenya Hara.",
+     "url": "https://en.wikipedia.org/wiki/Kenya_Hara",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Wikipedia. Muji (background on the retail label's history).",
+     "url": "https://www.wikipedia.org/wiki/Muji",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Spoon & Tamago. Retro advertisements for the retail label created by its first art director (background).",
+     "url": "https://spoon-tamago.com/retro-muji-ads-created-by-graphic-designer-ikko-tanaka/",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Hara's history of 'simplicity' and 'emptiness' is his argument, and historians may not accept it. The plain-goods approach began as a low-price signal inside a large retail group; a small business that copies the look does not inherit the trust that the label built over decades. A specific company's look is protected by trade-mark and trade-dress law in many places; the tool must stay with the general principle.",
+   "appliesTo": [
+    "theme",
+    "neutral",
+    "hero",
+    "copy",
+    "accent",
+    "signature",
+    "density"
+   ]
+  },
+  {
+   "id": "japanese-graphic-practice",
+   "topic": "japanese-practice",
+   "principle": "Japanese graphic practice: wide margins, few colours, one accent, steady rhythm, quiet type",
+   "claim": "Post-war Japanese graphic designers joined European modernist method to a Japanese sense of spatial balance: sources describe geometric forms, a limited palette and clean type. Japanese text sits on a grid of square character frames and runs horizontally or vertically, so page design starts from one base text block and a steady line rhythm; the W3C document 'Requirements for Japanese Text Layout' describes this method. In ink painting and calligraphy, a small vermilion seal beside black ink on paper is a long-standing practice. 'Generous margins, a restrained palette and a single accent' is a fair description of one strand of this practice and a designer's generalisation, not a documented rule.",
+   "mechanism": "A page built from one text block and one line unit repeats the same intervals, and the eye reads that repetition as order (existing records alignment-continuity and consistency-internal-and-external). A single small area of strong colour on a neutral field is found at a glance (existing record preattentive-popout), so one accent marks one thing without competition. Japanese fonts have no true italic and no capitals (recalled), so emphasis comes from weight, size or spacing, which keeps the texture of the text even.",
+   "effects": {
+    "cognitiveLoad": "lowers — one accent on a neutral field pops out, and repeated intervals group content; by the existing records named above, not by a test of Japanese practice",
+    "satisfaction": "unknown — not measured for this practice; the existing record classical-vs-expressive-aesthetics links order and clarity to one kind of visual appeal",
+    "perceivedIntuitiveness": "raises — when the single accent always marks the same kind of thing (the main action)"
+   },
+   "designMoves": [
+    "Build the page from one text block: body lines of 60 to 72 characters, side margins of at least 8% of the window on wide screens and 20 to 24 CSS pixels on phones.",
+    "Derive every vertical gap from one line unit (the body line height, for example 28 pixels at 16-pixel text with a line height of 1.75): gaps are whole multiples of the unit.",
+    "Use one column grid for the whole page; every block starts on a grid line.",
+    "Use neutrals plus one accent; give the accent one job (the main action or one mark) and at most about 5% of a screen.",
+    "Use one typeface family in two weights; mark emphasis with weight, never with italics or colour; keep headings modest in size.",
+    "Add slight letter spacing (about 0.04 to 0.08 em) to small labels only; leave body text at its normal spacing.",
+    "If a vertical label is wanted as the one signature move, limit it to a single short label; never set navigation or body text in the Latin alphabet vertically."
+   ],
+   "antiPatterns": [
+    "Gaps chosen by eye, so that no two sections share an interval.",
+    "Two or three accent colours competing on one screen.",
+    "Latin text rotated or stacked letter by letter to look 'Japanese'.",
+    "Brush-script or imitation-Asian display typefaces.",
+    "Applying the Japanese line length of about 40 characters to English text; the figure belongs to a script of full-width characters."
+   ],
+   "howToCheck": {
+    "machine": "Verify that every vertical gap is a whole multiple of the line unit and that every block's left edge sits on a grid line. Measure characters per line in body text. Count hues outside the neutrals; the target is one. Measure the accent's share of each viewport. Count font families and weights. Flag italic text and rotated or vertical text beyond one label.",
+    "human": "Lay a ruler down the left edge and across the gaps: do the edges line up and the intervals repeat? Can you name what the accent colour means on this page?"
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Design history and practice, not an experiment; every source was seen only as a search summary, and several details are recalled. Seen: a museum text that describes one designer's 'frequent use of geometric forms and a limited color palette' as evidence of respect for the Bauhaus; a design-history chapter that describes another designer's work as joining a Japanese sense of spatial balance to the International Typographic Style; the existence and structure of the W3C document (first published as a Note in 2009; it builds layout on a base text block called kihon-hanmen); a web.dev accessibility page that gives a line limit of 80 characters, or 40 for ideographic scripts; a Japanese reference that suggests letter spacing of about 0.05 em and an example line height of 1.75; an art-history dictionary entry on the seal (rakkan, 落款) and seals inked in vermilion. Recalled and not checked: that the W3C document gives a usual line gap of 50% to 100% of the character size for body text; that Japanese fonts lack true italics. The 'single accent' rule and all the numbers in the design moves are this record's translation. Background only: the designers are Ikko Tanaka and Yusaku Kamekura, whose 1964 Tokyo Olympics posters first brought Japanese graphic design wide international notice."
+   },
+   "sources": [
+    {
+     "citation": "W3C (2009; second edition 2020). Requirements for Japanese Text Layout (JLREQ). W3C Working Group Note.",
+     "url": "https://www.w3.org/TR/jlreq/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Cooper Hewitt, Smithsonian Design Museum (2015). Do I look simple? (object text on a poster by Ikko Tanaka).",
+     "url": "https://www.cooperhewitt.org/2015/12/05/do-i-look-simple/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Haimes, P. Japanese design (course text), chapter 5. Ritsumeikan University.",
+     "url": "https://www.ritsumei.ac.jp/~haimes/japanesedesign/pdfs/ch5_compressed.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "JAANUS (Japanese Architecture and Art Net Users System). Rakkan 落款.",
+     "url": "https://aisf.or.jp/~jaanus/deta/r/rakkan.htm",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "web.dev. Learn Accessibility: Typography (Japanese edition).",
+     "url": "https://web.dev/learn/accessibility/typography?hl=ja",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Wikipedia. Ikko Tanaka (background).",
+     "url": "https://en.wikipedia.org/wiki/Ikko_Tanaka",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The same designers also made dense, colourful work; one source describes 'bold geometries' and 'vibrant colors'. The W3C document describes book typesetting in Japanese, and its numbers do not transfer to English text; for line length and line spacing in the Latin alphabet, follow the existing records line-length and spacing-and-justification. The course-text author's name is read from the address of the file and was not confirmed.",
+   "appliesTo": [
+    "content-width",
+    "sections",
+    "typeface",
+    "size-scale",
+    "heading-treatment",
+    "accent",
+    "color-strategy",
+    "emphasis",
+    "mobile"
+   ]
+  },
+  {
+   "id": "traditional-colors-are-conventions",
+   "topic": "japanese-practice",
+   "principle": "Traditional Japanese colour names have no single screen value",
+   "claim": "Traditional colours (dentō-iro, 伝統色) are names that come from dyes, pigments and materials: ai (藍, indigo), shu (朱, vermilion), sumi (墨, ink black), kinari (生成り, unbleached cloth) and matcha (抹茶, powdered green tea) among them. A Japanese industrial standard, JIS Z 8102:2001, lists 269 customary colour names and gives each a representative value in the Munsell system, which describes surface colours, not screen colours. The hexadecimal values on websites are conversions and conventions, and they disagree: for vermilion this session met #FF3500, and the values #EB6101 and #EF454A are recalled from other lists. No value is 'the' traditional colour.",
+   "mechanism": "A dye or pigment varies with the batch, the cloth, the light and its age, so a name covers a range. Turning a Munsell value into a screen value needs assumptions about the light and the screen, and different publishers make different ones. One page seen in this session states that its own hex value for indigo is a screen approximation and not a colour measurement.",
+   "effects": {
+    "cognitiveLoad": "none — the choice among near values of a hue does not change effort; contrast does, and it is measured below",
+    "satisfaction": "unknown — not measured for these colours; the existing record lightness-saturation-over-hue records that lightness and vividness shape feeling more than hue does",
+    "perceivedIntuitiveness": "none — no effect is claimed"
+   },
+   "designMoves": [
+    "Page background in the kinari family: a warm off-white, OKLCH lightness 0.95 to 0.985, chroma 0.005 to 0.02, hue 78 to 97 (for example #F6F2EA; published values recalled for kinari are #FBFAF5 and #F7EFE3).",
+    "Text in the sumi family: a soft ink black, OKLCH lightness 0.23 to 0.32, chroma 0.005 or less (for example #2B2A28, which gives 12.8 to 1 on #F6F2EA; the standard's neutral N2 converts to about #313131, 11.7 to 1).",
+    "Accent option A, vermilion: bright vermilion (near #EB6101) gives only 3.0 to 1 on #F6F2EA, so use it for a non-text mark only; for a link, a button or text use a darkened vermilion near #B93A1A (5.1 to 1 on the background; a white label on it gives 5.7 to 1).",
+    "Accent option B, indigo: near #234A6B (8.3 to 1 on the background; a white label on it gives 9.3 to 1). Published values met for indigo span #0D5661, #264653 and #165E83.",
+    "Matcha green (values recalled: #C5C56A, #C0BA7F) gives under 2 to 1 on the background: use it as a surface tint or in pictures, never for text or a control's edge.",
+    "Name the tokens by job (background, text, accent). In teaching text write 'inspired by the traditional colour name shu (vermilion)'; never write 'the authentic' or 'the official' colour."
+   ],
+   "antiPatterns": [
+    "A hex value presented as the true value of a traditional colour.",
+    "Bright vermilion text or a vermilion button with a white label; both fail 4.5 to 1.",
+    "Five traditional colours used together as a 'Japanese palette'.",
+    "Pure white (#FFFFFF) with pure black (#000000) labelled as 'paper and ink'."
+   ],
+   "howToCheck": {
+    "machine": "Compute the contrast of every text and background pair with the WCAG 2.x formula and require 4.5 to 1 for text and 3 to 1 for the edges of controls and for meaningful marks. Convert each token to OKLCH and compare it with the ranges above. Search the tool's text for 'authentic', 'official' and 'true' next to a colour name.",
+    "human": "View the page on two different screens and in daylight: does the background still read as warm paper, the text as ink, and the accent as one clear mark?"
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "The names are tradition; the screen values are convention. Seen in search summaries: that JIS Z 8102:2001 defines 269 customary colour names with a representative Munsell value each (a university paper); that the standard's vermilion (shu-iro, number 015) is 6R 5.5/14 (two secondary colour-name pages); that kinari-iro is 10YR 9/1 and sumi is N2 (one secondary table whose columns were partly misaligned, so this is weaker); the hex values #FF3500 for vermilion (a copy of a Wikipedia list) and #0D5661 and #264653 for indigo (two colour sites); a remark by one author who compared the standard with a well-known reference book and found the Munsell values equal for only one colour. Recalled and not checked: the standard's values for ai-iro (2PB 3/5) and matcha-iro (2GY 7.5/4), and every other hex value above. Calculated in this session with the WCAG 2.x formula and a standard OKLCH conversion: all contrast ratios, all OKLCH figures, and the conversion of N2 to about #313131. The example values #F6F2EA, #2B2A28, #B93A1A and #234A6B are this record's own choices inside each colour family, not published traditional values. The standard itself was not seen."
+   },
+   "sources": [
+    {
+     "citation": "Japanese Industrial Standards Committee (2001). JIS Z 8102:2001, Names of non-luminous object colours. (Seen through a Yamaguchi University paper that describes it.)",
+     "url": "https://petit.lib.yamaguchi-u.ac.jp/21289/files/154604",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Japanese with Anime. JIS colors (secondary table of the 269 names with Munsell values); shuiro 朱色.",
+     "url": "https://colors.japanesewithanime.com/japanese-colors/jis-colors",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Wikipedia. Traditional colors of Japan (seen through a mirror copy).",
+     "url": "https://en.wikipedia.org/wiki/Traditional_colors_of_Japan",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Japanese Color Atlas. Ai-iro (states that its hex value is a screen approximation).",
+     "url": "https://japanese-color-atlas.pages.dev/ja/colors/ai-iro",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Qiita article comparing the standard's customary colours with Nagasaki, S. (2006), Nihon no dentō-iro: sono shikimei to shikichō, Seigensha.",
+     "url": "https://qiita.com/kaizen_nagoya/items/0cbaa9852d839f66c572",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Popular Japanese colour-name sites (for example Dentō-iro no Iroha and Wa-iro Daijiten) as the origin of the recalled hex values #EB6101, #165E83, #595857, #FBFAF5 and #C5C56A.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "Screens differ, so even an agreed hex value would not look the same everywhere. Colour meanings are conventions that differ between audiences (existing record semantic-color-conventions): vermilion may read as 'error red' to a visitor who expects red to mean a problem, so do not use the vermilion accent for a main action on a page that also shows error messages in red.",
+   "appliesTo": [
+    "color-strategy",
+    "neutral",
+    "accent",
+    "theme",
+    "copy"
+   ]
+  },
+  {
+   "id": "dense-japanese-web-counter-evidence",
+   "topic": "japanese-practice",
+   "principle": "Mainstream Japanese web pages are dense: 'Japanese design is minimal' is false as a general statement",
+   "claim": "The minimal strand of Japanese art and graphic design exists beside a commercial web mainstream that is dense: many links, small text, banners and badges. One peer-reviewed study found that East Asian portal pages and conference posters contain more information than North American ones. Writers offer three groups of reasons for the density (the writing system and its fonts, what shoppers expect, and technical history), and none of them has been tested as a cause. A design tool must therefore describe its quiet looks by their properties and must not present them as how Japan designs.",
+   "mechanism": "Reasons offered by journalists and practitioners. Writing system: Japanese mixes three scripts with Latin letters, a kanji carries more meaning per character than a Latin letter, and a font needs thousands of glyphs (a full font file runs to several megabytes), so sites long used system fonts or text set as pictures. Expectations: reports say shoppers want detail before they decide, designers there read density as thoroughness, and a sparse page can feel 'sabishii' (lonely); ranking badges and banners reassure. History: millions of people first used the internet on feature phones in the late 1990s and early 2000s, portal-style pages set habits, and cautious organisations redesign slowly. A fourth reason, Japan's high score of 92 on Hofstede's 'uncertainty avoidance' scale, appears often; a designer who works with that scale advises simplicity and limited choice for such audiences, so the scale can be read either way.",
+   "effects": {
+    "cognitiveLoad": "mixed — one study found East Asian participants faster than North Americans on information-heavy mock pages; another found Japanese participants about three times slower than Americans on highly complex sites (see cross-cultural-density-evidence)",
+    "satisfaction": "mixed — reports say that many Japanese shoppers prefer detail up front; no controlled preference test was found",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Name each quiet look by what a person sees (for example 'Paper, ink and one red mark'), and say in the teaching text that it draws on one strand of Japanese art and graphic design.",
+    "Never write 'Japanese design is minimal', 'the Japanese style' or 'Zen design' as a general description.",
+    "If the business's customers are in Japan, do not assume that they prefer a sparse page; test both a sparse and a detailed version with them.",
+    "In every sparse look, keep the facts that a customer checks before deciding (what, where, hours, price, how to reach) within the first two screenfuls."
+   ],
+   "antiPatterns": [
+    "A look labelled 'Japanese' that is only a Western minimal page with a red circle.",
+    "Explaining the density of Japanese sites by one cause.",
+    "Treating the dense mainstream as backward; reports describe it as a response to its audience.",
+    "A sparse page for a Japan-based audience that withholds detail."
+   ],
+   "howToCheck": {
+    "machine": "Search the tool's text for 'Japanese design is', 'Japanese style', 'Zen design' and 'authentic'; flag each match. For each sparse look, verify that the address, the hours, a price or price range and a contact method appear within two viewport heights.",
+    "human": "Ask a reader what the tool's text claims about Japan. The answer should be 'one tradition among several', not 'Japan is minimal'."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Two layers. The observation that East Asian pages carry more information has peer-reviewed support: Wang, Masuda, Ito and Rashid (2012) compared portal pages of governments and universities and conference posters; the abstract was seen through a search summary, and sample sizes were not seen. The reasons are journalism and practitioner writing (grade C to D): a 2025 newspaper feature seen only through pages that quote it, a 2023 practitioner essay, a 2022 video seen through summaries, and agency blogs. No study found in this session tests any reason as a cause. The uncertainty-avoidance score of 92 was seen in two search summaries; the advice of simplicity for such audiences comes from a magazine article by Aaron Marcus seen in a summary. The glyph counts in the summaries differ (7,000 to 10,000 in one, 23,000 in another), and the font file sizes differ (about 4 to 9 megabytes), so treat them as orders of magnitude."
+   },
+   "sources": [
+    {
+     "citation": "Wang, H., Masuda, T., Ito, K., & Rashid, M. (2012). How much information? East Asian and North American cultural products and information search performance. Personality and Social Psychology Bulletin, 38(12), 1539-1551.",
+     "url": "https://journals.sagepub.com/doi/abs/10.1177/0146167212455828",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Ha, T.-H. (2025, December 15). Why Japan's internet looks weird, unless you live here. The Japan Times (title approximate; seen only through pages that quote it).",
+     "url": "https://www.japantimes.co.jp/life/2025/12/15/style-design/japan-internet-web-design/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Boing Boing (2026, January 5). Japanese users prefer dense, busy websites.",
+     "url": "https://boingboing.net/2026/01/05/japanese-users-prefer-dense-busy-websites.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Missbichler, M. (2023). Why Japanese websites look so different. Medium.",
+     "url": "https://medium.com/@mirijam.missbichler/why-japanese-websites-look-so-different-2c7273e8be1e",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Gigazine (2022, November 29). Why are Japanese websites with lots of text and flashy colors so 'different'? (report on a 2022 video essay).",
+     "url": "https://gigazine.net/gsc_news/en/20221129-peculiar-case-of-japanese-web-design",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Marcus, A. Are you cultured? Dr. Dobb's (date not confirmed); related: Marcus, A., & Gould, E. W. (2000). Crosscurrents: Cultural dimensions and global Web user-interface design. Interactions, 7(4), 32-46 (details recalled).",
+     "url": "https://drdobbs.com/are-you-cultured/184411648?pgno=2",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Uhiyama Lab. Cut Noto Sans JP font size by 50% with FontTools subsetting (on Japanese font file sizes).",
+     "url": "https://uhiyama-lab.com/en/blog/webdev/optimize-subset-fonttools/",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Japan also has many sparse sites, notably for design-led brands, museums and studios; 'dense' describes the commercial and portal mainstream that the reports discuss. Web conventions keep converging as global platforms spread. Hofstede's country scores are disputed as explanations of individual behaviour (recalled, not checked).",
+   "appliesTo": [
+    "density",
+    "copy",
+    "sections",
+    "hero",
+    "theme"
+   ]
+  },
+  {
+   "id": "cross-cultural-density-evidence",
+   "topic": "audience-differences",
+   "principle": "East Asian and Western users differ on some visual measures, and the findings on density point both ways",
+   "claim": "Experiments support four narrower statements, with different strength. (1) East Asian participants attend more to context and Western participants more to a central object, in description, photography and drawing tasks; later eye-movement work is mixed. (2) East Asian public web pages and posters contain more information than North American ones, and East Asian participants found targets faster on information-heavy mock pages. (3) In a later online study, Japanese participants took about three times as long as Americans to find information on highly complex websites, and visual complexity slowed search and recall for everyone in a companion study. (4) Website designs differ measurably between countries, and surveys in Japan, Korea and Taiwan found a high preference for white. No finding supports choosing a page's density from the visitor's nationality.",
+   "mechanism": "Nisbett and Masuda propose that East Asian cultures train holistic attention (to relations and background) and Western cultures analytic attention (to a focal object). Wang and colleagues extend this: people raised among information-rich pages learn to search them. The 2021 study by Baughan and colleagues tested whether such attention patterns make Japanese users faster at finding information at the edges of a page, and its abstract says the results do not support that hypothesis. Exposure and local convention remain the simplest explanation for country differences (existing record preferences-vary-by-audience).",
+   "effects": {
+    "cognitiveLoad": "mixed — a familiar density may be easier for the group raised with it (Wang et al., 2012), and high complexity slowed everyone in the 2020 and 2021 studies",
+    "satisfaction": "mixed — preferred complexity and colourfulness differ by country and by person (existing record preferences-vary-by-audience)",
+    "perceivedIntuitiveness": "unknown — not measured in these studies"
+   },
+   "designMoves": [
+    "Name the audience's country and its everyday websites before choosing density; do not infer density from a stereotype of the culture.",
+    "Hold visual complexity down for every audience where visitors must find something: the two search studies found that complexity slowed search for all groups.",
+    "For an audience in Japan, Korea or Taiwan, a light or white page background has survey support; treat it as a starting point, since the surveys date from the 1990s.",
+    "Where the audience is outside the designer's own culture, run a preference test and a find-the-fact test with at least a few people from it."
+   ],
+   "antiPatterns": [
+    "'Asian users like busy pages' or 'Japanese users like minimal pages' as a rule.",
+    "Treating East Asia as one audience; one study found differences between Chinese and Korean speakers.",
+    "Using time alone to compare groups; the 2021 authors warn against it.",
+    "Citing Nisbett's theory as proof of a layout preference."
+   ],
+   "howToCheck": {
+    "machine": null,
+    "human": "Give five people from the intended audience two versions (sparse and detailed) and one fact to find in each. Record the time, the errors and which version they prefer."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "All of these are peer-reviewed studies, and every one was seen only as a search summary of its abstract or of a later citation; sample sizes are stated only where a summary gave them. Strength of each. Masuda and Nisbett (2001) and Masuda, Gonzalez, Kwan and Nisbett (2008, three studies: museum art, drawing and photography, portrait preference): moderate to strong for attention to context in those tasks; a 2017 conference poster reports a replication of the portrait result. Chua, Boland and Nisbett (2005) eye tracking: contested; failures to replicate by Rayner and colleagues (2007) and Evans and colleagues (2009) are recalled and were not checked. Rhode, Voyer and Gleibs (2016): challenges a pan-Asian pattern. Wang, Masuda, Ito and Rashid (2012): moderate; one paper with several studies; not replicated as far as this session saw. Baughan, Oliveira, August, Yamashita and Reinecke (2021): one online study, 84 American and 65 Japanese participants; moderate; it contradicts a simple reading of Wang et al. Baughan, August, Yamashita and Reinecke (2020): 165 online participants; complexity hurt search and recall, also for people who prefer complex sites. Nordhoff, August, Oliveira and Reinecke (2018): 80,901 websites from 44 countries measured by image analysis; strong that designs differ by country; the Japan figures were not seen; a later paper reports that Chinese sites scored highest in colourfulness and in the number of text areas. Dong and Lee (2008) eye tracking of Chinese, Korean and American viewers of a web page: weak; small study. Cyr and Trevor-Smith (2004): 30 municipal sites each from Germany, Japan and the United States; design features differed. Saito (1996): three surveys; about one Japanese respondent in four placed white among their top three colours. The existing record preferences-vary-by-audience covers Reinecke and Gajos (2014); this session found no East Asian country figures from that paper."
+   },
+   "sources": [
+    {
+     "citation": "Masuda, T., & Nisbett, R. E. (2001). Attending holistically versus analytically: Comparing the context sensitivity of Japanese and Americans. Journal of Personality and Social Psychology, 81(5), 922-934. (Seen through a 2016 paper that cites it; the address is that paper.)",
+     "url": "https://www.frontiersin.org/articles/10.3389/fpsyg.2016.01508/full",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Masuda, T., Gonzalez, R., Kwan, L., & Nisbett, R. E. (2008). Culture and aesthetic preference: Comparing the attention to context of East Asians and Americans. Personality and Social Psychology Bulletin, 34(9), 1260-1275.",
+     "url": "https://journals.sagepub.com/doi/full/10.1177/0146167208320555",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Rhode, A. K., Voyer, B. G., & Gleibs, I. H. (2016). Does language matter? Exploring Chinese-Korean differences in holistic perception. Frontiers in Psychology, 7, 1508 (title recalled).",
+     "url": "https://www.frontiersin.org/articles/10.3389/fpsyg.2016.01508/full",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Wang, H., Masuda, T., Ito, K., & Rashid, M. (2012). How much information? East Asian and North American cultural products and information search performance. Personality and Social Psychology Bulletin, 38(12), 1539-1551.",
+     "url": "https://journals.sagepub.com/doi/abs/10.1177/0146167212455828",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Baughan, A., Oliveira, N., August, T., Yamashita, N., & Reinecke, K. (2021). Do cross-cultural differences in visual attention patterns affect search efficiency on websites? Proceedings of CHI 2021. https://doi.org/10.1145/3411764.3445519",
+     "url": "https://wildlab.cs.washington.edu/Publications_files/Baughan_Oliveira_CHI2021.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Baughan, A., August, T., Yamashita, N., & Reinecke, K. (2020). Keep it simple: How visual complexity and preferences impact search efficiency on websites. Proceedings of CHI 2020.",
+     "url": "https://par.nsf.gov/biblio/10156432",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Nordhoff, M., August, T., Oliveira, N. A., & Reinecke, K. (2018). A case for design localization: Diversity of website designs in 44 countries. Proceedings of CHI 2018.",
+     "url": "https://wildlab.cs.washington.edu/Publications_files/Nordhoff_CHI2018.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Dong, Y., & Lee, K.-P. (2008). A cross-cultural comparative study of users' perceptions of a webpage: With a focus on the cognitive styles of Chinese, Koreans and Americans. International Journal of Design, 2(2), 19-30.",
+     "url": "https://ijdesign.org/index.php/IJDesign/article/view/267",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Cyr, D., & Trevor-Smith, H. (2004). Localization of Web design: An empirical comparison of German, Japanese, and United States Web site characteristics. Journal of the American Society for Information Science and Technology, 55(13), 1199-1208.",
+     "url": "https://ideas.repec.org/a/bla/jamist/v55y2004i13p1199-1208.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Saito, M. (1996). Comparative studies on color preference in Japan and other Asian regions, with special emphasis on the preference for white. Color Research and Application, 21(1), 35-49.",
+     "url": "https://sites.socsci.uci.edu/~kjameson/ECST/Saito_ComparativeCrossCulturalColorPreferenceAndItsStructure.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Chua, H. F., Boland, J. E., & Nisbett, R. E. (2005). Cultural variation in eye movements during scene perception. Proceedings of the National Academy of Sciences, 102(35), 12629-12633; and the replication attempts by Rayner et al. (2007) and Evans et al. (2009).",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "Most samples are students or online volunteers. 'East Asian' groups mix nationalities and often include students living abroad. The website studies date from 2004 to 2021, and conventions keep converging. Group averages hide large differences between persons. One search summary gives a different page range for the 2008 paper (1236-1248); check before citing.",
+   "appliesTo": [
+    "density",
+    "color-strategy",
+    "theme",
+    "sections",
+    "hero"
+   ]
+  },
+  {
+   "id": "empty-space-experiments-beyond-prestige",
+   "topic": "perceived-quality",
+   "principle": "Empty space and plainness raise perceived quality only under conditions",
+   "claim": "The existing records whitespace-quality-signal and whitespace-prestige-with-limits already cover the finding that generous space signals prestige by convention, and whitespace-comprehension covers the thin evidence on reading. Four further experiments set conditions. Empty space around a message made the message less persuasive in seven studies, because readers took the message for a weaker opinion. Simpler images raised perceived luxury for a familiar luxury brand, and more complex images did so for an unfamiliar one. Logo complexity built a luxurious image through perceived craftsmanship, depending on brand familiarity. In an analysis of over 400,000 brand images with an experiment, more colour variety consistently lowered perceived brand status. No experiment found in this session tests ma, kanso or any other Japanese principle directly.",
+   "mechanism": "Viewers read layout as a signal about the sender. Space around a product says 'this sender can afford restraint' when the viewer already trusts the sender; around a claim from an unknown sender it can say 'this sender has little to say'. Detail signals effort and craft (existing records visible-effort-raises-value and simplicity-can-read-as-cheap), which an unknown business needs more than a known one. Few hues read as controlled and many as busy.",
+   "effects": {
+    "cognitiveLoad": "none — these studies measured impression and persuasion, not effort",
+    "satisfaction": "mixed — perceived quality or status rises with space and plainness for familiar senders, and can fall for unfamiliar ones",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "For a business that visitors do not yet know, pair the empty space with visible craft: precise type, real photographs, specific facts. Do not rely on emptiness alone to signal quality.",
+    "Keep the number of hues low: neutrals and one accent. This is the part of a quiet look with the most direct experimental support.",
+    "Do not isolate the main claim or the call to action in a large empty area; keep its supporting facts (what, price, proof) next to it.",
+    "Give products and pictures clear space on all sides, and keep working content dominant on pages where visitors act (existing record whitespace-prestige-with-limits: usability ratings fell above about half the page empty in one study).",
+    "For reading comfort, follow the existing records line-length and spacing-and-justification; the Japanese tradition adds no tested reading rule."
+   ],
+   "antiPatterns": [
+    "'More white space always looks more premium.'",
+    "A single sentence floating in an empty screen as the whole case for the business.",
+    "A plain page for an unknown business with no detail that shows care.",
+    "Citing these studies as tests of Japanese aesthetics; they are not."
+   ],
+   "howToCheck": {
+    "machine": "Count distinct hues outside the neutrals. Measure the distance between the main call to action and the nearest supporting fact; flag a gap larger than one section gap. Report the empty share of each viewport and flag task pages above about one half.",
+    "human": "Show the first screen for five seconds to someone who does not know the business. Ask: does this look like a business with something to offer, or an unfinished page? Ask what they would pay compared with a named competitor."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Peer-reviewed experiments, each seen only as a search summary of its abstract; sample sizes were not seen. Kwan, Dai and Wyer (2017, Journal of Consumer Research): seven field and laboratory studies; the effect disappeared when a computer set the space at random or when the source had low credibility, and it reversed for messages that readers disagreed with; student replication write-ups exist, and their results were not seen. Lee, Hur and Watkins (2018, Journal of Brand Management): two experiments with social-media images of luxury fashion brands. Tang, Huang and Zhang (International Journal of Research in Marketing, 2026 issue, online 2025): logo complexity and brand luxury. Adam and Wen (2026, Journal of the Academy of Marketing Science): edge complexity had a U-shaped relation to perceived status, lowest in the middle; colour complexity lowered it throughout. Pracejus, O'Guinn and Olsen (2013), already in the knowledge base: the meanings of white space differ across cultures. None of these used a small-business website; the transfer is by analogy. None tested a Japanese design principle."
+   },
+   "sources": [
+    {
+     "citation": "Kwan, C. M. C., Dai, X., & Wyer, R. S., Jr. (2017). Contextual influences on message persuasion: The effect of empty space. Journal of Consumer Research, 44(2), 448-464. https://doi.org/10.1093/jcr/ucx051",
+     "url": "https://ideas.repec.org/a/oup/jconrs/v44y2017i2p448-464..html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Lee, J. E., Hur, S., & Watkins, B. (2018). Visual communication of luxury fashion brands on social media: Effects of visual complexity and brand familiarity. Journal of Brand Management, 25(5), 449-462.",
+     "url": "https://ideas.repec.org/a/pal/jobman/v25y2018i5d10.1057_s41262-018-0092-6.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Tang, Huang, & Zhang (2026). Simple or complex logos? The impact of logo complexity on brand luxury. International Journal of Research in Marketing, 43(2), 264-277 (first names not seen).",
+     "url": "https://ideas.repec.org/a/eee/ijrema/v43y2026i2p264-277.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Adam, & Wen (2026). How visual complexity signals brand status. Journal of the Academy of Marketing Science. https://doi.org/10.1007/s11747-026-01178-w (first names not seen).",
+     "url": "https://ideas.repec.org/p/hal/journl/hal-05704517.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Pracejus, J. W., O'Guinn, T. C., & Olsen, G. D. (2013). When white space is more than 'burning money': Economic signaling meets visual commercial rhetoric. International Journal of Research in Marketing, 30(3), 211-218.",
+     "url": "https://ideas.repec.org/a/eee/ijrema/v30y2013i3p211-218.html",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The persuasion studies used short messages such as quotations and notices, not full pages. The luxury studies used fashion brands and logos. An effect that depends on brand familiarity will differ between a first visit and a return visit. The 2026 papers are recent and not yet replicated.",
+   "appliesTo": [
+    "density",
+    "hero",
+    "sections",
+    "color-strategy",
+    "accent",
+    "copy",
+    "signature"
+   ]
+  }
+ ]
+}

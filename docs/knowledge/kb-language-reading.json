@@ -1,0 +1,1424 @@
+{
+ "part": "language-and-reading",
+ "generated": "2026-11-14",
+ "entries": [
+  {
+   "id": "readability-formulas-are-flags",
+   "topic": "readability",
+   "principle": "Readability formulas flag hard text; they do not measure understanding",
+   "claim": "A readability formula (a calculation that estimates how hard a text is from the length of its words and sentences) predicts fairly well which of several texts is harder. It does not show that a reader will understand a text, and rewriting a text only to improve its score did not improve comprehension in controlled tests. Different formulas, and different programs that run the same formula, can place one text several school grades apart.",
+   "mechanism": "The formulas count surface features: syllables per word, words per sentence, or the share of words outside a list of familiar words. In ordinary writing these features go together with difficulty, so the score follows difficulty. The causes of difficulty lie elsewhere: unfamiliar ideas, missing steps, poor order and unclear reference. A writer can shorten words and sentences without touching those causes, and can even remove the connecting words that readers need.",
+   "effects": {
+    "cognitiveLoad": "unknown — a better score does not by itself lower the effort of reading",
+    "satisfaction": "unknown — not measured in the cited studies",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Use one formula, in one fixed implementation, as a warning light: a poor score means 'look at this text'; a good score proves nothing.",
+    "Compare versions of the same text with the same tool; do not compare scores from different tools or formulas.",
+    "Score body text only (paragraphs). Leave out navigation, headings, lists, addresses and tables, which have no full sentences.",
+    "When a text scores as hard, fix the cause (order, missing steps, unfamiliar terms, tangled sentences), then score again.",
+    "Judge understanding by asking a reader to restate the text or to carry out the task."
+   ],
+   "antiPatterns": [
+    "Reporting 'reads at grade 6' as proof that the audience understands the page.",
+    "Chopping sentences into fragments, or swapping words for shorter and rarer ones, to move the score.",
+    "Setting a pass mark on a text sample of a few dozen words."
+   ],
+   "howToCheck": {
+    "machine": "Extract body text (paragraphs of at least two sentences). On samples of 100 words or more, compute Flesch Reading Ease = 206.835 − 1.015 × (words ÷ sentences) − 84.6 × (syllables ÷ words), and Flesch-Kincaid Grade = 0.39 × (words ÷ sentences) + 11.8 × (syllables ÷ words) − 15.59. Report both scores with the word count, and flag pages beyond the Catalog target (for example a grade above 8). Label the result 'formula flag'; never label it 'understood by readers'. Only the constant 206.835 was confirmed in this search; the other coefficients are recalled from memory and must be checked against a primary source before anyone codes them.",
+    "human": "Ask one member of the audience to read the passage and say in their own words what it tells them to do. This is the check of understanding; the formula is not one."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "All studies here were seen only as search summaries. Duffy and Kabance (1982, Journal of Educational Psychology) ran 5 experiments with 1,169 men aged 17 to 20; a technical report by the same authors states that 'readable writing' revisions had no practical effect on comprehension except in one instance. Wang, Miller, Schmitt and Wen (2013) applied several formulas to 15 health texts: the formulas differed by up to 5 grade levels on the same text, and a single formula differed by up to 6 grade levels with the choice of sample, formatting and software. Klare's 1976 review, as reported in a University of Illinois document, found a positive link between formula scores and reader performance in 39 of 65 studies, and in only about half of the studies that measured comprehension. Against this, Chall (1996), a co-author of the Dale-Chall formula, reports validity correlations of 0.6 to 0.7 for the classic formulas and near 0.9 for later ones; those figures describe how well a score ranks graded texts, not the effect of rewriting. The Dale-Chall formula counts the share of words outside a list of about 3,000 familiar words; its coefficients are recalled from memory, and the search confirmed only its constant 3.6365."
+   },
+   "sources": [
+    {
+     "citation": "Duffy, T. M., & Kabance, P. (1982). Testing a readable writing approach to text revision. Journal of Educational Psychology, 74(5), 733-748. (Page range recalled from memory.)",
+     "url": "https://www.bohrium.com/paper-details/testing-a-readable-writing-approach-to-text-revision/812079882166075392-11152",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Duffy, T. M., & Kabance, P. (1982). The role of word difficulty and sentence length in text comprehension. Navy Personnel Research and Development Center technical report.",
+     "url": "https://apps.dtic.mil/sti/pdfs/ADA114935.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Wang, L.-W., Miller, M. J., Schmitt, M. R., & Wen, F. K. (2013). Assessing readability formula differences with written health information materials. Research in Social and Administrative Pharmacy, 9(5), 503-516.",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/22835706/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Klare, G. R. (1976). A second look at the validity of readability formulas. Reported at second hand in a University of Illinois document. (Title of Klare's paper recalled from memory.)",
+     "url": "https://www.ideals.illinois.edu/items/15551/bitstreams/54962/data.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Chall, J. S. (1996). Article on the validity of readability formulas, Revue quebecoise de linguistique, 25(1). (Exact title not confirmed.)",
+     "url": "https://www.erudit.org/fr/revue/rql/1996/v25/n1/603125ar.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Article 'Readability Formulas: seven reasons to avoid them and what to do instead' (Effortmark), which carries the critique attributed to Ginny Redish, including the 'wave' and 'waive' example.",
+     "url": "https://www.effortmark.co.uk/?p=3586",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Agency for Healthcare Research and Quality. Tip 6: Use Caution With Readability Formulas for Quality Reports.",
+     "url": "https://www.ahrq.gov/talkingquality/resources/writing/tip6.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Flesch, R. (1948). A new readability yardstick. Journal of Applied Psychology, 32(3), 221-233; and Kincaid, J. P., et al. (1975), the Navy report that defines the Flesch-Kincaid grade formula.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "The formulas were built and tested on continuous English prose for school and military readers; web pages made of short fragments give unstable scores. A specialist word can be short and still unfamiliar: 'waive' scores the same as 'wave'. The existing record plain-language already says to treat scores as flags; this record adds the experiments and the size of the disagreement between tools.",
+   "appliesTo": [
+    "copy",
+    "sections",
+    "onboarding",
+    "forms"
+   ]
+  },
+  {
+   "id": "sentence-length-and-structure",
+   "topic": "language",
+   "principle": "Long sentences are a risk because of their structure; word limits are a convention",
+   "claim": "Readers slow down and remember less when words that belong together stand far apart in a sentence, for example when a clause is inserted between a subject and its verb. Long sentences contain more of these gaps, so sentence length is a useful warning sign. The common limits (an average of about 15 words, a maximum of about 25) come from style guides, not from an experiment that found those numbers.",
+   "mechanism": "A reader holds each unfinished part of a sentence in working memory until the word that completes it arrives. The longer the gap, and the more parts are open at once, the more the reader forgets or confuses. A long sentence that adds one item after another keeps few parts open and stays easy; a shorter sentence with one clause nested inside another can be harder.",
+   "effects": {
+    "cognitiveLoad": "raises — as the distance between related words grows",
+    "satisfaction": "unknown — not measured in the cited studies",
+    "perceivedIntuitiveness": "lowers — when an instruction must be read twice (inferred, not measured)"
+   },
+   "designMoves": [
+    "Keep the subject, the verb and the object close together; move conditions and exceptions to the start or the end of the sentence, or to a new sentence.",
+    "Do not nest one clause inside another; split the sentence.",
+    "Use the style-guide limits as flags: look at any sentence over 25 words, and at any page whose average is far above 15 to 20 words.",
+    "Turn a sentence that lists three or more parallel items into a list.",
+    "Do not cut every sentence short: a row of fragments removes the words ('because', 'so', 'but') that carry the reasoning."
+   ],
+   "antiPatterns": [
+    "A condition wedged between a subject and its verb: 'The fee, which unless otherwise agreed in writing by both parties is payable in advance, covers ...'.",
+    "Treating 25 words as a pass mark that proves a sentence is clear.",
+    "Chains of one-line fragments that leave the reader to guess how the statements connect."
+   ],
+   "howToCheck": {
+    "machine": "Split body text into sentences and count the words in each. Flag each sentence above 25 words and report the mean per page (style-guide convention: a mean near 15, none above 25). With a grammatical parser, also report for each sentence the number of words between the subject and its main verb and the depth of nested clauses, and list the highest values on the page. No validated threshold exists for these two measures, so report them as a ranking, not as pass or fail.",
+    "human": "Read each flagged sentence aloud once. If you must go back to find the verb, split the sentence."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries. Structure: Martinez, Mollica and Gibson (2022, Cognition) found in two experiments (184 participants in total) that contract excerpts with center-embedded clauses, rare jargon and passives were recalled and understood less well; press coverage reports that center-embedding did the most harm. Masson and Waldron (1994) found that simpler words and sentence structure reliably improved comprehension of contracts. The search summary of sentence-processing research reports slower reading as the distance between a verb and its arguments grows in controlled experiments, and weak or absent effects in studies of natural text; it did not name one paper for each finding. Length limits: the GOV.UK guidance asks writers to split sentences over 25 words, and a 2014 GOV.UK blog post gives as its evidence a set of percentages that cannot be traced (see folklore-reading-statistics). The Australian Government Style Manual advises an average of 15 words and a maximum of 25. The search found no experiment that varies sentence length alone and measures adult comprehension, which is why the grade is B and not higher."
+   },
+   "sources": [
+    {
+     "citation": "Martinez, E., Mollica, F., & Gibson, E. (2022). Poor writing, not specialized concepts, drives processing difficulty in legal language. Cognition, article 105070. Seen through a press summary.",
+     "url": "https://www.sciencedaily.com/releases/2022/03/220307162035.htm",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Masson, M. E. J., & Waldron, M. A. (1994). Comprehension of legal contracts by non-experts: Effectiveness of plain language redrafting. Applied Cognitive Psychology, 8(1), 67-85.",
+     "url": "https://scilit.com/publications/56d000a7a93f02741784f9d935268024",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Government Digital Service (2014). Sentence length: why 25 words is our limit. Inside GOV.UK blog.",
+     "url": "https://insidegovuk.blog.gov.uk/2014/08/04/sentence-length-why-25-words-is-our-limit/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "GOV.UK publishing guidance. Writing to GOV.UK standards: clear language.",
+     "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/clear-language/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Australian Government Style Manual. Guidance on sentences (average of 15 words, no more than 25).",
+     "url": "https://stylemanual.gov.au/node/60",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Gibson, E. (2000). The dependency locality theory: A distance-based theory of linguistic complexity. In Image, Language, Brain (MIT Press).",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "Sentence length and structure go together in ordinary writing, so a length flag catches many structural problems; it misses some, and it also flags harmless long lists. The experiments used legal texts and laboratory sentences; the search found no study on small-business web pages. Word counts depend on how the program splits sentences at abbreviations, prices and bullet points.",
+   "appliesTo": [
+    "copy",
+    "sections",
+    "forms",
+    "onboarding"
+   ]
+  },
+  {
+   "id": "folklore-reading-statistics",
+   "topic": "readability",
+   "principle": "Folklore: '8-word sentences are understood 100%', 'the average adult reads at 8th-grade level' and 'links of 7 to 12 words work best'",
+   "claim": "Three numbers that writing guides repeat have no source that can be checked. (1) 'Readers understand 100% of a text with 8-word sentences, more than 90% at 14 words and under 10% at 43 words.' (2) 'The average American adult reads at a 7th- to 8th-grade level.' (3) 'Links of 7 to 12 words are the most successful.' Each points in a sensible direction; none is a measured result that a design rule can rest on.",
+   "mechanism": "A precise number is easy to quote and hard to check. Each copy cites the previous copy, nobody produces the original report, and details drift: the sentence-length claim appears with 43 words in one version and 46 in another.",
+   "effects": {
+    "cognitiveLoad": "unknown — no traceable measurement",
+    "satisfaction": "unknown — no traceable measurement",
+    "perceivedIntuitiveness": "unknown — no traceable measurement"
+   },
+   "designMoves": [
+    "Do not cite these numbers in the Catalog, in a Prescription or in page copy.",
+    "For sentence length, use the style-guide limits and say that they are conventions (see sentence-length-and-structure).",
+    "For the reading skill of the audience, cite the adult-skills survey (see adult-literacy-survey-data).",
+    "For link wording, test whether a reader can predict the destination (see button-and-link-wording)."
+   ],
+   "antiPatterns": [
+    "Justifying a hard limit with a percentage that nobody can trace.",
+    "Describing survey skill levels as school grades.",
+    "Padding link text to reach a word count."
+   ],
+   "howToCheck": {
+    "machine": "Search the Catalog text, the exported Prescription files and the page copy for these claims, with patterns such as '8th-grade level', '7th grade', '100% comprehension', '90% of readers understand' and '7 to 12 words'. Flag each hit that has no checkable source beside it.",
+    "human": "For any statistic about reading, ask for the original report, its sample and its method. If nobody can produce them, remove the number."
+   },
+   "evidence": {
+    "grade": "D",
+    "kind": "folklore",
+    "strengthNote": "Seen only as search summaries. Grade D applies to the three numbers as stated, not to the general advice to write short sentences, plain words and descriptive links. Sentence length: secondary sites attribute the figures to an American Press Institute report called 'Readers' Degree of Understanding', said to rest on studies of 410 newspapers. The search found no copy of that report; a comment under one blog post says that the institute did not publish it; the top figure is 43 words in one version and 46 in another. A 2014 GOV.UK blog post cites the same figures at second hand in support of its 25-word limit. Reading level: one writing-advice site credits the '7th- to 8th-grade' figure to a literacy charity, and other sites give no source; the same site notes that the people who run the national adult-skills surveys do not assign school grades to their levels. Links: a secondary summary of a talk by Jared Spool gives '7 to 12 words' as an early guideline; the search found no study report, sample or method."
+   },
+   "sources": [
+    {
+     "citation": "Public Relations Society of America blog (2009). How to make your copy more readable: make sentences shorter. Repeats the sentence-length figures and names the American Press Institute as their source.",
+     "url": "https://prsay.prsa.org/2009/01/14/how-to-make-your-copy-more-readable-make-sentences-shorter/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Wylie Communications. How long should a sentence be? Repeats the figures with a second-hand attribution.",
+     "url": "https://www.wyliecomm.com/how-long-should-a-sentence-be/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Government Digital Service (2014). Sentence length: why 25 words is our limit. Inside GOV.UK blog.",
+     "url": "https://insidegovuk.blog.gov.uk/2014/08/04/sentence-length-why-25-words-is-our-limit/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Wylie Communications (2021). What's the latest U.S. literacy rate? Gives the '7th- to 8th-grade' figure with an attribution to a literacy charity.",
+     "url": "https://www.wyliecomm.com/2021/08/whats-the-latest-u-s-literacy-rate/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Hertling, W. (2012). Notes on a talk by Jared Spool, 'The lives of links'. The likely source of the search summary's '7 to 12 words' statement; the summary did not name its page.",
+     "url": "https://williamhertling.com/2012/03/jared-spool-on-the-lives-of-links/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Spool, J. M. The Right Trigger Words. User Interface Engineering. Defines trigger words; the summary seen gives no link-length finding.",
+     "url": "https://articles.centercentre.com/?p=68",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "A claim without a source can still be true; these three are unverified, not disproved. Patient-information practice uses grade-level targets (grade 6 to 8, depending on the source) as a working convention; that is a target for text, measured by a formula, and it is not evidence about what adults can read.",
+   "appliesTo": [
+    "copy",
+    "nav",
+    "ai-ux"
+   ]
+  },
+  {
+   "id": "word-frequency-familiar-words",
+   "topic": "language",
+   "principle": "Common words are read faster than rare words, by every reader",
+   "claim": "The more often a word occurs in everyday language, the faster people recognize it; this is one of the most repeated findings in reading research. Rare words slow readers of a second language more than they slow native readers. Word length is a poor stand-in for familiarity: a short word can be rare, and a long word can be common.",
+   "mechanism": "Each meeting with a word strengthens the link between its written form and its meaning. Readers look briefly at a common word or skip it; they look longer at a rare word and return to it more often. A word that the reader does not know at all stops reading until the context or a definition supplies the meaning.",
+   "effects": {
+    "cognitiveLoad": "lowers — when rare words are replaced or defined",
+    "satisfaction": "unknown — not measured in the cited sources",
+    "perceivedIntuitiveness": "raises — a label in the visitor's own words is understood at once (inferred from the reading-time evidence)"
+   },
+   "designMoves": [
+    "Prefer the everyday word when two words mean the same: 'buy', not 'purchase'; 'help', not 'assistance'.",
+    "Keep a trade term when it is the customer's own word for the thing, and define it once where it first appears.",
+    "Check familiarity with a word-frequency list, not by counting letters or syllables.",
+    "Hold labels, buttons and error messages to a stricter standard than body text, because readers meet them with little context."
+   ],
+   "antiPatterns": [
+    "Replacing a common long word with a rare short one to improve a readability score.",
+    "Internal product or department names used as menu labels.",
+    "A rare word used as decoration in the headline that must say what the business does."
+   ],
+   "howToCheck": {
+    "machine": "Split the page text into words and look up each content word (noun, verb, adjective, adverb) in a word-frequency list built from film subtitles that gives Zipf values. The Zipf value is the base-10 logarithm of a word's frequency per billion words; the list's authors call values of 4 to 7 high frequency and 1 to 3 low frequency. Flag each word below 3 that is not defined on the page and is not on the business's own term list. Report the flagged words and their share per page. Apply the same test to every label, button and error message. The cut-off of 3 is a convention; no study in this search ties it to comprehension of a page. Check the license of the frequency list before bundling it.",
+    "human": "Ask a person from the audience to circle every word they would not use themselves."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries. Brysbaert, Mandera and Keuleers (2018, Current Directions in Psychological Science) review the word-frequency effect, first described more than 80 years ago, and note that word prevalence (the share of people who know a word) matters beyond raw frequency. Van Heuven, Mandera, Keuleers and Brysbaert (2014) introduced the Zipf scale with the SUBTLEX-UK list; the list's web page labels values 1 to 3 as low frequency and 4 to 7 as high. Cop, Keuleers, Drieghe and Duyck (2015) tracked the eyes of bilingual and monolingual adults who read a whole novel and found a considerably larger frequency effect in the second language. The effect itself is among the best replicated in the field. The grade is A- because the step from the reading time of single words to a threshold for a web page is an inference that no study in this search tested."
+   },
+   "sources": [
+    {
+     "citation": "Brysbaert, M., Mandera, P., & Keuleers, E. (2018). The word frequency effect in word processing: An updated review. Current Directions in Psychological Science, 27(1), 45-50.",
+     "url": "https://research.tilburguniversity.edu/en/publications/the-word-frequency-effect-in-word-processing-an-updated-review/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "van Heuven, W. J. B., Mandera, P., Keuleers, E., & Brysbaert, M. (2014). SUBTLEX-UK: A new and improved word frequency database for British English. Quarterly Journal of Experimental Psychology.",
+     "url": "https://eprints.nottingham.ac.uk/2947",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "University of Nottingham. SUBTLEX-UK search page (states the Zipf ranges for low and high frequency).",
+     "url": "https://shiny.psychology.nottingham.ac.uk/lpzwjv/SUBTLEX-UK",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Cop, U., Keuleers, E., Drieghe, D., & Duyck, W. (2015). Frequency effects in monolingual and bilingual natural reading. Psychonomic Bulletin & Review.",
+     "url": "https://research.tilburguniversity.edu/en/publications/frequency-effects-in-monolingual-and-bilingual-natural-reading/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Rayner, K. (1998). Eye movements in reading and information processing: 20 years of research. Psychological Bulletin, 124(3), 372-422. Background for the statement that readers look longer at rare words.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "Frequency lists reflect film subtitles or general text, not a trade: 'grout' is rare in general English and ordinary to a tiler's customers. Frequency differs between British and American English. A common word used in an unusual sense ('consideration' in a contract) passes the test and still confuses.",
+   "appliesTo": [
+    "copy",
+    "nav",
+    "forms",
+    "hero"
+   ]
+  },
+  {
+   "id": "plain-language-legal-health",
+   "topic": "language",
+   "principle": "Plain rewriting of legal and health text helps, but only part of the way",
+   "claim": "When legal or health text is rewritten with common words and simpler sentences, readers recall and understand more of it, and most people say they prefer the plain version. The gain is real and partial: in the main legal experiment, understanding stayed low after rewriting, because the ideas themselves were unfamiliar. Most of the detailed rules in plain-language guides have not been tested one by one.",
+   "mechanism": "Legal drafting packs rare words, clauses nested inside clauses and passive constructions into long sentences, and each of these loads working memory. Removing them frees attention for the content. It does not supply missing background knowledge: a reader who does not know what a warranty or a deductible is still has to learn the concept.",
+   "effects": {
+    "cognitiveLoad": "lowers — less effort goes to decoding; the effort of learning a new concept remains",
+    "satisfaction": "raises — readers preferred the plain version in surveys and in one usability study",
+    "perceivedIntuitiveness": "raises — users completed more tasks on a simplified site in one sponsored study"
+   },
+   "designMoves": [
+    "Put a short plain summary above any terms, privacy or refund text: what the customer agrees to, what it costs, how to cancel.",
+    "In the legal text itself, replace rare formal words, take nested clauses apart, and name who must do what.",
+    "Explain each necessary concept (deposit, warranty, cancellation period) in one sentence with an example; simpler wording alone is not enough.",
+    "For health or safety instructions, state the action first and the reason second.",
+    "Keep the precise text available where the law requires exact wording."
+   ],
+   "antiPatterns": [
+    "Assuming that a plain rewrite makes terms understood, and dropping the summary and the examples.",
+    "Legal words kept for their sound ('herein', 'hereby', 'notwithstanding') where an everyday word says the same.",
+    "Simplifying by leaving out a condition that the customer needs to know."
+   ],
+   "howToCheck": {
+    "machine": "On pages that the Prescription marks as terms, policy, health or safety content: assert that a summary block precedes the full text; flag words from a list of legal formalities (for example 'herein', 'hereby', 'pursuant to', 'notwithstanding', 'shall'); apply the checks in sentence-length-and-structure and word-frequency-familiar-words. These checks show that known obstacles are absent. No program can confirm that a reader understands the terms.",
+    "human": "Ask one person to read the summary and then answer three questions: what do I owe, what happens if I cancel, whom do I contact. A wrong answer points to a concept that needs explaining."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries. Legal: Masson and Waldron (1994, Applied Cognitive Psychology) redrafted contracts in three stages; simpler words and sentence structure reliably improved paraphrasing and question answering, but absolute comprehension stayed very low, and the errors pointed to difficulty with legal concepts. A later replication describes the sample as 24 clerical staff and 24 students who read four contracts of about 400 words. Martinez, Mollica and Gibson (2022, Cognition) analyzed about 10 million words of contracts and ran two experiments (184 participants in total): readers recalled and understood text with rare jargon, center-embedded clauses and passives less well, and the authors attribute the difficulty to writing style more than to specialized concepts, which partly conflicts with Masson and Waldron. Trudeau (2012) surveyed public preference for plain legal language; secondary sources give 80% of 376 respondents and 'over 85%', figure not confirmed. Health: Stoll and colleagues (2022, PLOS ONE) reviewed 90 records on plain-language summaries, 33 of them empirical, and found little evidence for most criteria in the writing guidelines. Nielsen (2005) tested a rewritten pharmaceutical site with 50 users: success rose from 46% to 82% for lower-literacy users and from 68% to 93% for higher-literacy users; the study covered one site, and Pfizer sponsored it. Loranger (2017) reports from usability sessions that domain experts also prefer concise text; sample size not confirmed. Reviews of patient information report typical formula scores of grade 10 to 11 against targets of grade 6 to 8; the targets differ between sources."
+   },
+   "sources": [
+    {
+     "citation": "Masson, M. E. J., & Waldron, M. A. (1994). Comprehension of legal contracts by non-experts: Effectiveness of plain language redrafting. Applied Cognitive Psychology, 8(1), 67-85.",
+     "url": "https://scilit.com/publications/56d000a7a93f02741784f9d935268024",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Martinez, E., Mollica, F., & Gibson, E. (2022). Poor writing, not specialized concepts, drives processing difficulty in legal language. Cognition, article 105070. Seen through a press summary.",
+     "url": "https://www.sciencedaily.com/releases/2022/03/220307162035.htm",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Trudeau, C. R. (2012). The public speaks: An empirical study of legal communication. The Scribes Journal of Legal Writing, 14.",
+     "url": "https://lawrepository.ualr.edu/faculty_scholarship/254",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Stoll, M., Kerwer, M., Lieb, K., & Chasiotis, A. (2022). Plain language summaries: A systematic review of theory, guidelines and empirical research. PLOS ONE, 17(6), e0268789. (Author list recalled from memory.)",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/35666746/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Nielsen, J. (2005). Lower-Literacy Users: Writing for a Broad Consumer Audience. Nielsen Norman Group.",
+     "url": "https://www.nngroup.com/articles/writing-for-lower-literacy-users/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Loranger, H. (2017). Plain Language Is for Everyone, Even Experts. Nielsen Norman Group.",
+     "url": "https://www.nngroup.com/articles/plain-language-experts/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Systematic review of the readability of patient education materials in ophthalmology (2016). BMC Ophthalmology, DOI 10.1186/s12886-016-0315-0. (Authors not confirmed.)",
+     "url": "https://link.springer.com/article/10.1186/s12886-016-0315-0",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The legal experiments used contracts and laboratory tasks, not the terms pages of websites. A preference survey shows what people like, not what they understand. A summary that differs from the full terms can itself cause a dispute; a qualified person should check both texts. This record does not give legal advice.",
+   "appliesTo": [
+    "copy",
+    "forms",
+    "sections",
+    "onboarding"
+   ]
+  },
+  {
+   "id": "passive-voice-nuance",
+   "topic": "language",
+   "principle": "Passive voice is not slower to read; its real cost is the missing actor",
+   "claim": "Experiments do not show that passive sentences take longer to read than active ones; in one set of reading-time studies people read them faster. Passives do cause more errors when a reader must later say who did what to whom, most of all when either party could plausibly be the actor. The practical problem on a web page is the passive with no actor ('a fee will be charged'), which leaves out who acts.",
+   "mechanism": "Readers often take the first noun of a sentence as the actor. A passive breaks that habit, and when meaning alone cannot settle the roles, memory for them is weaker. A passive without a 'by' phrase removes the actor from the sentence, so the reader must guess it.",
+   "effects": {
+    "cognitiveLoad": "mixed — no extra reading time; more errors on who-did-what questions",
+    "satisfaction": "unknown — not measured in the cited studies",
+    "perceivedIntuitiveness": "lowers — for instructions that do not say who must act (inferred, not measured)"
+   },
+   "designMoves": [
+    "In instructions, obligations and promises, name the actor: 'We charge a fee', 'You must cancel 24 hours ahead'.",
+    "Keep a passive when the actor is unknown or does not matter, or when the thing acted on is the topic: 'Your order was delivered'.",
+    "Review passives one by one; do not set a page-wide limit on them."
+   ],
+   "antiPatterns": [
+    "'Payment must be received before work begins' on a page that never says who pays whom, or how.",
+    "Failing a page because a tool counts more than a set percentage of passive sentences.",
+    "Rewriting every passive into an awkward active sentence."
+   ],
+   "howToCheck": {
+    "machine": "With a grammatical parser, find passive verb phrases. Flag only those that (a) have no 'by' phrase and (b) express an obligation, a charge, a deadline or a promise (they contain words such as 'must', 'will', 'required', 'charged', 'refunded'). Report the share of passive sentences per page as information only; no evidence supports a pass mark for it.",
+    "human": "For each flagged sentence, ask 'who does this?'. If the same sentence does not answer, rewrite it."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries. The grade describes the nuanced claim. The blanket rule 'passive voice is harder to read' would get a C: plain-language guides repeat it, and these experiments do not support it. Ferreira (2003, Cognitive Psychology) had participants listen to sentences and name the doer: they answered passives less accurately than actives when the roles were implausible, and plausibility did not affect actives; a later replication confirmed the pattern. The task used spoken sentences, and the accuracy figure in the search summary was cut off, figure not confirmed. Paolazzi, Grillo, Alexiadou and Santi (2019, Language, Cognition and Neuroscience) found that people read passives faster than actives in self-paced reading and made more errors only on later questions about roles; the authors locate the difficulty in memory, not in understanding. Martinez, Mollica and Gibson (2022): press coverage reports about four times more passive voice in contracts than in other texts, and reports that center-embedded clauses harmed recall more than passives did."
+   },
+   "sources": [
+    {
+     "citation": "Ferreira, F. (2003). The misinterpretation of noncanonical sentences. Cognitive Psychology, 47(2), 164-203.",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Paolazzi, C. L., Grillo, N., Alexiadou, A., & Santi, A. (2019). Passives are not hard to interpret but hard to remember: evidence from online and offline studies. Language, Cognition and Neuroscience, 34(8), 991-1015.",
+     "url": "https://eprints.whiterose.ac.uk/145484",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Martinez, E., Mollica, F., & Gibson, E. (2022). Poor writing, not specialized concepts, drives processing difficulty in legal language. Cognition, article 105070. Seen through a press summary.",
+     "url": "https://www.sciencedaily.com/releases/2022/03/220307162035.htm",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The experiments used single sentences without context; in a paragraph a passive often keeps the topic in first position and helps the flow. Programs that detect passives make mistakes ('was tired' is not a passive). The findings are for English.",
+   "appliesTo": [
+    "copy",
+    "forms",
+    "states"
+   ]
+  },
+  {
+   "id": "negation-and-double-negatives",
+   "topic": "language",
+   "principle": "Negative sentences cost effort; double negatives cause wrong choices",
+   "claim": "People take longer to understand a negative sentence than a positive one and make more errors with it. When a choice is worded with two negatives, many people choose the opposite of what they intend: in one large experiment, a double-negative question led a third of participants to accept an offer, and half of those did not know that they had accepted.",
+   "mechanism": "To understand 'not X', a reader first forms the idea X and then rejects it, which takes two steps where a positive sentence takes one. With two negatives the reader must reverse the meaning twice, and a hurried reader stops after the first reversal. A context that has already raised the idea X makes a single negative easier.",
+   "effects": {
+    "cognitiveLoad": "raises — one extra step for each negation",
+    "satisfaction": "unknown — not measured for wording alone",
+    "perceivedIntuitiveness": "lowers — the control does the opposite of what the person expects"
+   },
+   "designMoves": [
+    "Word each checkbox and switch positively, so that 'on' means that the thing happens: 'Send me offers by email'.",
+    "Say what the customer can do before what they cannot: 'Open Monday to Friday' before 'Closed at weekends'.",
+    "Use at most one negative in a sentence, and keep it for real prohibitions and warnings, where 'do not' is the clearest form.",
+    "In a dialog about cancelling, label the buttons with the outcomes ('Cancel booking', 'Keep booking'); never 'Cancel' and 'OK'."
+   ],
+   "antiPatterns": [
+    "'Untick this box if you do not want to stop receiving offers.'",
+    "A 'Cancel' button inside a 'Cancel your order?' dialog.",
+    "'Do not hesitate to contact us' where 'Contact us' is shorter and positive."
+   ],
+   "howToCheck": {
+    "machine": "Count negation markers per sentence: 'not', 'no', 'never', 'none', words ending in n't, 'without', 'unless', and negative verbs such as 'unsubscribe', 'opt out', 'decline', 'disable' and 'stop'. Flag every sentence with two or more. Flag every checkbox, radio button or switch whose label contains one. Flag any dialog whose title contains 'cancel' and which has a button labelled only 'Cancel'.",
+    "human": "For each checkbox, say aloud what happens when it is ticked. If you cannot say it in one short sentence, rewrite the label."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries. Comprehension: a review found in the search reports longer processing times and higher error rates for negative than for affirmative sentences and cites Carpenter and Just (1975) and Clark (1974); the model of Carpenter and Just predicts that people verify true affirmative sentences fastest and negative sentences slowest. Kaup, Ludtke and Zwaan (2006) support a two-step account; related work finds that a supporting context makes negation easier, with some mixed results. The laboratory work used simple tasks in which people compare a sentence with a picture. Choices: Luguri and Strahilevitz (2021, Journal of Legal Analysis) tested deceptive designs on large online samples and report that trick questions were among the designs most likely to manipulate people. A slide deck by Strahilevitz reports that 33.4% of participants accepted a service through a double-negative question and that only half of them (16.7% of all participants) said afterwards that they had accepted. These two figures come from the slides, not from the article, and need checking against the article."
+   },
+   "sources": [
+    {
+     "citation": "Carpenter, P. A., & Just, M. A. (1975). Sentence comprehension: A psycholinguistic processing model of verification. Psychological Review, 82(1), 45-73. (Volume and pages recalled from memory.)",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Kaup, B., Ludtke, J., & Zwaan, R. A. (2006). Processing negated sentences with contradictory predicates: Is a door that is not open mentally closed? Journal of Pragmatics, 38.",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Luguri, J., & Strahilevitz, L. J. (2021). Shining a light on dark patterns. Journal of Legal Analysis, 13(1), 43-109.",
+     "url": "https://academic.oup.com/jla/article/13/1/43/6180579",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Strahilevitz, L. J. (2022). Presentation slides on the dark-patterns experiments, California Privacy Protection Agency meeting materials. Source of the 33.4% and 16.7% figures.",
+     "url": "https://cppa.ca.gov/meetings/materials/20220329_30_day_1_item_2c_strahilevitz.pdf",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "A single negative is often the clearest wording for a rule or a warning ('Do not use on broken skin'). A negative verb such as 'unsubscribe' is fine as the name of the action that a person came to perform; the flag asks for review, not removal. Double-negative choice wording may also breach consumer-protection rules in some places; that is a legal question which this record does not settle.",
+   "appliesTo": [
+    "forms",
+    "copy",
+    "states"
+   ]
+  },
+  {
+   "id": "headings-as-signals",
+   "topic": "content",
+   "principle": "Headings that name the topic improve what readers take from a text; the first words carry most of the signal",
+   "claim": "In eye-tracking experiments, adults who read a text with topic headings processed the main sentence of each section more easily, and mentioned more of the topics in their summaries, than adults who read the same text without headings. In a usability study of link text, people who saw only the first 11 characters of a link often could not tell where it led. A heading or a link therefore works when its first two words name the topic.",
+   "mechanism": "A heading tells the reader which topic comes next, so the reader can attach the following sentences to it and can build an outline of the whole text. A reader who scans looks at the start of each heading and link and moves on if the first words do not match the goal.",
+   "effects": {
+    "cognitiveLoad": "lowers — readers process topic sentences more easily under a heading",
+    "satisfaction": "unknown — not measured in the cited studies",
+    "perceivedIntuitiveness": "raises — the reader sees the outline of the page before reading (inferred from the summary results)"
+   },
+   "designMoves": [
+    "Give each section a heading that names its topic in the visitor's words ('Prices', 'Where we work'), not a mood line ('Excellence, delivered').",
+    "Start each heading and link with the word that sets it apart; put the business name and filler words last, or leave them out.",
+    "Make sure that no two headings or links on a page begin with the same two words.",
+    "Mark headings as real heading elements, in order, so that the outline exists in the code."
+   ],
+   "antiPatterns": [
+    "Section headings that are slogans and do not say what the section contains.",
+    "A list of links that all begin 'Learn more about ...' or with the company name.",
+    "Clever headings that make sense only after the reader has read the section."
+   ],
+   "howToCheck": {
+    "machine": "(1) For each heading, test that at least one of its content words, or a word with the same stem, occurs in the text of its section; flag a heading with no overlap as a possible slogan. (2) Take the first 11 characters of every heading and every link text; flag duplicates within the page, and flag any that consist only of function words or of the business name. (3) Flag any stretch of body text above the Catalog word limit that has no heading. The overlap test and the 11-character test are heuristics drawn from the cited studies; neither has a validated pass mark.",
+    "human": "Read only the headings, from top to bottom. They should tell a stranger what the business offers, where, at what price, and how to get in touch."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries, except the W3C text. Hyona and Lorch (2004, Learning and Instruction) had adults read one text with topic headings and one without: headings eased the processing of topic sentences, both on first reading and on later look-backs, and raised the number of topics in the summaries that readers wrote. Hyona, Lorch and Kaakinen (2002) found that the readers who attended closely to headings wrote the most accurate summaries. Both studies used expository texts with several topics, of the kind found in textbooks. The first-words finding comes from a Nielsen Norman Group study (the year 2009 is recalled from memory and was not confirmed): 80 users saw links cut to 11 characters; for the best link about 75% could predict the destination, and for 35% of the links users had no idea where they led. The firm calls this a harsh test. On its own that part is grade B (one practitioner study). WCAG 2.2 criterion 2.4.10 Section Headings (Level AAA) was read: section headings are used to organize the content."
+   },
+   "sources": [
+    {
+     "citation": "Hyona, J., & Lorch, R. F. (2004). Effects of topic headings on text processing: Evidence from adult readers' eye fixation patterns. Learning and Instruction, 14(2), 131-152.",
+     "url": "https://scholars.uky.edu/en/publications/effects-of-topic-headings-on-text-processing-evidence-from-adult-/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Hyona, J., Lorch, R. F., & Kaakinen, J. K. (2002). Individual differences in reading to summarize expository text: Evidence from eye fixation patterns. Journal of Educational Psychology. (Title recalled from memory.)",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Nielsen, J. (2009). First 2 Words: A Signal for the Scanning Eye. Nielsen Norman Group.",
+     "url": "https://www.nngroup.com/articles/first-2-words-a-signal-for-scanning/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 2.4.10 Section Headings, Level AAA.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/section-headings.html",
+     "verified": "read-page"
+    }
+   ],
+   "caveats": "The experiments tested headings that state the topic; they say nothing about headings phrased as questions or as jokes. A very short page needs few headings. The existing records f-pattern-is-a-symptom and front-load-headings-fold cover where attention falls; this record adds the experimental support and the 11-character test.",
+   "appliesTo": [
+    "heading-treatment",
+    "copy",
+    "sections",
+    "nav"
+   ]
+  },
+  {
+   "id": "short-lines-lower-bound",
+   "topic": "typography",
+   "principle": "Short lines: reading speed holds until about 13 characters per line, and shorter lines help some struggling readers",
+   "claim": "The existing record line-length sets an upper limit. For the lower limit, a study of digital displays found that normally sighted readers need about 13 characters per line, and readers with low vision about 8, to reach 80% of their fastest reading speed. For teenagers with dyslexia, lines of a few words on a small device raised reading speed and, for some, comprehension. Narrow columns are therefore less harmful than older print advice suggests, but lines of fewer than about 13 characters cost every reader speed.",
+   "mechanism": "In one glance a reader takes in a limited number of letters. When a line holds fewer letters than that, part of each glance is wasted and the eye must jump to a new line more often. For a reader who loses the place easily, or whom neighboring words distract, a short line leaves less text to interfere, and that can outweigh the extra jumps.",
+   "effects": {
+    "cognitiveLoad": "mixed — lowers for some readers with dyslexia; raises for all readers below about 13 characters per line",
+    "satisfaction": "unknown — not measured in the cited studies",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "On phones, let body text use the width of the screen with modest side padding; do not place paragraphs in half-width cards or beside images.",
+    "Test narrow layouts with enlarged text: a column that holds 40 characters at the default size holds about 20 when the reader doubles the text size.",
+    "Do not shrink text to fit more characters on a narrow line.",
+    "Keep body text in several columns for wide screens only.",
+    "Keep the upper limit of 80 characters from the existing record line-length."
+   ],
+   "antiPatterns": [
+    "Text wrapped tightly around an image, so that lines hold two or three words.",
+    "Three columns of text kept side by side on a phone.",
+    "Wide fixed side padding that stays the same when the reader zooms."
+   ],
+   "howToCheck": {
+    "machine": "Render each page in a viewport 320 CSS pixels wide, at the default text size and at 200% text size. For each paragraph of body text, divide the character count by the number of rendered lines. Fail a median below 13 characters per line (the floor from the evidence). Warn below the Catalog comfort value (for example 30, a convention). Also assert that the page needs no horizontal scrolling at 320 CSS pixels (WCAG 1.4.10).",
+    "human": "Set the phone's text size to its largest setting and read one full paragraph on each type of page."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries, except the W3C text. Atilgan, Xiong and Legge (2020) measured reading on digital displays: about 13 characters per line for normally sighted readers and about 8 for readers with low vision gave 80% of maximum speed, and a small screen or magnified print can remove the range of print sizes that allows maximum speed. Note that a reader at the 13-character point has already lost about a fifth of maximum speed. Schneps and colleagues (2013, PLOS ONE, 103 high-school students with dyslexia): students with a limited visual attention span understood more on a small e-reader that showed few words per line than on paper, and the students weakest at reading words by sight read faster on the device. A companion paper by the same group reports 27% faster reading and 11% fewer fixations on a small device, with no loss of comprehension. Reviews: Nanavati and Bias (2005) and Dyson (2004) describe a literature confounded by differences in typeface, spacing and screen; a secondary source reports that most screen studies found faster reading with longer lines. WCAG 2.2 criterion 1.4.10 Reflow (Level AA) was read."
+   },
+   "sources": [
+    {
+     "citation": "Atilgan, N., Xiong, Y.-Z., & Legge, G. E. (2020). Reconciling print-size and display-size constraints on reading. (Journal recalled from memory as Proceedings of the National Academy of Sciences.)",
+     "url": "https://legge.dl8.umn.edu/sites/legge.psych.umn.edu/files/2020-11/Atilgan%20Xiong%20Leggey%202020%20Reconciling%20print-size%20and%20display-size%20constraints%20on%20reading.pdf.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Schneps, M. H., Thomson, J. M., Chen, C., Sonnert, G., & Pomplun, M. (2013). E-readers are more effective than paper for some with dyslexia. PLOS ONE, 8(9), e75634.",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3776763",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Schneps, M. H., et al. (2013). Shorter lines facilitate reading in those who struggle. PLOS ONE, 8(8), e71161.",
+     "url": "https://collaborate.umb.edu/en/publications/shorter-lines-facilitate-reading-in-those-who-struggle/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Nanavati, A. A., & Bias, R. G. (2005). Optimal line length in reading: A literature review. Visible Language, 39(2). (Sources disagree on the volume; not confirmed.)",
+     "url": "https://journals.uc.edu/index.php/vl/article/view/5765",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Dyson, M. C. (2004). How physical text layout affects reading from screen. Behaviour & Information Technology, 23(6), 377-393.",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 1.4.10 Reflow, Level AA.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/21/reflow.html",
+     "verified": "read-page"
+    }
+   ],
+   "caveats": "The dyslexia studies tested teenagers with one device and compared it with paper, so the effect of the device cannot be fully separated from the effect of line length. The values of 13 and 8 characters mark 80% of maximum speed, not comfort. Character counts depend on the typeface and on hyphenation.",
+   "appliesTo": [
+    "content-width",
+    "mobile",
+    "size-scale",
+    "density"
+   ]
+  },
+  {
+   "id": "x-height-visual-angle-floor",
+   "topic": "typography",
+   "principle": "A measurable floor for text size: lowercase letters about 8 CSS pixels tall",
+   "claim": "Reading speed is at its maximum when the lowercase letters (measured as x-height, the height of the letter x) cover between about 0.2 and 2 degrees of visual angle, and it falls steeply below about 0.2 degrees. At the distances at which people hold phones and sit at desks, 0.2 degrees corresponds to an x-height of roughly 7 to 8 CSS pixels. Body text of 16 CSS pixels in a typeface with a small x-height therefore sits at this limit, not safely above it.",
+   "mechanism": "The eye resolves fine detail only in the center of vision. When letters fall below the critical size, their details blur, the reader recognizes fewer letters in one glance, and reading needs more and longer glances. Above the critical size, a tenfold range of sizes gives the same speed. Older eyes and eyes with low vision have a larger critical size.",
+   "effects": {
+    "cognitiveLoad": "lowers — when text is above the critical size",
+    "satisfaction": "raises — in one web study, ratings rose with text size up to a point (see the existing record type-size-and-x-height)",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Measure the x-height of the chosen body typeface, and set the font size so that the x-height is at least 8 CSS pixels: 16 pixels for a typeface whose x-height is half the font size, about 18 pixels for one whose x-height is 0.45 of the font size.",
+    "Hold captions, hints, prices, legal notes and error messages to an x-height of at least 7 CSS pixels.",
+    "Treat the floor as a minimum for adults with normal vision; choose a larger size when the audience includes older readers.",
+    "Use relative units, so that the reader's own text-size setting scales all text."
+   ],
+   "antiPatterns": [
+    "Choosing 16 pixels for every typeface without looking at its x-height.",
+    "Light grey 12-pixel footnotes for opening hours, prices or conditions.",
+    "Fixed pixel sizes that ignore the reader's browser setting."
+   ],
+   "howToCheck": {
+    "machine": "For each text style, draw a lowercase x on a canvas in the computed typeface and size and measure its height in CSS pixels (or multiply the font size by the x-height ratio of the typeface). Fail body text below 8, and fail any other text that must be read below 7. Report the visual angle for a phone at 32 cm and for a desktop screen at 60 cm with the formula angle = 2 × arctan(height ÷ (2 × distance)). The pixel thresholds are this record's own arithmetic from the 0.2-degree finding and from assumed pixel sizes; no published web study states them.",
+    "human": "Read the smallest text on the page on a phone at arm's length in daylight. Ask a reader over 60 to do the same."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries. Legge and Bigelow (2011, Journal of Vision): a later paper that cites the review gives a critical print size of about 0.2 degrees and maximum speed from 0.2 to 2 degrees of x-height; the review's own example, as summarized, is a 1.4 mm letter x in a newspaper column at 40 cm, which covers 0.2 degrees. Chung, Mansfield and Legge (1998) put the critical size at about 0.16 degrees in central vision. Bababekova and colleagues (2011, Optometry and Vision Science) measured how far from the eye adults hold smartphones: 36.2 cm on average for text messages (129 people) and 32.2 cm for web pages (100 people). Conversion, which is arithmetic by the author of this record and not taken from a source: 0.2 degrees is 1.12 mm at 32.2 cm and 2.09 mm at 60 cm; with one CSS pixel taken as about 0.16 mm on a phone and 0.26 mm on a desktop monitor, that is about 7.0 and 8.1 CSS pixels. The two pixel sizes and the 60 cm desk distance are typical values recalled from memory, not checked. Mansfield, Legge and Bane (year not confirmed) found small advantages for a fixed-width typeface over Times for readers with low vision near the limit of their acuity. Rello, Pielot and Marcos (CHI 2016) found that readability and comprehension improved up to 18 points for article text on a desktop screen; the search confirmed neither the sample size nor the pixel equivalent of their point sizes."
+   },
+   "sources": [
+    {
+     "citation": "Legge, G. E., & Bigelow, C. A. (2011). Does print size matter for reading? A review of findings from vision science and typography. Journal of Vision, 11(5), article 8.",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3428264",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Chung, S. T. L., Mansfield, J. S., & Legge, G. E. (1998). Psychophysics of reading. XVIII. The effect of print size on reading speed in normal peripheral vision. Vision Research.",
+     "url": "https://legge.dl8.umn.edu/sites/legge.psych.umn.edu/files/2020-08/psychophysics_of_reading._xviii._the_effect_of_print_size_on_reading_speed_in_normal_peripheral_vision_chung_mansfield_legge_1998.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Bababekova, Y., Rosenfield, M., Hue, J. E., & Huang, R. R. (2011). Font size and viewing distance of handheld smart phones. Optometry and Vision Science, 88(7), 795-797.",
+     "url": "https://pubmed.ncbi.nlm.nih.gov/21499163/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Bigelow & Holmes blog. Why The New York Times Magazine's redesign is probably not more legible than its previous design. Applies the review: reading slows when the x-height falls below about 4 points at 16 inches.",
+     "url": "https://lucidafonts.com/blogs/bigelow-holmes-blog/why-the-new-york-times-magazine-s-redesign-is-probably-not-more-legible-than-its-previous-design",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Mansfield, J. S., Legge, G. E., & Bane, M. C. Psychophysics of reading. XV. Font effects in normal and low vision.",
+     "url": "https://legge.dl8.umn.edu/sites/legge.psych.umn.edu/files/files/media/mansfield96_psychophysics_of_reading_xv-_font_effects_in_normal_and_low_vision.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Rello, L., Pielot, M., & Marcos, M.-C. (2016). Make it big! The effect of font size and line spacing on online readability. Proceedings of CHI 2016, 3637-3648.",
+     "url": "https://researchr.org/publication/RelloPM16",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Physical size of one CSS pixel on phones (about 0.16 mm) and desktop monitors (about 0.26 mm), and a desk viewing distance of about 60 cm.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "Pixel size and viewing distance vary from device to device and from person to person, so the pixel floor is an estimate with a margin of about one pixel either way. The critical size is the smallest size that still gives maximum speed; comfortable reading of long text needs a margin above it. Researchers measured the critical size with high-contrast text; low contrast or thin strokes raise it. Readers with low vision need much larger text, which is why resizing matters more than any fixed floor.",
+   "appliesTo": [
+    "size-scale",
+    "typeface",
+    "mobile",
+    "density"
+   ]
+  },
+  {
+   "id": "spacing-evidence-limits",
+   "topic": "typography",
+   "principle": "Letter and line spacing: the defaults are close to best, and '1.5' is a standard, not a measured optimum",
+   "claim": "For skilled adult readers, the default letter spacing of a typeface is at or near the best value: some studies find a small gain from slightly wider spacing, a review of 20 studies concludes that the default is optimal, and no study in this search found a gain from tighter spacing. Wider letter spacing without wider word spacing slowed reading in children. For line spacing, studies find worse results only at the extremes; the familiar value of 1.5 comes from an accessibility standard, and the experiments do not single it out.",
+   "mechanism": "Letters that stand too close blur into each other at the edge of a glance, an effect called crowding. Letters that stand too far apart push the end of each word farther from the center of vision and weaken the gaps that mark where words begin and end. Lines that are too close interfere with the line being read; beyond a moderate gap, more space adds nothing for central vision.",
+   "effects": {
+    "cognitiveLoad": "mixed — small and inconsistent effects inside the normal range; raises at the extremes",
+    "satisfaction": "unknown — the cited studies measured speed and comprehension",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Leave the letter spacing of body text at the default of the typeface; never tighten it.",
+    "If a design widens the letter spacing of body text, widen the word spacing in proportion.",
+    "Set the line height of body text in a moderate range (about 1.3 to 1.6 times the font size) and choose within it by eye and by line length; do not treat 1.5 as proven.",
+    "Keep layouts intact when a reader applies wider spacing (the override test in the existing record spacing-and-justification)."
+   ],
+   "antiPatterns": [
+    "Negative letter spacing on paragraphs, copied from a headline style.",
+    "Body text with wide letter spacing and normal word gaps, so that words run together.",
+    "A line height below about 1.2 or above about 1.8 for body text."
+   ],
+   "howToCheck": {
+    "machine": "For body text, read the computed letter-spacing, word-spacing, line-height and font-size. Fail negative letter-spacing. Flag letter-spacing above 0.05 of the font size when word-spacing is zero. Flag a ratio of line height to font size below 1.2 or above 1.8. The value 0.05 and the bounds 1.2 and 1.8 are working conventions that mark 'extreme'; the studies give no exact cut-offs.",
+    "human": "Compare a paragraph at the default spacing with the styled version at reading distance. If the words in the styled version are harder to tell apart, return to the default."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries, except the W3C text; the findings conflict. Letter spacing: Perea, Moret-Tatay and Gomez (2011) found faster word recognition with slightly wider spacing; Perea and Gomez (2012, PLOS ONE) found the shortest fixations with a small increase and the longest with the default during sentence reading. A secondary source reports that van den Boer and Hakvoort (2015) examined 20 studies and concluded that default spacing is optimal (title and details not confirmed), and that Slattery and colleagues object that typefaces have no single 'default'. Work by Chung found no gain in reading speed beyond standard letter spacing in central or peripheral vision. Galliussi and colleagues (2020, Annals of Dyslexia) found, in children with and without dyslexia, that wider letter spacing without a matching increase in word spacing impaired reading speed. Line spacing: Chung (2004) found that the gain for central vision leveled off at about 1.25 times standard line spacing; a follow-up with patients who had macular degeneration found no gain from 1.5 to 4 times standard spacing, so 'more line spacing helps low vision' is not supported for that group; Rello, Pielot and Marcos (2016) found poorer comprehension at the smallest and the largest line spacing that they tested, and their slides recommend 1.0 or 1.4. WCAG 2.2 criterion 1.4.8 Visual Presentation (Level AAA) was read; it asks for a mechanism to reach line spacing of at least space-and-a-half within paragraphs."
+   },
+   "sources": [
+    {
+     "citation": "Perea, M., Moret-Tatay, C., & Gomez, P. (2011). The effects of interletter spacing in visual-word recognition. Acta Psychologica.",
+     "url": "https://www.uv.es/~mperea/spacing_AP.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Perea, M., & Gomez, P. (2012). Subtle increases in interletter spacing facilitate the encoding of words during normal reading. PLOS ONE, e47568.",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3474730",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "van den Boer, M., & Hakvoort, B. E. (2015). Default spacing is the optimal spacing for word reading. Quarterly Journal of Experimental Psychology. Known only through a secondary source; title and journal not confirmed.",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Galliussi, J., Perondi, L., Chia, G., Gerbino, W., & Bernardis, P. (2020). Inter-letter spacing, inter-word spacing, and font with dyslexia-friendly features: Testing text readability in people with and without dyslexia. Annals of Dyslexia. (Author list recalled from memory.)",
+     "url": "https://arts.units.it/retrieve/handle/11368/2960158/339575/Galliussi2020_Article_Inter-letterSpacingInter-wordS.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Chung, S. T. L. (2004). Reading speed benefits from increased vertical word spacing in normal peripheral vision. Optometry and Vision Science. Also Chung's study of letter spacing, and a follow-up on line spacing with patients who had macular degeneration (authors and titles of those two not confirmed).",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2729069",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Rello, L., Pielot, M., & Marcos, M.-C. (2016). Make it big! The effect of font size and line spacing on online readability. Proceedings of CHI 2016, 3637-3648.",
+     "url": "https://researchr.org/publication/RelloPM16",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 1.4.8 Visual Presentation, Level AAA.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/visual-presentation.html",
+     "verified": "read-page"
+    }
+   ],
+   "caveats": "'Standard' spacing in the vision studies is defined by the test typeface and is not the same as a CSS value. Several studies used single words or short sentences. Children and readers with dyslexia may gain from wider spacing where skilled adults do not (see the existing record dyslexia-fonts). Large headings need tighter line spacing than body text.",
+   "appliesTo": [
+    "size-scale",
+    "typeface",
+    "density",
+    "content-width"
+   ]
+  },
+  {
+   "id": "alignment-and-serifs-no-reliable-difference",
+   "topic": "typography",
+   "principle": "Justified text, centered text and serifs: studies show no reliable difference in reading speed",
+   "claim": "Three common rules have weaker evidence than their reputation. Controlled studies of justified text against ragged-right text give mixed and mostly null results. One usability study of centered against left-aligned text on phones found no difference in reading speed or comprehension, though more people preferred left alignment. Recent screen studies of serif against sans-serif typefaces find no significant difference in reading measures. The practical rules (left-align body text, do not justify it) rest on a standard, on preference and on the uneven word gaps that browsers produce, not on measured reading speed.",
+   "mechanism": "Skilled readers adapt to a wide range of layouts and letter shapes, so moderate differences leave speed unchanged. Justification can still harm when it is done badly: a browser that stretches word gaps without hyphenating leaves wide, uneven gaps, and gaps that line up form distracting vertical streaks. Centered lines each start at a different place, so the eye must search for the start of each line; over two or three lines this does not matter.",
+   "effects": {
+    "cognitiveLoad": "none — no reliable effect within normal ranges in the cited studies",
+    "satisfaction": "mixed — more participants preferred left alignment; preference for serif or sans-serif varies from person to person",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Left-align body text in left-to-right languages; this matches preference and the standard, and costs nothing.",
+    "Do not justify body text on the web: browsers space justified lines unevenly, and criterion 1.4.8 (Level AAA) asks for a way to avoid justification.",
+    "Use centered text for headings and for blocks of up to about three lines; left-align longer blocks.",
+    "Choose between serif and sans-serif for tone and for the quality of the individual typeface, not for reading speed."
+   ],
+   "antiPatterns": [
+    "Stating in a Prescription that a sans-serif typeface 'reads faster on screens'.",
+    "Whole pages of centered paragraphs.",
+    "Justified text in a narrow phone column."
+   ],
+   "howToCheck": {
+    "machine": "Flag text-align: justify on body text (WCAG 1.4.8, Level AAA). Flag paragraphs with text-align: center that render on more than three lines at any tested width; the limit of three lines is a convention, because the one study found no difference in speed. Do not create any check that passes or fails a page on serif against sans-serif.",
+    "human": "Read a justified or centered block on the narrowest supported screen, and look for uneven gaps or lost line starts."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries, except the W3C text. Justification: 'Experiments with unjustified text' (Visible Language; the summary names Burnhill and one co-author) found no significant difference in reading speed or comprehension in three experiments. Two small studies in TUGboat found that people read justified text slightly faster, with slightly fewer correct answers on a delayed test in one study and no difference in comprehension in the other. Trollip and Sales (1986), cited at second hand, found slower reading of fully justified text on a screen. One overview calls the studies from 1951 to 1991 disparate and inconclusive. Centered text: a working paper of the United States Census Bureau (2022) compared left and center alignment of survey text on phones and found no statistically significant difference in reading speed or comprehension, with more participants preferring left alignment; sample size not confirmed. Serifs on screens: an eye-tracking study in the International Journal of Human-Computer Interaction (2024, authors not confirmed) found no significant differences in readability measures or preference across four tests; a 2022 study in PeerJ Computer Science found no evidence to support the common choice of sans-serif for shop sites. The search found no meta-analysis. WCAG 2.2 criterion 1.4.8 Visual Presentation (Level AAA) was read."
+   },
+   "sources": [
+    {
+     "citation": "Hartley, J., & Burnhill, P. Experiments with unjustified text. Visible Language. (Authors and year recalled from memory; the search summary gives 'Burnhill and Harley'.)",
+     "url": "https://www.journals.uc.edu/index.php/vl/article/view/5109",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Akhmadeeva, L., and colleagues. Study of reading speed and comprehension for justified and ragged-right text. TUGboat, 37(2).",
+     "url": "https://tug.org/TUGboat/tb37-2/tb116akhmadeeva.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Veytsman, B., and colleagues. Follow-up study on justification and hyphenation. TUGboat, 38(2).",
+     "url": "https://tug.org/TUGboat/tb38-2/tb119veytsman-justify.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "United States Census Bureau (2022). Mobile Survey Design Research - Experiment 13: Text Alignment. Working paper rsm2022-05.",
+     "url": "https://www.census.gov/library/working-papers/2022/adrm/rsm2022-05.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Eye-tracking study of serif and sans-serif typefaces on screens (2024). International Journal of Human-Computer Interaction, DOI 10.1080/10447318.2024.2338667. (Authors and title not confirmed.)",
+     "url": "https://informahealthcare.com/doi/full/10.1080/10447318.2024.2338667",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "How does serif vs sans serif typeface impact the usability of e-commerce websites? (2022). PeerJ Computer Science, article cs-1139. (Authors not confirmed.)",
+     "url": "https://peerj.com/articles/cs-1139",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 1.4.8 Visual Presentation, Level AAA.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/visual-presentation.html",
+     "verified": "read-page"
+    }
+   ],
+   "caveats": "A small study that finds no difference does not prove that none exists. The Census study used short survey questions, not long paragraphs. Print typesetters justify well, with hyphenation and fine control of spacing; the web rule reflects the limits of browsers and may change as browsers improve. One study of readers with dyslexia found better results with sans-serif and upright type (see dyslexia-supported-and-myth). The existing record no-single-best-font covers serifs in print-like tests and differences between individual readers.",
+   "appliesTo": [
+    "typeface",
+    "content-width",
+    "heading-treatment",
+    "hero"
+   ]
+  },
+  {
+   "id": "numerals-and-number-formats",
+   "topic": "content",
+   "principle": "Write facts as digits, keep strings of digits short, and make dates unambiguous",
+   "claim": "Digits stand out in a line of words: in eye-tracking sessions, readers who skipped the surrounding words still stopped on numerals, so a fact written as '23' is easier to find than 'twenty-three'. Long numbers are costly to read: adults needed up to seven times more fixations for numbers of 8 to 11 digits than for words of the same length. Style guides add conventions for grouping digits and for writing dates so that nobody can misread them.",
+   "mechanism": "A numeral has a different shape from the letters around it, so it attracts the eye of a person who scans for facts such as prices, sizes and times. A reader recognizes a word as a whole, and must convert a long number into speech one group of digits at a time. An all-numeric date such as 03/04/2026 has two readings, because countries order the day and the month differently.",
+   "effects": {
+    "cognitiveLoad": "mixed — lowers the effort of finding a fact; raises with every extra digit that must be read",
+    "satisfaction": "unknown — not measured",
+    "perceivedIntuitiveness": "unknown — not measured; the practitioner source says that exact figures add credibility"
+   },
+   "designMoves": [
+    "Write prices, quantities, sizes, times and distances in digits, including small numbers and numbers at the start of a line.",
+    "Round where precision does not matter ('about 2,000 customers'), and write very large numbers with digits and a word ('2.4 million').",
+    "Group long numbers: a thousands separator for quantities of five digits or more, and spaced groups for telephone and reference numbers.",
+    "Write dates with the month as a word ('3 April 2026') and times with a clear marker ('5pm' or '17:00').",
+    "Spell out a number that is not a fact ('one of our team').",
+    "Make each telephone number a tel: link."
+   ],
+   "antiPatterns": [
+    "'We have served over five thousand customers' in a line that visitors scan for proof.",
+    "Opening dates written as 03/04/26.",
+    "An eleven-digit telephone or order number with no spaces."
+   ],
+   "howToCheck": {
+    "machine": "In the page text: (1) flag number words from 'two' upward that stand before a unit, a currency or a countable noun; (2) flag runs of five or more digits with no separator or space, after excluding years, postal codes and values inside links; (3) flag all-numeric dates, with patterns such as one or two digits, a slash or a dot, one or two digits, a slash or a dot, and two or four digits; (4) assert that each telephone number appears in groups and sits inside a tel: link; (5) assert one consistent currency format per page. Rules 2 to 5 follow style-guide convention, not experiments.",
+    "human": "Scan the page for five seconds, looking only for the price and the opening hours. Note whether the eye finds them."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "large-practitioner-study",
+    "strengthNote": "Seen only as search summaries. Nielsen (2007, Nielsen Norman Group) reports from eye-tracking sessions that numerals stop the scanning eye even inside text that users otherwise ignore, and recommends digits for facts; the summary gives no counts, and the search did not show that anyone has retested the finding. De Chambrier, Pedrotti, Ruggeri and colleagues (2023, Acta Psychologica) had adults read numbers aloud: about 2.5 times more fixations on four-digit numbers than on short words, and up to 7 times more on numbers of 8 to 11 digits than on long words. The sample was small and consisted of psychology students, and the summary does not report the study's comparison of numbers with and without thousands separators. The rules for separators, dates and telephone numbers are expert opinion from government style guides (the NHS content guide and the Australian Government Style Manual appeared in the search; their wording was not read) and would be grade C on their own. The search found no experiment on date formats."
+   },
+   "sources": [
+    {
+     "citation": "Nielsen, J. (2007). Show Numbers as Numerals When Writing for Online Readers. Nielsen Norman Group.",
+     "url": "https://www.nngroup.com/articles/web-writing-show-numbers-as-numerals/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "de Chambrier, A.-F., Pedrotti, M., Ruggeri, P., and colleagues (2023). Reading numbers is harder than reading words: An eye-tracking study. Acta Psychologica, 237, 103942.",
+     "url": "https://doaj.org/article/3316ebab20f747c98a57214db857dbc0",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "NHS digital service manual. Content guide: numbers, measurements, dates and time.",
+     "url": "https://service-manual.nhs.uk/content/numbers-measurements-dates-time",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Australian Government Style Manual. Numbers and measurements.",
+     "url": "https://www.stylemanual.gov.au/node/138",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Separators differ by country: 1,000.50 in English-speaking countries is 1.000,50 in much of Europe, so the format must follow the language of the page. Digits attract attention, which is unwanted for numbers that are not facts. The number study measured reading aloud, which may overstate the cost of silent reading. The existing record tabular-numerals covers the alignment of numbers in tables.",
+   "appliesTo": [
+    "numerals",
+    "copy",
+    "tables",
+    "hero"
+   ]
+  },
+  {
+   "id": "button-and-link-wording",
+   "topic": "microcopy",
+   "principle": "Buttons and links: name the action or the destination; the support is standards and convention, not experiments",
+   "claim": "Platform guidelines agree that a button should carry a specific verb that names its result ('Book a visit', 'Save changes') in place of 'OK', 'Yes', 'Submit' or 'Click here'. The accessibility standard requires that the purpose of a link can be determined from its text or its context, and that the name read by assistive technology contains the visible label. The search found no controlled experiment that measures the effect of specific verbs on buttons. About one in seven of the top million home pages has ambiguous link text.",
+   "mechanism": "People act on a button after reading its label, often without reading the text around it. A person can judge a label that names the outcome without any other text; a person can judge 'OK' or 'Yes' only by reading the question. People who use a screen reader often move through a list of links or buttons with the surrounding text removed, and people who control the page by voice say the label that they see.",
+   "effects": {
+    "cognitiveLoad": "lowers — the label can be judged without the surrounding text (argued, not measured)",
+    "satisfaction": "unknown — no measurement found",
+    "perceivedIntuitiveness": "raises — the visitor can predict what will happen (argued, not measured)"
+   },
+   "designMoves": [
+    "Start each button with a verb and add its object: 'Request a quote', 'Call the shop', 'Send message'.",
+    "In a confirmation, label both buttons with outcomes: 'Delete photo' and 'Keep photo'.",
+    "Write link text that names the destination: 'See our price list', not 'click here'.",
+    "Use the same words for a button and for the heading of the page or step that it opens.",
+    "Keep the visible label inside the name that assistive technology reads, and put it first."
+   ],
+   "antiPatterns": [
+    "'Submit' on a contact form.",
+    "'Yes' and 'No' under a question that the visitor has to read again.",
+    "Several 'Learn more' links on one page that lead to different places.",
+    "An icon button whose spoken name differs from the word shown beside it."
+   ],
+   "howToCheck": {
+    "machine": "For every button and link, read the visible text and the accessible name (the name that assistive technology reads). (1) Flag button text that is on a generic list ('OK', 'Yes', 'No', 'Submit', 'Continue', 'Click here', 'Go') or that does not begin with a verb from a verb list; conventional one-word buttons such as 'Search' pass. (2) Flag dialogs whose buttons are 'Yes' and 'No' or 'OK' and 'Cancel'. (3) Assert that the accessible name contains the visible text (WCAG 2.5.3, Level A). (4) Flag link texts that are identical but lead to different addresses, and link texts on the generic list (WCAG 2.4.4, Level A; 2.4.9, Level AAA).",
+    "human": "Cover everything except the buttons and links. A stranger should be able to say what each one does."
+   },
+   "evidence": {
+    "grade": "C",
+    "kind": "expert-opinion",
+    "strengthNote": "Grade C describes the evidence that specific verbs improve outcomes; the standards part is a formal requirement. Three W3C texts were read: WCAG 2.2 criteria 2.4.4 Link Purpose (In Context) (Level A), 2.4.9 Link Purpose (Link Only) (Level AAA) and 2.5.3 Label in Name (Level A). The rest was seen only as search summaries. Guidelines from Microsoft, GNOME and KDE, quoted at second hand, say to avoid 'Yes' and 'No' and to use the name of the action; the blog post that quotes them asks whether the rule rests on research and gives no answer. This search found no controlled experiment on button verbs. WebAIM's 2025 analysis of one million home pages found ambiguous link text on 13.7% of pages (13.2% in 2024); a secondary source gives 15.2% for 2026, figure not confirmed. The Nielsen Norman Group study of links cut to 11 characters (80 users) supports putting the informative words first. Reports of large sales gains from changing one word on a button come from single uncontrolled tests; this record does not use them."
+   },
+   "sources": [
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 2.4.4 Link Purpose (In Context), Level A.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/link-purpose-in-context.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 2.4.9 Link Purpose (Link Only), Level AAA.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/link-purpose-link-only.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 2.5.3 Label in Name, Level A.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/21/label-in-name.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "WebAIM (2025). The WebAIM Million: the 2025 report on the accessibility of the top 1,000,000 home pages.",
+     "url": "https://webaim.org/projects/million/2025",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Kossebau, F. (2022). Blog post on 'Yes' and 'No' buttons that quotes the Microsoft, KDE and GNOME interface guidelines.",
+     "url": "https://planet.kde.org/friedrich-kossebau-2022-09-13-no-yes-no-yes",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "GNOME Human Interface Guidelines. Dialogs.",
+     "url": "https://developer-old.gnome.org/hig/stable/dialogs.html.en",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Nielsen, J. (2009). First 2 Words: A Signal for the Scanning Eye. Nielsen Norman Group.",
+     "url": "https://www.nngroup.com/articles/first-2-words-a-signal-for-scanning/",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "Short conventional labels ('Search', 'Menu', 'Close') are understood by habit. A long label can wrap or be cut off on a phone. The existing record information-scent-and-labels covers navigation labels and the theory behind them; this record adds buttons, dialogs and the requirement that the spoken name contains the visible label.",
+   "appliesTo": [
+    "forms",
+    "nav",
+    "copy",
+    "states"
+   ]
+  },
+  {
+   "id": "error-message-wording-evidence",
+   "topic": "microcopy",
+   "principle": "Error messages: specific, constructive and neutral wording improved correction in early experiments",
+   "claim": "Experiments from the early 1980s found that error messages that were more specific, more positive in tone and clearer raised the rate at which people corrected their errors and raised their satisfaction. A 2021 study of programming error messages found that length, jargon, sentence structure and vocabulary each changed how readable beginners found a message. The existing record error-messages-and-recovery states the requirement to identify the error and to suggest a fix; this record adds the evidence on wording.",
+   "mechanism": "An error interrupts a task, so the person reads the message with their attention still on the task. A person can act at once on a message that names the item and the next action. A vague, alarming or blaming message adds a second problem: the person must work out what happened, and may conclude that they cannot continue.",
+   "effects": {
+    "cognitiveLoad": "lowers — a specific message removes the search for the cause",
+    "satisfaction": "raises — reported in the early experiments",
+    "perceivedIntuitiveness": "raises — the message states the way forward (inferred from the correction rates)"
+   },
+   "designMoves": [
+    "Say what happened and what to do next in one or two short sentences: 'Enter a phone number with at least 10 digits.'",
+    "Name the field or the item in the visitor's words.",
+    "Use neutral words; avoid 'invalid', 'illegal', 'fatal' and 'failed', and never show 'Error' as the whole message.",
+    "Leave out codes and technical terms, or place them after the plain sentence for support staff.",
+    "Write in sentence case, with no exclamation mark."
+   ],
+   "antiPatterns": [
+    "'Invalid input.'",
+    "'ERROR 422: UNPROCESSABLE ENTITY'",
+    "'Oops! Something went wrong!' with no next step.",
+    "A message that blames: 'You entered the date incorrectly.'"
+   ],
+   "howToCheck": {
+    "machine": "Collect every error and warning text in the build. For each one, flag: (1) fewer than three words, or only a code; (2) any word from an alarm-and-blame list ('invalid', 'illegal', 'fatal', 'failed', 'bad', 'wrong', 'forbidden'); (3) text in capitals throughout, or an exclamation mark; (4) no imperative verb and no 'must' or 'need', which suggests that the message gives no next step; (5) words that fail the test in word-frequency-familiar-words. The word list is a working convention drawn from the guidelines; the studies do not test single words.",
+    "human": "Show each message alone, without the form. Ask a first-time user what went wrong and what they would do next."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries, except the W3C text. Shneiderman (1981 abstract; 1982, Communications of the ACM) reports five studies with syntax errors from a compiler and command errors in a text editor: more specific wording, a more positive tone and greater clarity improved correction rates and user satisfaction. The search showed neither sample sizes nor effect sizes. Denny, Prather, Becker, Mooney and colleagues (CHI 2021) ran three experiments on programming error messages and found that length, jargon, sentence structure and vocabulary significantly affect readability as judged by beginners. Both lines of work studied people who write code, on text terminals or in programming tools; applying them to a contact form or a booking page is an inference, which is why the grade is B. The Nielsen Norman Group guidelines (human-readable, concise, precise, constructive, no blame) are practitioner guidance. WCAG 2.2 criterion 3.3.3 Error Suggestion (Level AA) was read."
+   },
+   "sources": [
+    {
+     "citation": "Shneiderman, B. (1982). Designing computer system messages. Communications of the ACM, 25(9), 610-611.",
+     "url": "https://lccd.umiacs.umd.edu/node/17064",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Shneiderman, B. (1981). Human factors studies with system message styles (abstract only).",
+     "url": "https://lccd.umiacs.umd.edu/node/17201",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Denny, P., Prather, J., Becker, B. A., Mooney, C., and colleagues (2021). On designing programming error messages for novices: Readability and its constituent factors. Proceedings of CHI 2021, article 55.",
+     "url": "https://dblp.uni-trier.de/rec/conf/chi/DennyPBMHAP21.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Nielsen Norman Group. Error-Message Guidelines.",
+     "url": "https://www.nngroup.com/articles/error-message-guidelines/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 3.3.3 Error Suggestion, Level AA.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/error-suggestion.html",
+     "verified": "read-page"
+    }
+   ],
+   "caveats": "A neutral tone suits most messages; a real danger (loss of data, a payment taken twice) needs a plain warning. A joke in an error message can annoy a person who has just lost work. Security limits what a message may reveal, for example at sign-in. The existing record error-messages-and-recovery covers placement, summaries and recovery.",
+   "appliesTo": [
+    "forms",
+    "states",
+    "copy",
+    "ai-ux"
+   ]
+  },
+  {
+   "id": "adult-literacy-survey-data",
+   "topic": "audience",
+   "principle": "About a quarter of adults read at the lowest measured levels",
+   "claim": "In the 2023 international Survey of Adult Skills, 28% of adults in the United States scored at Level 1 or below in literacy, up from 19% in 2017; the average across the participating OECD countries was 26%. Adults at these levels can read short, simple texts and find a single piece of information, and they struggle with long or dense text. A website for the general public should expect that about one visitor in four reads at this level.",
+   "mechanism": "Reading skill varies widely among adults. It is lower on average among people with less schooling, among older people and among people who read in a second language. A page written at the writer's own reading level shuts out part of the audience, and the owner sees no sign of it, because people who cannot read a page leave without complaint.",
+   "effects": {
+    "cognitiveLoad": "raises — for about a quarter of adults, when text is long or dense",
+    "satisfaction": "raises — when text is simplified; in one usability study lower-literacy users rated the simpler site higher",
+    "perceivedIntuitiveness": "raises — users completed more tasks on the simplified site in that study"
+   },
+   "designMoves": [
+    "Treat plain wording, short sentences and common words as the default for every public page, not as a special version.",
+    "Put the main facts (what, where, when, price, how to get in touch) in short statements and labelled lists that a visitor can find without reading paragraphs.",
+    "Do not rely on a long paragraph to carry a condition that the customer must know.",
+    "Offer a telephone number or another spoken route for people who prefer not to read."
+   ],
+   "antiPatterns": [
+    "Assuming that the audience reads as well as the owner does.",
+    "Describing the audience by a school grade; the surveys do not report grades.",
+    "Important conditions that appear only in dense text."
+   ],
+   "howToCheck": {
+    "machine": "No program can measure the reading skill of the visitors of a page. Use this record to set Catalog defaults: apply the checks in readability-formulas-are-flags, sentence-length-and-structure and word-frequency-familiar-words to every public page, and assert that the key facts of the page (address, hours, price or price range, contact route) occur outside paragraphs: in headings, lists, tables or labelled fields.",
+    "human": "Ask a person who does not read much to find the opening hours and the price on the page, and watch where they look."
+   },
+   "evidence": {
+    "grade": "A",
+    "kind": "large-practitioner-study",
+    "strengthNote": "Seen only as search summaries; the official pages could not be opened. These are large official sample surveys that test adults directly, which is why the grade is A; 'large-practitioner-study' is the nearest label in the existing scale for an official statistical survey. United States: the highlights report of the National Center for Education Statistics for the 2023 cycle (NCES 2024-202) states that the share of adults at Level 1 or below rose from 19% in 2017 to 28% in 2023; a literacy charity converts this to about 58.9 million adults. OECD: a country note gives an OECD average of 26% at Level 1 or below in literacy and 25% in numeracy; the OECD reports that almost one in three adults across 31 countries and economies scored at or below Level 1 in literacy or in numeracy; one brochure gives a range from 7% in Japan to 44% in Chile, and the summary does not say which measure that range refers to. Behavior: Nielsen (2005) tested one pharmaceutical site with 50 users before and after simplification; success rose from 46% to 82% for lower-literacy users and from 68% to 93% for higher-literacy users, total task time fell from 22.3 to 9.5 minutes and from 14.3 to 5.1 minutes, and Pfizer sponsored the study. WCAG 2.2 criterion 3.1.5 Reading Level (Level AAA) was read: where text needs more than lower-secondary reading ability, supplemental content or a simpler version is available."
+   },
+   "sources": [
+    {
+     "citation": "National Center for Education Statistics (2024). Highlights of the 2023 U.S. PIAAC Results (NCES 2024-202).",
+     "url": "https://ies.ed.gov/use-work/resource-library/report/first-look-ed-tab/highlights-2023-u-s-piaac-results",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "OECD (2024). Survey of Adult Skills 2023: country note for Germany (states the OECD averages).",
+     "url": "https://www.oecd.org/en/publications/survey-of-adults-skills-2023-country-notes_ab4f6b8c-en/germany_5f81cb66-en.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "OECD. Navigating life with low literacy and numeracy: How many adults have low skills and why does it matter?",
+     "url": "https://www.oecd.org/en/publications/navigating-life-with-low-literacy-and-numeracy_c198a20f-en/full-report/how-many-adults-have-low-skills-and-why-does-it-matter_8fb4cae4.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "ProLiteracy (2024). US adults need stronger skills to thrive in a changing world. Source of the figure of 58.9 million adults.",
+     "url": "https://www.proliteracy.org/news/us-adults-need-stronger-skills-to-thrive-in-a-changing-world/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Nielsen, J. (2005). Lower-Literacy Users: Writing for a Broad Consumer Audience. Nielsen Norman Group.",
+     "url": "https://www.nngroup.com/articles/writing-for-lower-literacy-users/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 3.1.5 Reading Level, Level AAA.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/reading-level.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "The age range of the survey (16 to 65) and the description of what adults at Level 1 can do.",
+     "url": null,
+     "verified": "from-memory-unverified"
+    }
+   ],
+   "caveats": "The survey tests adults in the main language of the country, so its low scorers include people who are still learning that language. The visitors of one business's site are not a random sample of adults. The age range and the description of Level 1 in this record are recalled from memory and were not checked. The claim that 'the average adult reads at an 8th-grade level' does not come from these surveys (see folklore-reading-statistics).",
+   "appliesTo": [
+    "copy",
+    "sections",
+    "forms",
+    "onboarding"
+   ]
+  },
+  {
+   "id": "dyslexia-supported-and-myth",
+   "topic": "typography",
+   "principle": "Dyslexia: larger text, upright type and shorter lines have support; tinted overlays do not",
+   "claim": "For readers with dyslexia, studies support larger text, upright type in place of italics and, for some readers, shorter lines. A systematic review found that the evidence does not support colored overlays or tinted backgrounds as a reading aid. Wider letter spacing helps only when word spacing grows with it. Special dyslexia typefaces do not help, as the existing record dyslexia-fonts states.",
+   "mechanism": "Dyslexia is chiefly a difficulty in linking written letters to speech sounds. Many readers with dyslexia also suffer more from crowding, in which neighboring letters and words interfere with the one being read. Larger text, upright letters and shorter lines reduce that interference. A color tint does not change the link between letters and sounds, which may be why controlled trials find no reliable effect.",
+   "effects": {
+    "cognitiveLoad": "lowers — with larger, upright text and shorter lines, for some readers",
+    "satisfaction": "unknown — the typeface study recorded preference, but the summary seen gives no ratings",
+    "perceivedIntuitiveness": "unknown — not measured"
+   },
+   "designMoves": [
+    "Use upright type for body text; keep italics for a few words of emphasis or for a title.",
+    "Let text grow to 200% without loss, and let lines shorten as it grows.",
+    "Use a familiar, plainly drawn typeface for body text.",
+    "Do not offer a tinted overlay, a 'dyslexia mode' or a dyslexia typeface as a reading aid.",
+    "If the design widens letter spacing, widen word spacing as well."
+   ],
+   "antiPatterns": [
+    "Whole paragraphs or customer quotes set in italics.",
+    "A switch for a color overlay or a dyslexia typeface, presented as help for readers with dyslexia.",
+    "Fixed-width text columns that force sideways scrolling when the reader enlarges the text."
+   ],
+   "howToCheck": {
+    "machine": "Flag any block of body text longer than one sentence whose computed font-style is italic or oblique. Assert that text resizes to 200% without loss of content (WCAG 1.4.4, Level AA). Flag page controls or copy that offer a 'dyslexia font', a 'dyslexia mode' or a 'color overlay'. Apply the spacing rule from spacing-evidence-limits.",
+    "human": "If a reader with dyslexia is available, ask them to read a full page and to say where they lost their place. A typeface switch is no substitute for this."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries, except the W3C text. Overlays: Griffiths, Taylor, Henderson and Barrett (2016) reviewed 51 published items; most studies had a high or uncertain risk of bias, and the authors conclude that colored overlays and lenses cannot be endorsed for reading difficulty and that reported gains may be placebo or practice effects. An overview of systematic reviews found that three of four judged the evidence insufficient. Italics and typeface: Rello and Baeza-Yates (2013) had 48 people with diagnosed dyslexia, aged 11 to 50, read 12 texts in 12 typefaces: italic type lowered readability, and sans-serif, fixed-width and upright type did better than serif, proportional and italic type. This is one eye-tracking study. Size: a study by Rello, Pielot, Marcos and Carlini (2013), with 28 participants with dyslexia according to the summary, carries the title 'Size matters (spacing not)' and recommends 18 points; its details were not seen. Line length: Schneps and colleagues (2013, PLOS ONE, 103 high-school students with dyslexia) found better comprehension on a small e-reader with few words per line for students with a limited visual attention span. Spacing: Galliussi and colleagues (2020) found that wider letter spacing without wider word spacing slowed reading. WCAG 2.2 criterion 1.4.4 Resize Text (Level AA) was read."
+   },
+   "sources": [
+    {
+     "citation": "Griffiths, P. G., Taylor, R. H., Henderson, L. M., & Barrett, B. T. (2016). The effect of coloured overlays and lenses on reading: A systematic review of the literature. Ophthalmic and Physiological Optics.",
+     "url": "https://eprints.whiterose.ac.uk/104441",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Rello, L., & Baeza-Yates, R. (2013). Good fonts for dyslexia. Proceedings of ASSETS 2013.",
+     "url": "https://dblp.dagstuhl.de/rec/bibtex/conf/assets/RelloB13",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Rello, L., Pielot, M., Marcos, M.-C., & Carlini, R. (2013). Size matters (spacing not): 18 points for a dyslexic-friendly Wikipedia. Proceedings of W4A 2013, DOI 10.1145/2461121.2461125. (Author list and venue recalled from memory.)",
+     "url": "https://unpaywall.org/10.1145%2F2461121.2461125",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Schneps, M. H., Thomson, J. M., Chen, C., Sonnert, G., & Pomplun, M. (2013). E-readers are more effective than paper for some with dyslexia. PLOS ONE, 8(9), e75634.",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3776763",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Galliussi, J., Perondi, L., Chia, G., Gerbino, W., & Bernardis, P. (2020). Inter-letter spacing, inter-word spacing, and font with dyslexia-friendly features: Testing text readability in people with and without dyslexia. Annals of Dyslexia. (Author list recalled from memory.)",
+     "url": "https://arts.units.it/retrieve/handle/11368/2960158/339575/Galliussi2020_Article_Inter-letterSpacingInter-wordS.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 1.4.4 Resize Text, Level AA.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/resize-text.html",
+     "verified": "read-page"
+    }
+   ],
+   "caveats": "Dyslexia differs from person to person; a group result does not predict what helps one reader. Most studies tested children or teenagers, in Spanish, Italian or English. A reader's own preferred settings deserve respect even without a measured gain; the point is that the site should not present unproven aids as help. Some people report visual discomfort that a tint relieves; that question is separate from reading skill. The statement in the mechanism that dyslexia is chiefly a difficulty with letters and sounds is recalled from memory.",
+   "appliesTo": [
+    "typeface",
+    "size-scale",
+    "content-width",
+    "theme"
+   ]
+  },
+  {
+   "id": "second-language-readers",
+   "topic": "audience",
+   "principle": "Readers in a second language are slower, are slowed more by rare words, and gain nothing from idioms",
+   "claim": "Adults who read in their second language take about 20% longer per sentence and make about 21% more fixations than when they read in their first language. Rare words slow them more than they slow native readers. Idioms, which native readers process quickly, give them no advantage and slow them when the meaning is figurative. Many of them will use the browser's translation, which works only on real text in a correctly declared language.",
+   "mechanism": "A second-language reader has met each word fewer times, so recognition is slower for all but the commonest words. Nobody can understand an idiom word by word: a native reader retrieves it whole, and a second-language reader must first work out that the literal meaning is not intended. Translation tools and screen readers decide how to treat text from the language that the page code declares.",
+   "effects": {
+    "cognitiveLoad": "raises — for rare words, idioms and long sentences",
+    "satisfaction": "unknown — not measured in the cited studies",
+    "perceivedIntuitiveness": "lowers — when a label depends on an idiom or a cultural reference (inferred, not measured)"
+   },
+   "designMoves": [
+    "Prefer literal wording to idioms and sayings: 'We answer within one day', not 'We'll get back to you in no time'.",
+    "Use the commonest word for each thing and repeat it; do not vary terms for style.",
+    "Declare the language of the page in the code, and mark passages in another language.",
+    "Keep all text as real text; do not place words inside images.",
+    "Write dates, prices and units in a form that nobody can misread (see numerals-and-number-formats)."
+   ],
+   "antiPatterns": [
+    "A headline built on wordplay or a local saying, on a page that must explain what the business does.",
+    "Opening hours or prices inside an image.",
+    "A page with no declared language, or with the wrong one."
+   ],
+   "howToCheck": {
+    "machine": "Assert that the html element has a valid lang attribute that matches the detected language of the text (WCAG 3.1.1, Level A), and that passages in another language carry their own lang attribute (3.1.2, Level AA). Flag images that contain text other than a logo (1.4.5, Level AA). Flag phrases from an idiom list. For pages that the Prescription marks as serving second-language readers, run the test in word-frequency-familiar-words with a stricter cut-off, and allow at least 20% more time on any timed message (see reading-rate-and-screen-comprehension).",
+    "human": "Translate the page with the browser into another language and read the result with a speaker of that language. Note what was lost."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "peer-reviewed-experiment",
+    "strengthNote": "Seen only as search summaries, except the W3C texts. Cop, Drieghe and Duyck (2015, PLOS ONE) tracked the eyes of bilingual and monolingual adults who read a whole novel of about 56,000 words: reading in the second language showed 20% longer sentence reading times, 21% more fixations, 12% shorter eye movements and 4.6% less word skipping than reading in the first language. Cop, Keuleers, Drieghe and Duyck (2015) found a considerably larger word-frequency effect in the second language. Siyanova-Chanturia, Conklin and Schmitt (2011, Second Language Research) found that native speakers read idioms faster than matched new phrases while non-native speakers did not, and that non-native speakers read figurative uses more slowly than literal ones. The participants were proficient bilingual adults; less practised readers are likely to be slower still, which these studies did not test. Four W3C texts were read: WCAG 2.2 criteria 3.1.1 Language of Page (Level A), 3.1.2 Language of Parts (Level AA), 1.4.5 Images of Text (Level AA) and 3.1.3 Unusual Words (Level AAA), which names idioms and jargon."
+   },
+   "sources": [
+    {
+     "citation": "Cop, U., Drieghe, D., & Duyck, W. (2015). Eye movement patterns in natural reading: A comparison of monolingual and bilingual reading of a novel. PLOS ONE, 10(8).",
+     "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4545791/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Cop, U., Keuleers, E., Drieghe, D., & Duyck, W. (2015). Frequency effects in monolingual and bilingual natural reading. Psychonomic Bulletin & Review.",
+     "url": "https://research.tilburguniversity.edu/en/publications/frequency-effects-in-monolingual-and-bilingual-natural-reading/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Siyanova-Chanturia, A., Conklin, K., & Schmitt, N. (2011). Adding more fuel to the fire: An eye-tracking study of idiom processing by native and non-native speakers. Second Language Research, 27(2), 251-272.",
+     "url": "https://eprints.nottingham.ac.uk/28901",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 3.1.1 Language of Page, Level A.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/language-of-page.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 3.1.2 Language of Parts, Level AA.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/language-of-parts.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 1.4.5 Images of Text, Level AA.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/images-of-text.html",
+     "verified": "read-page"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 3.1.3 Unusual Words, Level AAA.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/unusual-words.html",
+     "verified": "read-page"
+    }
+   ],
+   "caveats": "The participants of the novel study were Dutch-English bilinguals (recalled from memory); other pairs of languages may differ. The quality of machine translation varies, and this record did not study it. A local saying can be right for a local audience; the flag asks for a decision, not for removal. The search found nothing specific on phrasal verbs such as 'set up' and 'put off', which teachers of English often name as hard.",
+   "appliesTo": [
+    "copy",
+    "nav",
+    "hero",
+    "forms"
+   ]
+  },
+  {
+   "id": "scanning-claim-and-limits",
+   "topic": "content",
+   "principle": "'People do not read online' is a half-truth: they choose what to read, and then often read it",
+   "claim": "The figures behind 'people do not read' are real and narrow. In a 1997 test, 79% of users scanned each new page and 16% read word by word. The often-quoted '20% to 28% of the words' is an estimate from the browsing logs of 25 people, not a measurement of reading. Against these, an eye-tracking study of about 600 news readers found that online readers read about 77% of the text of the stories that they chose. Scanning is how people decide what to read; it is not a refusal to read.",
+   "mechanism": "A visitor first samples a page to judge whether it will repay attention: headings, first sentences, numbers, the top of each block. Where the sample matches the goal, the visitor reads on, and stops when the text stops giving new information. Skimming under time pressure keeps the main ideas and loses the details.",
+   "effects": {
+    "cognitiveLoad": "lowers — when a page lets the visitor decide quickly where to read",
+    "satisfaction": "unknown — the search did not confirm the usability figure that the existing record scanning-not-reading recalls",
+    "perceivedIntuitiveness": "raises — the visitor finds the relevant part without reading the whole page (inferred, not measured)"
+   },
+   "designMoves": [
+    "Make the first sentence of each section carry its main point, because that is the part a skimming reader keeps.",
+    "Do not cut content that a committed customer needs (how the service works, what is included, conditions); structure it so that a visitor can skip it or find it.",
+    "Put details that nobody may miss (price, deadline, exclusions) in a heading, a list or a first sentence, never only deep in a paragraph.",
+    "Do not quote '20% of the words' as a reason to remove information."
+   ],
+   "antiPatterns": [
+    "Deleting useful detail because 'nobody reads'.",
+    "Long undivided text that hides the one sentence the visitor came for.",
+    "An essential condition in the middle of the last paragraph."
+   ],
+   "howToCheck": {
+    "machine": "Build a 'skim view' of each page: the headings, the first sentence under each heading, the list items, and all numerals with their units. Assert that the skim view contains each key fact that the Prescription lists for the page (for example the name of the service, the area served, the price or price range, the contact route, and any condition marked as essential). A program can test whether these items are present. Whether the skim view makes sense is a judgment by a model or a person, and the report must label it as such.",
+    "human": "Give a person only the skim view and ask what the business offers and what it costs. Then give the full page and ask what they learned in addition."
+   },
+   "evidence": {
+    "grade": "B",
+    "kind": "large-practitioner-study",
+    "strengthNote": "Seen only as search summaries. Nielsen and Morkes (1997): the search quotes the original column for the figures of 79% and 16%; the widely cited 124% gain in usability for a concise, scannable and objective rewrite appeared only in a student's notes, figure not confirmed. Nielsen (2008) computed 'at most 28% of the words, 20% more likely' from data by Weinreich, Obendorf, Herder and Mayer (2008, ACM Transactions on the Web): 25 users, 59,573 page views logged in 2005, of which Nielsen analyzed 45,237, with an average page of 593 words. The estimate uses time on page and an assumed reading speed, with no eye tracking, and the article describes the users as high-end. As a precise number it is grade D. Poynter Institute EyeTrack07 (2007, about 600 readers in four markets in the United States, known here from press reports): online readers read about 77% of the text of the stories that they chose, against 62% for readers of broadsheet papers and 57% for readers of tabloids; about half of the online readers scanned and half read methodically, and both groups read about the same amount of text. Duggan and Payne (2009, Journal of Experimental Psychology: Applied; 2011, CHI): readers with half the time they needed kept the main ideas and lost details and inferences, and spent more time on the start of paragraphs and the top of pages; the authors model skimming as stopping when the rate of new information drops."
+   },
+   "sources": [
+    {
+     "citation": "Nielsen, J. (1997). How Users Read on the Web. Nielsen Norman Group (Alertbox), reporting a study with J. Morkes.",
+     "url": "https://www.nngroup.com/articles/how-users-read-on-the-web/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Nielsen, J. (2008). How Little Do Users Read? Nielsen Norman Group (Alertbox).",
+     "url": "https://www.nngroup.com/articles/how-little-do-users-read/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Weinreich, H., Obendorf, H., Herder, E., & Mayer, M. (2008). Not quite the average: An empirical study of Web use. ACM Transactions on the Web, 2(1), article 5. Known here through Nielsen's article.",
+     "url": null,
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Poynter Institute (2007). EyeTrack07 study of print and online news reading. Known here through a press report.",
+     "url": "https://phys.org/news/2007-03-web-news-readers-greater-attention.html",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Duggan, G. B., & Payne, S. J. (2009). Text skimming: The process and effectiveness of foraging through text under time pressure. Journal of Experimental Psychology: Applied, 15(3), 228-242.",
+     "url": "https://researchportal.bath.ac.uk/en/publications/text-skimming-the-process-and-effectiveness-of-foraging-through-t/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Duggan, G. B., & Payne, S. J. (2011). Skim reading by satisficing: Evidence from eye tracking. Proceedings of CHI 2011.",
+     "url": "https://researchportal.bath.ac.uk/en/publications/skim-reading-by-satisficing-evidence-from-eye-tracking/",
+     "verified": "search-snippet"
+    }
+   ],
+   "caveats": "The Poynter figure describes news stories that the reader had already chosen, in 2007; it does not describe a first visit to the site of a business. All the studies are at least fifteen years old. The existing record scanning-not-reading gives the writing advice; this record checks its numbers and adds the evidence that people read what they have chosen.",
+   "appliesTo": [
+    "copy",
+    "sections",
+    "heading-treatment",
+    "hero"
+   ]
+  },
+  {
+   "id": "reading-rate-and-screen-comprehension",
+   "topic": "readability",
+   "principle": "Adults read non-fiction at about 240 words a minute, and understand explanatory text slightly less well on a screen than on paper",
+   "claim": "A meta-analysis of 190 studies puts the average silent reading rate of adults in English at 238 words per minute for non-fiction and 260 for fiction; the often-quoted 300 is too high. Readers in a second language need about 20% longer. Two meta-analyses find that people understand explanatory text slightly less well on a screen than on paper, with no difference for stories. Any message that disappears by itself, and any stated reading time, should be calculated from these rates with a margin for slower readers.",
+   "mechanism": "Reading rate is limited by how fast the eyes take in words and the mind connects them; it varies with word length, the difficulty of the text, age and language skill. On screens, people tend to read faster and to check their understanding less, and scrolling removes the fixed positions on a page that help memory. These are the explanations that the authors offer; they are not settled.",
+   "effects": {
+    "cognitiveLoad": "raises — when a message disappears before a slower reader has finished it",
+    "satisfaction": "unknown — not measured in the cited analyses",
+    "perceivedIntuitiveness": "lowers — when information vanishes and the reader cannot get it back (inferred, not measured)"
+   },
+   "designMoves": [
+    "Do not make important text disappear by itself. If a message must time out, give it at least half a second per word plus one second to be noticed, and keep it visible while the pointer or the keyboard focus is on it.",
+    "State reading times at about 240 words per minute, and round up.",
+    "Give customers the facts that they must remember (terms, prices, appointment details) in a form that they can keep: a confirmation page with its own address, an email, a printable page.",
+    "Do not rely on one pass through a long scrolling page to convey a condition; repeat the condition at the point of decision."
+   ],
+   "antiPatterns": [
+    "A notification of 20 words that vanishes after 3 seconds.",
+    "Rotating customer quotes or offers that change before a visitor can read them.",
+    "'2 min read' on a page of 900 words."
+   ],
+   "howToCheck": {
+    "machine": "For each element that hides itself after a delay (notifications, banners, rotating slides), count its words and read its delay. Fail any delay below words × 0.25 seconds, which is the time an average adult needs at 238 words per minute. Warn below 1 + words × 0.5 seconds; this margin for slower readers is a design choice of this record, not a published figure. For any stated reading time, compute words ÷ 238 minutes and flag a statement that is more than 20% lower. For pages that the Prescription marks as terms or bookings, assert that a print style sheet or a plain confirmation view exists.",
+    "human": "Ask the slowest reader available to read each self-hiding message once, aloud. If the message vanishes first, lengthen the delay or remove the timer."
+   },
+   "evidence": {
+    "grade": "A-",
+    "kind": "meta-analysis",
+    "strengthNote": "Seen only as search summaries, except the W3C text. The grade is A for the reading rate and A- for the screen effect, whose cause and size are less certain. Rate: Brysbaert (2019, Journal of Memory and Language) analyzed 190 studies with 18,573 participants: 238 words per minute for non-fiction and 260 for fiction in silent reading, and 183 for reading aloud (77 studies, 5,965 participants). The meta-analysis included participants under 60; a secondary source reports a decline of about 10% by the age of 70. Second language: Cop, Drieghe and Duyck (2015) found 20% longer sentence reading times. Screen and paper: Delgado, Vargas, Ackerman and Salmeron (2018, Educational Research Review) pooled 54 studies with more than 170,000 participants and found an advantage for paper of g = -0.21, a small effect, limited to explanatory text and larger when readers had to scroll. Clinton (2019, Journal of Research in Reading), using only studies with random assignment from 2008 to 2018, found g = -0.25, again not for stories. A 2021 meta-analysis reports a larger effect, so the estimate varies with the choice of studies. Phones: Moran (2016, Nielsen Norman Group) found no clear difference in comprehension between phone and computer, with a marginal sign (p = .10) that hard content suffers more on phones; sample size not confirmed. WCAG 2.2 criterion 2.2.1 Timing Adjustable (Level A) was read; it governs time limits that content sets."
+   },
+   "sources": [
+    {
+     "citation": "Brysbaert, M. (2019). How many words do we read per minute? A review and meta-analysis of reading rate. Journal of Memory and Language, 109, 104047.",
+     "url": "https://bibbase.org/network/publication/brysbaert-howmanywordsdowereadperminuteareviewandmetaanalysisofreadingrate-2019",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Delgado, P., Vargas, C., Ackerman, R., & Salmeron, L. (2018). Don't throw away your printed books: A meta-analysis on the effects of reading media on reading comprehension. Educational Research Review, 25, 23-38. (Volume and pages recalled from memory.)",
+     "url": "https://www.uv.es/lasalgon/papers/Delgado%202018%20dont%20throw%20away%20your%20printed%20books.pdf",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Clinton, V. (2019). Reading from paper compared to screens: A systematic review and meta-analysis. Journal of Research in Reading, DOI 10.1111/1467-9817.12269.",
+     "url": "https://www.readingrockets.org/research-by-topic/reading-paper-compared-screens-systematic-review-and-meta-analysis",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Cop, U., Drieghe, D., & Duyck, W. (2015). Eye movement patterns in natural reading: A comparison of monolingual and bilingual reading of a novel. PLOS ONE, 10(8).",
+     "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4545791/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "Moran, K. (2016). Reading Content on Mobile Devices. Nielsen Norman Group.",
+     "url": "https://www.nngroup.com/articles/mobile-content/",
+     "verified": "search-snippet"
+    },
+    {
+     "citation": "W3C. WCAG 2.2, Success Criterion 2.2.1 Timing Adjustable, Level A.",
+     "url": "https://raw.githubusercontent.com/w3c/wcag/main/guidelines/sc/20/timing-adjustable.html",
+     "verified": "read-page"
+    }
+   ],
+   "caveats": "The rates are averages for skilled adult readers of continuous English text; individual adults differ widely. A short message also needs time to be noticed, which the rate does not cover. The studies of screen and paper mostly tested students who read study texts, not customers who read a web page. The margin of half a second per word is a judgment that should be tested with real users. Criterion 2.2.1 has its own conditions for time limits, which this check does not replace.",
+   "appliesTo": [
+    "states",
+    "copy",
+    "motion",
+    "forms"
+   ]
+  }
+ ]
+}
