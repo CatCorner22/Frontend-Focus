@@ -1,0 +1,406 @@
+import { describe, expect, it } from 'vitest';
+import {
+  DEFAULT_PARAMS, DIRECTIONS, SAMPLE_CONTENT, SCHEMA_VERSION, STEPS,
+  OVERLAYS, findSkin, skinParams, skinsOf, startPlain, applyDirection, createProject, findStep, keep, matchingOptionId, overlaysOf, ownedValues, parseProject, pick, setOverlay, setReason, tune,
+  type Project,
+} from '../src/index.js';
+import { fixture } from './helpers.js';
+
+const AT = '2026-11-13T12:00:00.000Z';
+const roundTrip = (p: Project): unknown => JSON.parse(JSON.stringify(p));
+const ok = (input: unknown) => {
+  const result = parseProject(input);
+  if (!result.ok) throw new Error(`expected the file to load: ${result.error}`);
+  return result;
+};
+const refusal = (input: unknown): string => {
+  const result = parseProject(input);
+  if (result.ok) throw new Error('expected the file to be refused');
+  return result.error;
+};
+
+function busyProject(): Project {
+  let p = applyDirection(createProject('Harbor Street Dental'), 'ember-noir');
+  p = pick(p, 'nav', 'split-cta', AT);
+  p = setReason(p, 'nav', 'One action matters most: booking.');
+  p = keep(p, 'hero', AT);
+  p = tune(p, 'accent', 'accentHue', 40, AT);
+  p = pick(p, 'color-strategy', 'duo-neighbor', AT);
+  return { ...p, a11y: 'enforce' };
+}
+
+describe('saved projects: the current version', () => {
+  it('loads a saved project back exactly as it was saved', () => {
+    for (const project of [createProject('Empty'), busyProject(), applyDirection(createProject('G'), DIRECTIONS[5]!.id)]) {
+      const result = ok(roundTrip(project));
+      expect(result.project).toEqual(project);
+      expect(result.migratedFrom).toBeNull();
+      expect(result.notes).toEqual([]);
+    }
+  });
+
+  it('refuses anything that is not a project, in fixed words', () => {
+    for (const input of [null, undefined, 42, 'text', [], [1, 2], {}, { schemaVersion: '2' }, { schemaVersion: 0 }, { schemaVersion: 1.5 }]) expect(refusal(input)).toBe('This is not a Frontend Focus project file.');
+    expect(refusal({ ...(roundTrip(busyProject()) as object), schemaVersion: SCHEMA_VERSION + 1 })).toBe('A newer version of the Studio made this file, and this version cannot read it.');
+  });
+
+  it('refuses values of the wrong type, outside their range, or outside their list, and says which part', () => {
+    const base = roundTrip(busyProject()) as Record<string, any>;
+    const cases: [string, (p: Record<string, any>) => void][] = [
+      ['params', (p) => { p.params.radius = 1000; }],
+      ['params', (p) => { p.params.radius = '8'; }],
+      ['params', (p) => { p.params.nav = 'light"><script>alert(1)</script>'; }],
+      ['params', (p) => { delete p.params.motion; }],
+      ['params', (p) => { p.params.accentHue = null; }],
+      ['base', (p) => { p.base.theme = 'sepia'; }],
+      ['name', (p) => { p.name = 'x'.repeat(121); }],
+      ['a11y', (p) => { p.a11y = 'strict'; }],
+      ['template', (p) => { p.template = 'blog'; }],
+      ['content', (p) => { p.content.headline = 'x'.repeat(601); }],
+      ['content', (p) => { p.content.nav = Array(13).fill('x'); }],
+      ['content', (p) => { p.content.fees = 'free'; }],
+      ['decisions', (p) => { p.decisions.nav.kind = 'defaulted'; }],
+      ['decisions', (p) => { p.decisions.nav.rejected = Array(41).fill('x'); }],
+      ['decisions', (p) => { p.decisions.nav.values = { radius: 'big' }; }],
+      ['decisions', (p) => { p.decisions.nav = 'picked'; }],
+      ['direction', (p) => { p.direction = 'x'.repeat(61); }],
+    ];
+    for (const [part, damage] of cases) {
+      const copy = JSON.parse(JSON.stringify(base)) as Record<string, any>;
+      damage(copy);
+      // The message names the damaged part in plain words, from a fixed list (finding U2-21).
+      const words = { name: 'the project name', template: 'the kind of website', a11y: 'the Contrast checks setting', direction: 'the Direction', base: 'the starting design values', params: 'the design values', decisions: 'the Decisions', content: 'the texts of the page' }[part];
+      expect(words, part).toBeDefined();
+      expect(refusal(copy)).toBe(`The file does not match the project format. The problem is in the part that holds ${words}.`);
+    }
+  });
+
+  it('never repeats content from the file in a message (finding SEC-12)', () => {
+    const marker = 'CALL-555-0100-TO-REPAIR-THIS-FILE';
+    const base = roundTrip(busyProject()) as Record<string, any>;
+    const attempts: Record<string, any>[] = [
+      { ...base, decisions: { [marker]: base.decisions.nav } },
+      { ...base, decisions: { nav: { ...base.decisions.nav, optionId: marker } } },
+      { ...base, direction: marker },
+      { ...base, name: marker.repeat(20) },
+      { ...base, params: { ...base.params, nav: marker } },
+      { ...base, [marker]: marker },
+      { ...base, content: { ...base.content, [marker]: 1, headline: 7 } },
+    ];
+    for (const attempt of attempts) {
+      const result = parseProject(attempt);
+      const text = result.ok ? result.notes.join(' ') : result.error;
+      expect(text).not.toContain(marker);
+      expect(text.length).toBeLessThan(400);
+    }
+  });
+
+  it('drops unknown fields instead of keeping them', () => {
+    const base = roundTrip(busyProject()) as Record<string, any>;
+    const result = ok({ ...base, extra: 'x', params: { ...base.params, extra: 1 }, content: { ...base.content, extra: '<script>' } });
+    expect(result.project).toEqual(busyProject());
+  });
+});
+
+describe('saved projects: references to the Catalog are recomputed, never trusted', () => {
+  it('leaves out Decisions keyed by names that are not Steps, including built-in object member names (findings SEC-04, P-09)', () => {
+    const base = roundTrip(busyProject()) as Record<string, any>;
+    const fake = base.decisions.nav;
+    const names = ['constructor', 'toString', 'valueOf', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', '__defineGetter__', '__defineSetter__', '__lookupGetter__', '__lookupSetter__', 'not-a-step'];
+    const decisions = Object.fromEntries([...Object.entries(base.decisions), ...names.map((n) => [n, fake])]);
+    const withProto = JSON.parse(JSON.stringify({ ...base, decisions }).replace('"decisions":{', '"decisions":{"__proto__":{"polluted":true},')) as unknown;
+    const result = ok(withProto);
+    expect(Object.keys(result.project.decisions).sort()).toEqual(Object.keys(busyProject().decisions).sort());
+    expect(result.notes.join(' ')).toMatch(/belong to Steps that this version of the Studio does not have/);
+    expect(({} as Record<string, unknown>)['polluted']).toBeUndefined();
+    expect(Object.prototype.hasOwnProperty.call(Object.prototype, 'polluted')).toBe(false);
+  });
+
+  it('recomputes a Decision’s Option, values, and Step name from the design (finding SEC-05)', () => {
+    const base = roundTrip(busyProject()) as Record<string, any>;
+    base.decisions.nav = { stepId: 'hero', optionId: 'option-that-was-renamed', kind: 'picked', rejected: ['ghost', 'top-inline'], values: { nav: 'side-rail' }, at: 'javascript:alert(1)' };
+    const result = ok(base);
+    const nav = result.project.decisions['nav']!;
+    // The design value is the truth: the file's design says "split-cta", so the Decision says so too. The list of rejected
+    // Options keeps what the file lists and the Catalog has ("top-inline"), drops what the Catalog lacks ("ghost"), and gains
+    // nothing: the Studio no longer fills the list with every other Option of the Step (campaign 4, round 3; decision D50).
+    expect(nav).toEqual({ stepId: 'nav', optionId: 'split-cta', kind: 'picked', rejected: ['top-inline'], values: { nav: 'split-cta' }, at: '1970-01-01T00:00:00.000Z' });
+    for (const [id, decision] of Object.entries(result.project.decisions)) {
+      const s = findStep(id)!;
+      expect(decision.stepId).toBe(id);
+      expect(decision.values).toEqual(ownedValues(s, result.project.params));
+      expect(decision.optionId).toBe(matchingOptionId(result.project.params, s));
+    }
+  });
+
+  it('says so when it changes a Decision to match the file’s own design values (campaign 4, finding F-3)', () => {
+    // A file that the Studio wrote is consistent: opening it changes no Decision and gives no note.
+    expect(ok(roundTrip(busyProject())).notes).toEqual([]);
+    // A file edited by hand: the Decision says "Field of stars", the design value says "plain".
+    const edited = roundTrip(pick(createProject('P'), 'atmosphere', 'stars', AT)) as Record<string, any>;
+    edited.params.atmosphere = 'plain';
+    const result = ok(edited);
+    expect(result.project.decisions['atmosphere']).toMatchObject({ optionId: 'plain', values: { atmosphere: 'plain' } });
+    expect(result.notes).toEqual(['One Decision in the file named a choice that the file’s own design values do not show. The Studio follows the design values, so it changed that Decision to match them.']);
+  });
+
+  it('marks a pick as hand-set when its design values match no Option, keeps the value, and says only what it knows', () => {
+    const base = roundTrip(pick(createProject('P'), 'radius', 'soft', AT)) as Record<string, any>;
+    base.params.radius = 11;
+    const result = ok(base);
+    expect(result.project.params.radius).toBe(11);
+    expect(result.project.decisions['radius']).toMatchObject({ kind: 'tuned', optionId: null, values: { radius: 11 } });
+    // The Catalog has the Option "soft"; only the value differs. The note used to say that the Catalog lacks the Option
+    // (campaign 4, round 3). It now states what is true in every such case.
+    expect(result.notes).toEqual(['One Decision was recorded as a picked Option, but its design values match no Option of this version of the Catalog. Its values were kept and it is now marked as hand-set.']);
+    expect(result.notes.join(' ')).not.toMatch(/does not have/);
+  });
+
+  it('never adds to a Decision’s list of rejected Options, and drops from it only what cannot stand (campaign 4, round 3)', () => {
+    // A pick whose list names one rejected Option keeps exactly that list, and opening says nothing, because nothing changed.
+    const partial = roundTrip(setReason(pick(createProject('P'), 'radius', 'soft', AT), 'radius', 'tried square only')) as Record<string, any>;
+    partial.decisions.radius.rejected = ['square'];
+    const kept = ok(partial);
+    expect(kept.project.decisions['radius']).toMatchObject({ kind: 'picked', optionId: 'soft', rejected: ['square'], reason: 'tried square only' });
+    expect(kept.notes).toEqual([]);
+    // A file that contradicts itself: it records "pill" as picked and as rejected, repeats an entry, names an Option that
+    // does not exist, and its design value (20) matches no Option. The Option that the file records as picked is not listed
+    // as rejected afterwards; the repeat and the unknown name go.
+    const odd = roundTrip(pick(createProject('P'), 'radius', 'pill', AT)) as Record<string, any>;
+    odd.params.radius = 20;
+    odd.decisions.radius.values = { radius: 20 };
+    odd.decisions.radius.rejected = ['square', 'crisp', 'square', 'ghost', 'subtle', 'pill'];
+    const settled = ok(odd);
+    expect(settled.project.decisions['radius']).toMatchObject({ kind: 'tuned', optionId: null, rejected: ['square', 'crisp', 'subtle'], values: { radius: 20 } });
+    // A project that the Studio wrote comes back exactly as it was, list included.
+    const own = pick(pick(createProject('P'), 'radius', 'soft', AT), 'nav', 'side-rail', AT);
+    expect(ok(roundTrip(own)).project).toEqual(own);
+  });
+
+  it('brings a design value that no slider and no Option can set into reach, and says so (campaign 4, round 3)', () => {
+    // The format allows a text size of 30 and a spacing of 2; the sliders end at less. The Studio described such a value with
+    // the slider's end ("22px" for 30) and recorded a Decision under that description.
+    const far = roundTrip(createProject('P')) as Record<string, any>;
+    Object.assign(far.params, { baseSize: 30, scaleRatio: 2, density: 2, radius: 40, borderWeight: 8 });
+    const result = ok(far);
+    for (const step of STEPS) {
+      for (const t of step.tunables ?? []) {
+        const value = result.project.params[t.key] as number;
+        const ofAnOption = step.options.some((o) => o.patch[t.key] === value);
+        expect(ofAnOption || (value >= t.min && value <= t.max), `${String(t.key)} = ${value}`).toBe(true);
+      }
+    }
+    // A corner value above the slider's top means "fully round", so it becomes the value of that Option.
+    expect(result.project.params.radius).toBe(999);
+    expect(result.notes).toEqual(['5 design values in the file lay outside what the Studio can set. The Studio brought each to the nearest value that it can set, and the design changed with them.']);
+    // Every Direction, and a project picked through every Option, is within reach already: opening changes nothing.
+    for (const direction of DIRECTIONS) {
+      let project = applyDirection(createProject('P'), direction);
+      expect(ok(roundTrip(project)).notes, direction.name).toEqual([]);
+      for (const step of STEPS) for (const option of step.options) {
+        project = pick(project, step.id, option.id, AT);
+        const back = ok(roundTrip(project));
+        expect(back.notes, `${direction.name} / ${step.id} / ${option.id}`).toEqual([]);
+        expect(back.project.params).toEqual(project.params);
+      }
+    }
+  });
+
+  it('says that an old file named a Direction it does not know, as it does for a new file (campaign 4, round 3)', () => {
+    const old = JSON.parse(JSON.stringify(fixture('project-v1-direction.json'))) as Record<string, any>;
+    old.direction = 'Quiet Harbor Classic';
+    const result = ok(old);
+    expect(result.migratedFrom).toBe(1);
+    expect(result.project.direction).toBe('generated-0-0');
+    expect(result.notes).toContain('The file named a Direction that this version of the Studio does not have. The design itself is unchanged.');
+  });
+
+  it('replaces a Direction name it does not know, and says so', () => {
+    for (const direction of ['constructor', 'Midnight Aurora', 'generated-abc', 'generated-99999999999-1']) {
+      const result = ok({ ...(roundTrip(createProject('P')) as object), direction });
+      expect(result.project.direction).toBe('generated-0-0');
+      expect(result.notes).toHaveLength(1);
+    }
+    for (const direction of [null, 'ember-noir', 'generated-20261113-4']) expect(ok({ ...(roundTrip(createProject('P')) as object), direction }).project.direction).toBe(direction);
+  });
+
+  it('cuts an over-long reason and keeps a normal one', () => {
+    const base = roundTrip(busyProject()) as Record<string, any>;
+    base.decisions.nav.reason = 'r'.repeat(500);
+    expect(ok(base).project.decisions['nav']!.reason).toHaveLength(280);
+    // The cut is announced, never silent (finding S2-02).
+    expect(ok(base).notes.join(' ')).toContain('shortened');
+    base.decisions.nav.reason = 'r'.repeat(601);
+    expect(parseProject(base).ok).toBe(false);
+  });
+
+  it('keeps hostile text as plain data', () => {
+    const hostile = '"><script>alert(1)</script><img src=x onerror=alert(1)>';
+    const project = { ...createProject(hostile.slice(0, 100)), content: { ...SAMPLE_CONTENT, headline: hostile, business: hostile, nav: [hostile], services: [{ title: hostile, body: hostile }], facts: [{ value: hostile, label: hostile }], fees: [{ item: hostile, price: hostile }] } };
+    // The markup stays as plain characters, never escaped and never taken out. A text longer than its own limit is cut there, as a
+    // typed text is (guarantee 55.01; audit finding A1-04): the hostile text has 55 characters, and a figure holds 12, a label 40,
+    // a price 16, and a menu word 24.
+    expect(hostile).toHaveLength(55);
+    const cut = (n: number): string => hostile.slice(0, n);
+    expect(ok(roundTrip(project)).project).toEqual({ ...project, content: { ...project.content, nav: [cut(24)], facts: [{ value: cut(12), label: cut(40) }], fees: [{ item: hostile, price: cut(16) }] } });
+  });
+});
+
+describe('saved projects: files from version 1 (finding M-07)', () => {
+  it('loads a version-1 project that started from a Direction, with the design unchanged', () => {
+    const raw = fixture('project-v1-direction.json') as Record<string, any>;
+    expect(raw.schemaVersion).toBe(1);
+    const result = ok(raw);
+    const p = result.project;
+    expect(result.migratedFrom).toBe(1);
+    expect(p.schemaVersion).toBe(SCHEMA_VERSION);
+    expect(p.params).toEqual(raw.params);
+    expect(p.name).toBe('Harbor Street Dental');
+    expect(p.a11y).toBe('enforce');
+    // Version 1 stored the Direction's display name; version 2 stores its identifier and the design it started with.
+    expect(p.direction).toBe('midnight-aurora');
+    expect(p.base).toEqual(DIRECTIONS.find((d) => d.id === 'midnight-aurora')!.params);
+    // "Skip: take the default" became "kept"; one Step for theme and contrast became two.
+    expect(Object.keys(p.decisions).sort()).toEqual(['accent', 'color-strategy', 'contrast', 'density', 'nav', 'radius', 'theme']);
+    expect(p.decisions['nav']).toMatchObject({ kind: 'picked', optionId: 'top-inline', rejected: ['top-centered', 'split-cta', 'side-rail'] });
+    expect(p.decisions['radius']).toMatchObject({ kind: 'kept', optionId: 'subtle', rejected: [], values: { radius: 8 } });
+    expect(p.decisions['theme']).toMatchObject({ kind: 'picked', optionId: 'dark', values: { theme: 'dark' } });
+    expect(p.decisions['contrast']).toMatchObject({ kind: 'picked', optionId: 'soft', values: { contrast: 0.4 } });
+    expect(p.decisions['accent']).toMatchObject({ kind: 'tuned', optionId: null, values: { accentHue: 200 } });
+    expect(p.decisions['color-strategy']).toMatchObject({ kind: 'picked', optionId: 'duo-complement', values: { colorStrategy: 'duo', accent2Hue: 20 } });
+    expect(p.decisions['density']).toMatchObject({ kind: 'tuned', optionId: null });
+    for (const d of Object.values(p.decisions)) expect(d.at).toBe('2026-11-13T12:00:00.000Z');
+    // The new price list arrives with its sample content; the rest of the content is the file's own.
+    expect(p.content.fees).toEqual(SAMPLE_CONTENT.fees);
+    expect(p.content.headline).toBe(raw.content.headline);
+    // A migrated project saves and loads as a current one.
+    expect(ok(roundTrip(p)).project).toEqual(p);
+  });
+
+  it('loads a version-1 project that started plain', () => {
+    const raw = fixture('project-v1-plain.json') as Record<string, any>;
+    const p = ok(raw).project;
+    expect(p.params).toEqual(raw.params);
+    expect(p.direction).toBeNull();
+    expect(p.base).toEqual(raw.params);
+    expect(p.decisions['hero']).toMatchObject({ kind: 'picked', optionId: 'statement' });
+    expect(p.decisions['accent']).toMatchObject({ kind: 'picked', optionId: 'crimson' });
+    expect(p.decisions['theme']).toMatchObject({ kind: 'picked', optionId: 'light' });
+    // The old "Light, crisp" Option set contrast to 0.85, which is the new "Crisp" Option.
+    expect(p.decisions['contrast']).toMatchObject({ kind: 'picked', optionId: 'crisp' });
+  });
+
+  it('fills in the four finish values that the earliest version-1 files lack', () => {
+    const raw = fixture('project-v1-plain.json') as Record<string, any>;
+    for (const key of ['atmosphere', 'buttonFinish', 'displayTreatment', 'motion']) delete raw.params[key];
+    delete raw.direction;
+    const p = ok(raw).project;
+    expect(p.params).toMatchObject({ atmosphere: 'plain', buttonFinish: 'flat', displayTreatment: 'solid', motion: 'subtle' });
+    expect(p.direction).toBeNull();
+  });
+
+  it('still refuses a damaged version-1 file', () => {
+    const raw = fixture('project-v1-plain.json') as Record<string, any>;
+    raw.params.radius = 1000;
+    expect(parseProject(raw).ok).toBe(false);
+    const other = fixture('project-v1-plain.json') as Record<string, any>;
+    other.decisions = 'none';
+    expect(parseProject(other).ok).toBe(false);
+  });
+
+  it('names the design values, not a part the file lacks, when a version-1 file that started plain is damaged (code review, finding "engine 6")', () => {
+    const v1 = JSON.parse(JSON.stringify(fixture('project-v1-plain.json'))) as Record<string, any>;
+    expect(v1.base).toBeUndefined();
+    v1.params.radius = 'x';
+    expect(refusal(v1)).toBe('The file does not match the project format. The problem is in the part that holds the design values.');
+  });
+
+  it('covers every Step in a fixture or in the current catalog', () => {
+    // A reminder that fails when the saved shape changes without a new version: the current project's keys are fixed here.
+    expect(Object.keys(createProject()).sort()).toEqual(['a11y', 'base', 'content', 'decisions', 'direction', 'name', 'params', 'schemaVersion', 'template']);
+    expect(Object.keys(DEFAULT_PARAMS)).toHaveLength(31);
+    expect(STEPS).toHaveLength(23);
+    expect(SCHEMA_VERSION).toBe(2);
+  });
+});
+
+describe('saved projects: Overlays (decision D52)', () => {
+  it('keeps a project without Overlays exactly as it was: no new field, so older files and older tests read the same', () => {
+    const p = busyProject();
+    expect('overlays' in p).toBe(false);
+    expect(overlaysOf(p)).toEqual([]);
+    expect('overlays' in ok(roundTrip(p)).project).toBe(false);
+    // Switching an Overlay on and off again leaves no trace, and switching off what is off returns the same project.
+    expect(setOverlay(setOverlay(p, 'tooltip', true), 'tooltip', false)).toEqual(p);
+    expect(setOverlay(p, 'tooltip', false)).toBe(p);
+    expect(setOverlay(setOverlay(p, 'tooltip', true), 'tooltip', true)).toEqual(setOverlay(p, 'tooltip', true));
+  });
+
+  it('stores the switched-on Overlays in the order of the Catalog, and reads them back', () => {
+    let p = busyProject();
+    for (const id of ['sticky-call', 'tooltip', 'confirm']) p = setOverlay(p, id, true);
+    expect(p.overlays).toEqual(['tooltip', 'confirm', 'sticky-call']);
+    const loaded = ok(roundTrip(p));
+    expect(loaded.project.overlays).toEqual(['tooltip', 'confirm', 'sticky-call']);
+    expect(loaded.notes).toEqual([]);
+    // An identifier that the Catalog does not hold is a mistake in the Studio's own code, so it is refused loudly.
+    expect(() => setOverlay(p, 'no-such-overlay', true)).toThrow('The Catalog has no such Overlay.');
+  });
+
+  it('leaves out an Overlay that this version does not know, repeats included, and says so', () => {
+    const file = roundTrip({ ...busyProject(), overlays: ['confirm', 'from-a-later-version', 'confirm', 'tooltip'] });
+    const loaded = ok(file);
+    expect(loaded.project.overlays).toEqual(['tooltip', 'confirm']);
+    expect(loaded.notes.join(' ')).toContain('One Overlay in the file is unknown to this version of the Studio. It was left out.');
+    // Two unknown Overlays, one of them twice: counted as two, in the sentence for several.
+    const several = ok(roundTrip({ ...busyProject(), overlays: ['later-one', 'tooltip', 'later-two', 'later-one'] }));
+    expect(several.project.overlays).toEqual(['tooltip']);
+    expect(several.notes.join(' ')).toContain('2 Overlays in the file are unknown to this version of the Studio. They were left out.');
+    // Only unknown ones: the field goes, so that the project equals one that never had Overlays.
+    const none = ok(roundTrip({ ...busyProject(), overlays: ['x'] }));
+    expect('overlays' in none.project).toBe(false);
+  });
+
+  it('refuses a file whose Overlay list is not a short list of short words', () => {
+    const wrong: unknown[] = ['tooltip', [1], [{}], Array.from({ length: 41 }, () => 'tooltip'), ['t'.repeat(41)]];
+    for (const bad of wrong) {
+      // The refusal names the part of the file that is at fault, as it does for every other part (finding "core 6").
+      expect(refusal({ ...(roundTrip(busyProject()) as object), overlays: bad }), JSON.stringify(bad).slice(0, 40)).toBe('The file does not match the project format. The problem is in the part that holds the Overlays.');
+    }
+    expect(OVERLAYS.every((o) => o.id.length <= 40)).toBe(true);
+  });
+});
+
+describe('saved projects: the Skin a project started in (review of 2026-11-14, finding U5-04)', () => {
+  const daylight = DIRECTIONS.find((d) => d.id === 'soft-daylight')!;
+  const berry = findSkin('berry')!;
+  const inBerry = (): Project => applyDirection(createProject('In a Skin'), { ...daylight, params: skinParams(daylight, berry) }, berry.id);
+
+  it('records the Skin when a project starts in one, and only for a Skin that the Direction offers', () => {
+    expect(skinsOf(daylight)).toContain(berry);
+    const p = inBerry();
+    expect(p.skin).toBe('berry');
+    expect(p.params).toEqual(skinParams(daylight, berry));
+    // The Direction's own colors: no Skin is recorded, so a project without a Skin is stored as before.
+    expect('skin' in applyDirection(createProject('Own colors'), 'soft-daylight')).toBe(false);
+    // A Skin that this Direction does not offer, or that does not exist, is not recorded.
+    expect('skin' in applyDirection(createProject('x'), 'ink-and-seal', 'berry')).toBe(false);
+    expect('skin' in applyDirection(createProject('x'), 'soft-daylight', 'no-such-skin')).toBe(false);
+  });
+
+  it('forgets the Skin when the project starts again from another Direction or from the plain start', () => {
+    expect('skin' in applyDirection(inBerry(), 'graphite-precision')).toBe(false);
+    expect('skin' in startPlain(inBerry())).toBe(false);
+  });
+
+  it('reads the Skin back from a file, and leaves out, with a note, a Skin that the Direction does not offer', () => {
+    const loaded = ok(roundTrip(inBerry()));
+    expect(loaded.project.skin).toBe('berry');
+    expect(loaded.notes).toEqual([]);
+    const wrong = ok({ ...(roundTrip(inBerry()) as object), skin: 'lagoon-of-a-later-version' });
+    expect('skin' in wrong.project).toBe(false);
+    expect(wrong.project.params).toEqual(skinParams(daylight, berry));
+    expect(wrong.notes.join(' ')).toContain('The file names a Skin that this version of the Studio does not offer for this Direction. The name was left out; the colors are unchanged.');
+    expect(refusal({ ...(roundTrip(inBerry()) as object), skin: 7 })).toBe('The file does not match the project format. The problem is in the part that holds the Skin.');
+  });
+});

@@ -1,0 +1,997 @@
+// The engine: pure functions that turn the owner's actions into a project state. No React, no browser APIs.
+
+import { z } from 'zod';
+import { DIRECTIONS, findDirection, isOwnDirectionId, type Direction } from './catalog/directions.js';
+import { OVERLAYS, findOverlay } from './catalog/overlays.js';
+import { skinsOf } from './catalog/skins.js';
+import { CONFLICT_RULES, HARMONY_RULES } from './catalog/rules.js';
+import { STEPS, findStep } from './catalog/steps.js';
+import type { Option, Step, Tunable } from './catalog/types.js';
+import { A11Y_PROFILES, DEFAULT_PARAMS, FONTS, PARAM_RANGES, PARAM_VALUES, RETIRED_FONTS, assertKnownParams, type A11yProfile, type DesignParams } from './params.js';
+import { BRIEF_KEYS, BRIEF_MAX, cleanLoaded, type Brief } from './brief.js';
+import { SAMPLE_CONTENT, type SiteContent } from './templates/smallBusiness.js';
+import { deriveTokens, type DerivedTokens } from './tokens.js';
+import { cutUnits, visibleText } from './text.js';
+
+/** The version of the saved-project shape. Raise it on every change of shape, and add a migration and a fixture file for the old shape. */
+export const SCHEMA_VERSION = 2;
+
+/**
+ * How a Decision came about.
+ * - `picked`: the owner picked one of the Catalog's Options.
+ * - `kept`: the owner looked at the Step and kept the value the design already had.
+ * - `tuned`: the owner set the values by hand (a slider, or a small variation).
+ */
+export type DecisionKind = 'picked' | 'kept' | 'tuned';
+
+export interface Decision {
+  stepId: string;
+  /** The Catalog Option whose values the design holds for this Step, or `null` when no Option matches them. */
+  optionId: string | null;
+  kind: DecisionKind;
+  /** The Options that were shown and not picked. */
+  rejected: string[];
+  /** The values of the parameters this Step owns, as the design holds them. */
+  values: Partial<DesignParams>;
+  /** The owner's reason, in the owner's words. Optional. */
+  reason?: string;
+  /** When the Decision was made (ISO 8601, UTC). */
+  at: string;
+}
+
+export interface Project {
+  schemaVersion: number;
+  name: string;
+  template: 'small-business';
+  a11y: A11yProfile;
+  /** Where the project started: a curated Direction's identifier, a generated Direction's identifier, or `null` for the plain start. */
+  direction: string | null;
+  /** The design as it stood when the project started. "Put this Step back" restores from it. */
+  base: DesignParams;
+  params: DesignParams;
+  decisions: Record<string, Decision>;
+  content: SiteContent;
+  /**
+   * The owner's three answers about the project (what is offered, for whom, the one thing a visitor should do). Absent when
+   * the owner wrote none, so that a project saved before the Brief existed opens without a change.
+   */
+  brief?: Brief;
+  /**
+   * The Overlays that are switched on, by identifier, in the Catalog's order. Absent when none is on, so that a project saved
+   * before Overlays existed opens without a change.
+   */
+  overlays?: string[];
+  /**
+   * The Skin in which the project started, by identifier. Absent when the project started in the Direction's own colors.
+   * It is a name for the owner to read; the colors themselves are in the design values (review of 2026-11-14, finding U5-04:
+   * after the start, nothing on screen named the Skin).
+   */
+  skin?: string;
+}
+
+const hueTurn = (h: number, by: number): number => (((h + by) % 360) + 360) % 360;
+const same = (a: unknown, b: unknown): boolean => (typeof a === 'number' && typeof b === 'number' ? Math.abs(a - b) < 1e-9 : a === b);
+const isoNow = (): string => new Date().toISOString();
+const GENERATED_ID = /^generated-\d{1,10}-\d{1,3}$/;
+
+export function createProject(name = 'Untitled project'): Project {
+  return { schemaVersion: SCHEMA_VERSION, name, template: 'small-business', a11y: 'advise', direction: null, base: { ...DEFAULT_PARAMS }, params: { ...DEFAULT_PARAMS }, decisions: {}, content: structuredCopy(SAMPLE_CONTENT) };
+}
+
+/** True while a project still holds the sample texts, word for word. */
+export function isSampleContent(content: SiteContent): boolean {
+  const same = (a: unknown, b: unknown): boolean =>
+    typeof a === 'object' && a !== null && typeof b === 'object' && b !== null
+      ? Object.keys(a).length === Object.keys(b).length && Object.keys(a).every((key) => same((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key]))
+      : a === b;
+  return same(content, SAMPLE_CONTENT);
+}
+
+function structuredCopy(content: SiteContent): SiteContent {
+  return { ...content, nav: [...content.nav], services: content.services.map((s) => ({ ...s })), facts: content.facts.map((f) => ({ ...f })), fees: content.fees.map((f) => ({ ...f })) };
+}
+
+/** The parameter values an Option sets, given the current design. */
+export function resolvePatch(option: Option, current: DesignParams): Partial<DesignParams> {
+  const d = option.derive;
+  return d ? { ...option.patch, [d.key]: hueTurn(current[d.from], d.turn) } : { ...option.patch };
+}
+
+/**
+ * The parameters to preview an Option with: exactly the design that picking the Option gives. An earlier version added the
+ * Option's own values to the current design and nothing else; a card for a new main color then showed the old second color,
+ * while the pick moved a second color that follows the main color (code review of 2026-11-13, finding "gaps 1").
+ */
+export function previewParams(project: Project, stepId: string, optionId: string): DesignParams {
+  return pick(project, stepId, optionId, UNKNOWN_TIME).params;
+}
+
+/** The current values of the parameters that a Step owns. */
+export function ownedValues(step: Step, params: DesignParams): Partial<DesignParams> {
+  const out: Partial<Record<keyof DesignParams, DesignParams[keyof DesignParams]>> = {};
+  for (const key of step.owns) out[key] = params[key];
+  return out as Partial<DesignParams>;
+}
+
+/** The Option whose values equal the design's current values for this Step, or `null` when no Option matches. */
+export function matchingOptionId(params: DesignParams, step: Step): string | null {
+  for (const option of step.options) {
+    const patch = resolvePatch(option, params);
+    if ((Object.keys(patch) as (keyof DesignParams)[]).every((key) => same(patch[key], params[key]))) return option.id;
+  }
+  return null;
+}
+
+/**
+ * The Option that a Step holds: the Option that the design matches, unless the match is a coincidence.
+ *
+ * An Option such as "Two colors: a third of the wheel apart" is a relation: its second color follows the main color. A design
+ * with a fixed second color can match that relation for one hue of the main color and stop matching at the next change. Such a
+ * design does not hold the Option. A kept Decision used to be recorded and shown under the Option's name for that moment, and
+ * lost the name again at the next change of the main color, both times without a word (campaign 4, finding F-24; the owner's
+ * decision D55: a kept Decision stays as kept until the owner picks an Option).
+ *
+ * The design holds a following Option in two cases only, the same two in which `rederive` makes it follow: the owner picked on
+ * that Step, or there is no hand-set Decision and the starting design matches the same Option.
+ */
+function heldId(params: DesignParams, base: DesignParams, kind: DecisionKind | undefined, step: Step): string | null {
+  const id = matchingOptionId(params, step);
+  if (id === null || !step.options.find((o) => o.id === id)?.derive) return id;
+  if (kind === 'picked') return id;
+  if (kind === 'tuned') return null;
+  return matchingOptionId(base, step) === id ? id : null;
+}
+
+/** The Option that a Step of this project holds (see `heldId`), or null when the Step's values are the owner's own or a fixed value. */
+export function heldOptionId(project: Pick<Project, 'params' | 'base' | 'decisions'>, step: Step): string | null {
+  return heldId(project.params, project.base, project.decisions[step.id]?.kind, step);
+}
+
+const WIREFRAME: Partial<DesignParams> = {
+  fontHeading: 'system-sans',
+  fontBody: 'system-sans',
+  headingWeight: 700,
+  headingTracking: -0.01,
+  headingCase: 'sentence',
+  baseSize: 17,
+  scaleRatio: 1.25,
+  numerals: 'proportional',
+  neutralHue: 0,
+  neutralChroma: 0,
+  accentChroma: 0,
+  accentLightness: 0.32,
+  colorStrategy: 'quiet',
+  theme: 'light',
+  contrast: 0.75,
+  radius: 4,
+  elevation: 'borders',
+  borderWeight: 1,
+  signature: 'none',
+  atmosphere: 'plain',
+  buttonFinish: 'flat',
+  displayTreatment: 'solid',
+  motion: 'none',
+};
+
+/** Gray layout-only version of a design: structure stays, every Feel value resets. "Structure before decoration." */
+export function wireframeParams(params: DesignParams): DesignParams {
+  return { ...params, ...WIREFRAME };
+}
+
+/**
+ * Start from a Direction: every parameter is set at once, and earlier Decisions are cleared,
+ * because they described a different design. The Steps then refine the Direction one variable at a time.
+ */
+export function applyDirection(project: Project, direction: Direction | string, skinId?: string): Project {
+  const found = typeof direction === 'string' ? findDirection(direction) : direction;
+  if (!found) throw new Error('Unknown Direction.');
+  assertKnownParams(found.params);
+  const next: Project = { ...project, direction: found.id, base: { ...found.params }, params: { ...found.params }, decisions: {} };
+  // The name of the Skin is recorded only for a Skin that this Direction offers; the caller passes the Skin's colors in `direction.params`.
+  if (skinId !== undefined && offersSkin(found.id, skinId)) next.skin = skinId;
+  else delete next.skin;
+  return next;
+}
+
+/** True when the curated Direction with this identifier offers the Skin. */
+function offersSkin(directionId: string | null, skinId: string): boolean {
+  const direction = directionId === null ? undefined : findDirection(directionId);
+  return direction !== undefined && skinsOf(direction).some((skin) => skin.id === skinId);
+}
+
+/** Start plain: no Direction, the default Option of every Step, and no Decisions. */
+export function startPlain(project: Project): Project {
+  const next: Project = { ...project, direction: null, base: { ...DEFAULT_PARAMS }, params: { ...DEFAULT_PARAMS }, decisions: {} };
+  delete next.skin;
+  return next;
+}
+
+// ───────── Decisions ─────────
+
+function mustStep(stepId: string): Step {
+  const step = findStep(stepId);
+  if (!step) throw new Error('Unknown Step.');
+  return step;
+}
+
+/**
+ * Recompute every value that follows another value, then bring every Decision's record up to date.
+ *
+ * An Option such as "Two colors: opposites" keeps its second hue opposite the main color, however the main color changes later.
+ * That holds whether the owner picked the Option, kept it, or received it from a Direction (finding T2-02). The rule: if the design
+ * matched such an Option before the change, it still follows that Option after the change. Two exceptions keep the owner's hand
+ * in charge: a hand-tuned Decision is never recomputed, and the Step the owner just acted on keeps exactly what the action set.
+ */
+function rederive(before: Project, after: Project, actedStepId: string): Project {
+  let { params, decisions } = after;
+  let changed = false;
+  for (const step of STEPS) {
+    if (!step.options.some((o) => o.derive)) continue;
+    if (decisions[step.id]?.kind === 'tuned') continue;
+    // For the Step the owner acted on, the Option is the one the action set. For every other Step it is the one the design matched
+    // before the change: after the change, a stale second hue can match a different Option by coincidence (a 60-degree move does it).
+    // The design before the change is asked only when the owner picked on that Step. With no Decision, or a kept one, the Step's
+    // values come from the starting design, so the starting design is asked. Otherwise a fixed second color that happens to
+    // match a following Option for one hue of the main color would start to follow from then on: "Galactic Goth" (second color
+    // fixed at a red) turned pink after two clicks on the main color (code review of 2026-11-13, finding "engine 1").
+    const optionId = step.id === actedStepId
+      ? matchingOptionId(params, step)
+      : matchingOptionId(decisions[step.id]?.kind === 'picked' ? before.params : before.base, step);
+    const derive = step.options.find((o) => o.id === optionId)?.derive;
+    if (!derive) continue;
+    const value = hueTurn(params[derive.from], derive.turn);
+    if (same(params[derive.key], value)) continue;
+    params = { ...params, [derive.key]: value };
+    changed = true;
+  }
+  // Every Decision names the Option that the design holds now, and holds the values that the design has now.
+  for (const [stepId, decision] of Object.entries(decisions)) {
+    const step = findStep(stepId);
+    if (!step) continue;
+    const optionId = heldId(params, after.base, decision.kind, step);
+    const values = ownedValues(step, params);
+    // A Decision never lists as rejected the Option that it holds. A slider moved onto the exact value of an Option that was
+    // rejected earlier would otherwise leave a record that contradicts itself; opening the saved project then "corrected" it
+    // and said that opening had changed details (campaign 4, finding F-14).
+    const rejected = optionId !== null && decision.rejected.includes(optionId) ? decision.rejected.filter((id) => id !== optionId) : decision.rejected;
+    if (decision.optionId === optionId && rejected === decision.rejected && JSON.stringify(decision.values) === JSON.stringify(values)) continue;
+    decisions = { ...decisions, [stepId]: { ...decision, optionId, values, rejected } };
+    changed = true;
+  }
+  return changed ? { ...after, params, decisions } : after;
+}
+
+function withDecision(project: Project, step: Step, params: DesignParams, decision: Omit<Decision, 'stepId' | 'values' | 'optionId'>): Project {
+  const full: Decision = { ...decision, stepId: step.id, optionId: heldId(params, project.base, decision.kind, step), values: ownedValues(step, params) };
+  return rederive(project, { ...project, params, decisions: { ...project.decisions, [step.id]: full } }, step.id);
+}
+
+/** Pick one of the Catalog's Options for a Step. */
+export function pick(project: Project, stepId: string, optionId: string, now = isoNow()): Project {
+  const step = mustStep(stepId);
+  const option = step.options.find((o) => o.id === optionId);
+  if (!option) throw new Error('This Step has no such Option.');
+  const params = { ...project.params, ...resolvePatch(option, project.params) };
+  // A written reason belongs to the choice it was written for. It stays when the owner picks the same Option again, and it
+  // goes when the owner picks another Option: "friendly" is no reason for square corners. The Studio says so when it removes
+  // a reason this way, and offers to put it back (campaign 4, round 3: it used to go without a word).
+  const previous = project.decisions[stepId];
+  const reason = previous?.reason && previous.optionId === option.id ? previous.reason : undefined;
+  return withDecision(project, step, params, { kind: 'picked', rejected: step.options.filter((o) => o.id !== option.id).map((o) => o.id), at: now, ...(reason ? { reason } : {}) });
+}
+
+/** Keep the value the design already has for a Step. The design does not change; the Decision records that the owner looked and kept it. */
+export function keep(project: Project, stepId: string, now = isoNow()): Project {
+  const step = mustStep(stepId);
+  const previous = project.decisions[stepId];
+  if (previous) return project;
+  return withDecision(project, step, project.params, { kind: 'kept', rejected: [], at: now });
+}
+
+function checkOwnedValues(step: Step, values: Partial<DesignParams>): void {
+  for (const [key, value] of Object.entries(values) as [keyof DesignParams, unknown][]) {
+    if (!step.owns.includes(key)) throw new Error('This Step does not own that value.');
+    const range = (PARAM_RANGES as Partial<Record<keyof DesignParams, readonly [number, number]>>)[key];
+    const list = (PARAM_VALUES as Partial<Record<keyof DesignParams, readonly string[]>>)[key];
+    if (range) {
+      if (typeof value !== 'number' || !Number.isFinite(value) || value < range[0] || value > range[1]) throw new Error('That value is outside its allowed range.');
+    } else if (!list || typeof value !== 'string' || !list.includes(value)) throw new Error('That value is not in its list.');
+  }
+}
+
+/** Set hand-chosen values for a Step (a "small variation"). The Decision is recorded as tuned. */
+export function pickValues(project: Project, stepId: string, values: Partial<DesignParams>, now = isoNow()): Project {
+  const step = mustStep(stepId);
+  checkOwnedValues(step, values);
+  const previous = project.decisions[stepId];
+  return withDecision(project, step, { ...project.params, ...values }, { kind: 'tuned', rejected: previous?.rejected ?? [], at: now, ...(previous?.reason ? { reason: previous.reason } : {}) });
+}
+
+/** Fine-tune one value by hand. Only that value changes. The Step's Decision becomes "tuned". */
+export function tune(project: Project, stepId: string, key: keyof DesignParams, value: number, now = isoNow()): Project {
+  const step = mustStep(stepId);
+  const tunable = step.tunables?.find((t) => t.key === key);
+  if (!tunable) throw new Error('This Step has no such adjustable value.');
+  if (typeof value !== 'number' || !Number.isFinite(value)) throw new Error('That value is not a number.');
+  const clamped = Math.min(tunable.max, Math.max(tunable.min, value));
+  const previous = project.decisions[stepId];
+  return withDecision(project, step, { ...project.params, [key]: clamped }, { kind: 'tuned', rejected: previous?.rejected ?? [], at: now, ...(previous?.reason ? { reason: previous.reason } : {}) });
+}
+
+/** A value on a slider's grid: a whole number of steps, counted from zero, inside the slider's range. */
+export function nearestSliderValue(tunable: Tunable, value: number): number {
+  const onGrid = Number((Math.round(value / tunable.step) * tunable.step).toFixed(6));
+  return Math.min(tunable.max, Math.max(tunable.min, onGrid));
+}
+
+/**
+ * The value that a slider moves to from `current` when a key moves it by `steps` grid points (negative: toward the low end).
+ * A value between two grid points, such as a Direction's 1.12 on a grid of 0.05, moves to the next grid point in that
+ * direction (1.15 or 1.10). The slider itself is drawn without a grid, so its knob stands exactly on the value that the text
+ * beside it states (campaign 4, finding F-9: the browser moved the knob to the nearest grid point, 1.10, while the text said 1.12).
+ */
+export function nextSliderValue(tunable: Tunable, current: number, steps: number): number {
+  if (steps === 0) return current;
+  // A key that points past the end at which the value already stands changes nothing. That includes a value beyond the slider:
+  // "Fully round" (999) stands beyond the top of "Corner rounding" (28), and the key for "rounder" used to make it 28, which is
+  // less round (code review of 2026-11-13, finding "engine 3").
+  if ((steps > 0 && current >= tunable.max) || (steps < 0 && current <= tunable.min)) return current;
+  // On a slider whose range is narrowed to the part that changes the picture (the main color's lightness on a dark page), a
+  // value beyond an end is drawn as that end. A key that points inward then walks from that end, so that the first press
+  // changes what is drawn. It used to land on the end itself: the record changed and the picture did not (campaign 4,
+  // round 3). On any other slider a value beyond the end is a look of its own ("Fully round"), and the first press goes to the end.
+  const narrowed = tunable.rangeWhen !== undefined && tunable.min === tunable.rangeWhen.min && tunable.max === tunable.rangeWhen.max;
+  if (narrowed && (current > tunable.max || current < tunable.min)) return nextSliderValue(tunable, Math.min(tunable.max, Math.max(tunable.min, current)), steps);
+  const tiny = tunable.step / 1000;
+  const first = steps > 0 ? Math.ceil((current + tiny) / tunable.step) : Math.floor((current - tiny) / tunable.step);
+  const target = (first + (steps > 0 ? steps - 1 : steps + 1)) * tunable.step;
+  return Math.min(tunable.max, Math.max(tunable.min, Number(target.toFixed(6))));
+}
+
+/** Put a Step back to the value the project started with, and remove its Decision. */
+export function revert(project: Project, stepId: string): Project {
+  const step = mustStep(stepId);
+  let params = { ...project.params, ...ownedValues(step, project.base) };
+  // If the starting design matched an Option whose value follows another value ("Two colors: a third of the wheel apart"),
+  // the Step goes back to that Option, not to the starting number: the second color is worked out again from the main
+  // color as it is now. Otherwise it would match no Option and would stop following (finding T3-03).
+  const follows = step.options.find((o) => o.id === matchingOptionId(project.base, step))?.derive;
+  if (follows) params = { ...params, [follows.key]: hueTurn(params[follows.from], follows.turn) };
+  const decisions = Object.fromEntries(Object.entries(project.decisions).filter(([id]) => id !== stepId));
+  return rederive(project, { ...project, params, decisions }, stepId);
+}
+
+/**
+ * Why this project's start departs from a research rule on purpose, in plain words; null when it does not. It answers only
+ * while the Step's values that the start gave still stand: once the owner changes them, the result is the owner's own.
+ */
+export function startDeparture(project: Pick<Project, 'direction' | 'params' | 'base'>, ruleId: string, ownedBy: Step | undefined): string | null {
+  const why = (project.direction ? findDirection(project.direction) : undefined)?.departs?.find((d) => d.ruleId === ruleId)?.why;
+  if (!why) return null;
+  if (ownedBy && JSON.stringify(ownedValues(ownedBy, project.params)) !== JSON.stringify(ownedValues(ownedBy, project.base))) return null;
+  return why;
+}
+
+/** The Overlays that are switched on, in the Catalog's order. */
+export function overlaysOf(project: Project): string[] {
+  return project.overlays ?? [];
+}
+
+/** Switch one Overlay on or off. The design itself does not change. */
+export function setOverlay(project: Project, overlayId: string, on: boolean): Project {
+  if (!findOverlay(overlayId)) throw new Error('The Catalog has no such Overlay.');
+  const wanted = new Set(overlaysOf(project));
+  if (wanted.has(overlayId) === on) return project;
+  if (on) wanted.add(overlayId);
+  else wanted.delete(overlayId);
+  const overlays = OVERLAYS.map((overlay) => overlay.id).filter((id) => wanted.has(id));
+  const next: Project = { ...project };
+  if (overlays.length > 0) next.overlays = overlays;
+  else delete next.overlays;
+  return next;
+}
+
+export const REASON_MAX = 280;
+
+/** Record the owner's reason for a Decision. An empty reason removes it. */
+export function setReason(project: Project, stepId: string, reason: string): Project {
+  const decision = project.decisions[mustStep(stepId).id];
+  if (!decision) throw new Error('This Step has no Decision yet.');
+  const text = cutUnits(reason.trim(), REASON_MAX);
+  const { reason: _old, ...rest } = decision;
+  return { ...project, decisions: { ...project.decisions, [stepId]: text ? { ...rest, reason: text } : rest } };
+}
+
+// ───────── Small variations ("closer to this one") ─────────
+
+export interface GeneratedOption {
+  id: string;
+  label: string;
+  values: Partial<DesignParams>;
+}
+
+const HUE_NAMES: readonly (readonly [number, string])[] = [[25, 'red'], [55, 'orange'], [95, 'yellow'], [140, 'green'], [195, 'teal'], [258, 'blue'], [298, 'violet'], [345, 'pink']];
+
+/** The named color that a hue moves toward when it turns one way or the other around the color wheel. */
+function hueNeighbor(hue: number, direction: -1 | 1): string {
+  let nearest = 0;
+  let distance = Infinity;
+  HUE_NAMES.forEach(([center], i) => {
+    const d = Math.min(Math.abs(hue - center), 360 - Math.abs(hue - center));
+    if (d < distance) {
+      distance = d;
+      nearest = i;
+    }
+  });
+  return HUE_NAMES[(nearest + direction + HUE_NAMES.length) % HUE_NAMES.length]![1];
+}
+
+/**
+ * Small variations of a Step's current values, made by nudging its adjustable values.
+ * `round` shrinks the nudge, so repeated use narrows in. Each variation is named by what the eye will see.
+ */
+/** The sliders of a Step that change the design as it stands. A slider for a second color, for example, does nothing on a page with one color. */
+export function activeTunables(step: Step, params: DesignParams): Tunable[] {
+  return (step.tunables ?? [])
+    .filter((t) => !t.onlyWhen || params[t.onlyWhen.key] === t.onlyWhen.is)
+    .map((t) => (t.rangeWhen && params[t.rangeWhen.key] === t.rangeWhen.is ? { ...t, min: t.rangeWhen.min, max: t.rangeWhen.max } : t));
+}
+
+export function closerOptions(project: Project, stepId: string, round = 0): GeneratedOption[] {
+  const step = mustStep(stepId);
+  const tunables = activeTunables(step, project.params);
+  const shrink = 1 / (1 + round * 0.6);
+  const isHue = (key: keyof DesignParams): boolean => key.toLowerCase().includes('hue');
+  const here = (key: keyof DesignParams, min: number, max: number): number => Math.min(max, Math.max(min, project.params[key] as number));
+  const moved = (key: keyof DesignParams, from: number, by: number, min: number, max: number): number =>
+    Number((isHue(key) ? hueTurn(from, by) : Math.min(max, Math.max(min, from + by))).toFixed(4));
+  const word = (t: (typeof tunables)[number], direction: -1 | 1, from: number): string =>
+    isHue(t.key) ? `toward ${hueNeighbor(from, direction)}` : (t.directions ?? ['less', 'more'])[direction < 0 ? 0 : 1]!;
+
+  const out: GeneratedOption[] = [];
+  const seenValues = new Set<string>();
+  const add = (option: GeneratedOption): void => {
+    const signature = JSON.stringify(option.values);
+    if (seenValues.has(signature)) return;
+    seenValues.add(signature);
+    out.push(option);
+  };
+  for (const t of tunables) {
+    const from = here(t.key, t.min, t.max);
+    for (const direction of [-1, 1] as const) {
+      const value = moved(t.key, from, direction * t.nudge * shrink, t.min, t.max);
+      if (same(value, from)) continue;
+      add({ id: `${String(t.key)}${direction > 0 ? '+' : '-'}`, label: `${t.label}: a little ${word(t, direction, from)}`, values: { [t.key]: value } as Partial<DesignParams> });
+    }
+  }
+  if (tunables.length >= 2) {
+    const a = tunables[0]!;
+    const b = tunables[1]!;
+    const fromA = here(a.key, a.min, a.max);
+    const fromB = here(b.key, b.min, b.max);
+    for (const direction of [-1, 1] as const) {
+      const other = (direction * -1) as -1 | 1;
+      const va = moved(a.key, fromA, direction * a.nudge * shrink, a.min, a.max);
+      const vb = moved(b.key, fromB, other * b.nudge * shrink, b.min, b.max);
+      if (same(va, fromA) || same(vb, fromB)) continue;
+      add({ id: `mix${direction > 0 ? '+' : '-'}`, label: `${a.label} ${word(a, direction, fromA)}, ${b.label.toLowerCase()} ${word(b, other, fromB)}`, values: { [a.key]: va, [b.key]: vb } as Partial<DesignParams> });
+    }
+  }
+  return out.slice(0, 6);
+}
+
+// ───────── Conflicts ─────────
+
+export interface Conflict {
+  id: string;
+  stepIds: string[];
+  message: string;
+}
+
+const DELICATE_FACES = new Set<string>(['playfair', 'newsreader', 'fraunces', 'literata', 'system-serif']);
+
+/** When each conflict rule applies. The rule's text, source, and review date are Catalog records in `catalog/rules.ts`. */
+export const CONFLICT_TESTS = new Map<string, (p: DesignParams) => boolean>([
+  ['outline-thin', (p) => p.signature === 'outline-type' && p.headingWeight < 600],
+  ['marker-gray', (p) => p.signature === 'marker' && p.colorStrategy === 'quiet' && p.accentChroma < 0.05],
+  ['statement-emphasis', (p) => p.hero === 'statement' && p.emphasis !== 'headline'],
+  ['narrow-split', (p) => p.contentWidth === 'narrow' && p.hero === 'split-media'],
+  ['caps-dramatic', (p) => p.headingCase === 'upper' && p.scaleRatio > 1.34],
+  ['outline-delicate', (p) => p.signature === 'outline-type' && DELICATE_FACES.has(p.fontHeading)],
+  ['sticker-finish', (p) => (p.buttonFinish === 'gloss' || p.buttonFinish === 'glow') && p.elevation === 'hard-shadow'],
+  ['sheen-thin', (p) => p.displayTreatment === 'ink-gradient' && p.headingWeight < 500],
+  ['purple-aurora', (p) => p.atmosphere === 'aurora' && p.theme === 'dark' && p.accentHue >= 265 && p.accentHue <= 315],
+  ['dark-shadow', (p) => p.theme === 'dark' && (p.elevation === 'soft-shadow' || p.elevation === 'float')],
+  ['cream-serif', (p) => p.fontHeading === 'fraunces' && p.neutralHue > 50 && p.neutralHue < 110 && p.neutralChroma > 0.008 && p.theme === 'light'],
+  ['black-acid', (p) => p.theme === 'dark' && p.contrast > 0.8 && p.accentChroma > 0.17 && p.accentHue > 100 && p.accentHue < 160],
+]);
+
+/** Re-check the whole design after any change. Conflicts are flagged; the engine never changes a Decision because of one. */
+export function conflicts(project: Project): Conflict[] {
+  return CONFLICT_RULES.filter((rule) => CONFLICT_TESTS.get(rule.id)?.(project.params) === true).map((rule) => ({ id: rule.id, stepIds: rule.stepIds, message: rule.text }));
+}
+
+// ───────── Generated Directions: taste-constrained composition ─────────
+
+/** A small seeded random generator (mulberry32), so that a seed always yields the same Directions. */
+function seeded(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** What each harmony rule changes in a generated design. The rule's text and source are Catalog records in `catalog/rules.ts`. */
+export const HARMONY_FIXES = new Map<string, (out: DesignParams) => void>([
+  ['painted-first-screen', (out) => {
+    if (out.colorStrategy !== 'color-block') return;
+    if (out.atmosphere === 'aurora' || out.atmosphere === 'spotlight' || out.atmosphere === 'horizon') out.atmosphere = 'plain';
+    out.displayTreatment = 'solid';
+  }],
+  ['glow-on-light', (out) => {
+    if (out.buttonFinish === 'glow' && out.theme === 'light') out.buttonFinish = 'gloss';
+  }],
+  ['sticker-owns-buttons', (out) => {
+    if (out.elevation !== 'hard-shadow') return;
+    out.buttonFinish = 'flat';
+    out.borderWeight = Math.max(out.borderWeight, 2);
+  }],
+  ['dark-soft-shadow', (out) => {
+    if (out.theme === 'dark' && (out.elevation === 'soft-shadow' || out.elevation === 'float')) out.elevation = 'tonal';
+  }],
+  ['thin-outline', (out) => {
+    if (out.headingWeight < 600 && out.signature === 'outline-type') out.signature = 'marker';
+  }],
+  ['thin-sheen', (out) => {
+    if (out.headingWeight < 500 && out.displayTreatment === 'ink-gradient') out.displayTreatment = 'solid';
+  }],
+  ['statement-headline', (out) => {
+    if (out.hero === 'statement') out.emphasis = 'headline';
+  }],
+  ['narrow-page', (out) => {
+    if (out.contentWidth !== 'narrow') return;
+    if (out.hero === 'split-media') out.hero = 'text-left';
+    if (out.nav === 'side-rail') out.contentWidth = 'standard';
+    if (out.sections === 'bento' || out.sections === 'alternating') out.sections = 'stacked';
+  }],
+  ['capitals-restraint', (out) => {
+    if (out.headingCase !== 'upper') return;
+    out.scaleRatio = Math.min(out.scaleRatio, 1.3);
+    if (out.hero === 'statement') out.hero = 'text-left';
+  }],
+  ['delicate-outline', (out) => {
+    if (out.signature === 'outline-type' && DELICATE_FACES.has(out.fontHeading)) out.signature = 'marker';
+  }],
+  ['dense-motion', (out) => {
+    if (out.density < 0.9 && out.motion === 'expressive') out.motion = 'subtle';
+  }],
+]);
+
+/** Apply the harmony rules, in the order of their records, to a copy of a design. */
+export function harmonize(p: DesignParams): DesignParams {
+  const out = { ...p };
+  for (const rule of HARMONY_RULES) HARMONY_FIXES.get(rule.id)?.(out);
+  return out;
+}
+
+const CATEGORICAL: (keyof DesignParams)[] = ['nav', 'hero', 'sections', 'fontHeading', 'fontBody', 'colorStrategy', 'theme', 'elevation', 'signature', 'atmosphere', 'buttonFinish', 'displayTreatment'];
+
+/** How different two designs are: categorical differences plus scaled numeric differences. */
+export function designDistance(a: DesignParams, b: DesignParams): number {
+  let dist = 0;
+  for (const key of CATEGORICAL) if (a[key] !== b[key]) dist += 1;
+  const hue = Math.abs(a.accentHue - b.accentHue);
+  dist += Math.min(hue, 360 - hue) / 60;
+  const radius = (v: number): number => Math.min(v, 28) / 28;
+  dist += Math.abs(radius(a.radius) - radius(b.radius)) > 0.3 ? 0.5 : 0;
+  dist += Math.abs(a.density - b.density) * 2;
+  dist += Math.abs(a.headingWeight - b.headingWeight) / 400;
+  return dist;
+}
+
+const labelFor = (stepId: string, params: DesignParams, fallback: string): string => {
+  const step = findStep(stepId);
+  const id = step ? matchingOptionId(params, step) : null;
+  return step?.options.find((o) => o.id === id)?.label ?? fallback;
+};
+
+const STRATEGY_WORDS: Record<DesignParams['colorStrategy'], string> = {
+  quiet: 'with color kept to small details',
+  'single-accent': 'with one main color',
+  duo: 'with two colors',
+  'tinted-surface': 'lightly tinted with its main color',
+  'color-block': 'with a first screen painted in its main color',
+};
+const ATMOSPHERE_WORDS: Record<DesignParams['atmosphere'], string> = {
+  plain: 'a plain background',
+  horizon: 'a faint fade of color behind the first screen',
+  'dot-grid': 'a faint grid of dots behind the first screen',
+  'line-grid': 'a faint grid of lines behind the first screen',
+  spotlight: 'a soft glow behind the first screen',
+  aurora: 'soft clouds of color behind the first screen',
+  stars: 'a field of stars behind the first screen',
+  grain: 'a fine film-grain texture',
+};
+
+/** A plain sentence that describes a design. Built from the design's final values, so it cannot disagree with them. */
+export function describeDesign(params: DesignParams): string {
+  return `A ${params.theme} page ${STRATEGY_WORDS[params.colorStrategy]} and ${ATMOSPHERE_WORDS[params.atmosphere]}.`;
+}
+
+const GENERATED_SOURCE = [{ text: 'Composed by the Studio at random from the Catalog’s Options, then adjusted by the harmony rules. Nobody has reviewed this combination.', basis: 'builder' as const }];
+
+/**
+ * Compose new Directions from the Catalog: one random Option per Step, adjusted by the harmony rules,
+ * kept only if conflict-free, then chosen to be as different as possible from each other and from `avoid`.
+ */
+export function generateDirections(seed: number, count: number, avoid: DesignParams[] = []): Direction[] {
+  const rand = seeded(seed);
+  const candidates: DesignParams[] = [];
+  for (let attempt = 0; attempt < count * 14 && candidates.length < count * 7; attempt++) {
+    let project = createProject('generated');
+    for (const step of STEPS) {
+      // Options that carry an overused-look warning are chosen rarely.
+      const weights = step.options.map((o) => (o.warn ? 0.12 : 1));
+      const total = weights.reduce((x, y) => x + y, 0);
+      let roll = rand() * total;
+      let chosen = step.options[0]!;
+      for (let i = 0; i < step.options.length; i++) {
+        roll -= weights[i]!;
+        if (roll <= 0) {
+          chosen = step.options[i]!;
+          break;
+        }
+      }
+      project = pick(project, step.id, chosen.id, '1970-01-01T00:00:00.000Z');
+    }
+    const params = harmonize(project.params);
+    if (conflicts({ ...project, params }).length > 0) continue;
+    candidates.push(params);
+  }
+  const chosen: DesignParams[] = [];
+  const reference = [...avoid];
+  while (chosen.length < count && candidates.length > 0) {
+    let bestIndex = 0;
+    let bestScore = -1;
+    candidates.forEach((c, i) => {
+      const score = reference.length === 0 ? 1 : Math.min(...reference.map((r) => designDistance(c, r)));
+      if (score > bestScore) {
+        bestScore = score;
+        bestIndex = i;
+      }
+    });
+    const [winner] = candidates.splice(bestIndex, 1);
+    if (!winner) break;
+    chosen.push(winner);
+    reference.push(winner);
+  }
+  // Names come from the final values (after the harmony rules), and each name in a batch is distinct.
+  const names = new Set<string>();
+  return chosen.map((params, i) => {
+    const parts = [labelFor('accent', params, 'Custom main color'), labelFor('typeface', params, 'custom letter style'), labelFor('elevation', params, 'custom box edges')];
+    let name = parts.join(' · ');
+    for (const extra of [labelFor('hero', params, ''), labelFor('sections', params, '')]) {
+      if (!names.has(name)) break;
+      if (extra) name = `${name} · ${extra}`;
+    }
+    for (let n = 2; names.has(name); n++) name = `${parts.join(' · ')} (${n})`;
+    names.add(name);
+    return {
+      id: `generated-${seed >>> 0}-${i}`,
+      name,
+      mood: describeDesign(params),
+      bestFor: 'Nobody has reviewed this combination. Judge it by eye.',
+      risk: 'A random combination can clash in ways that the rules did not foresee.',
+      params,
+      sources: GENERATED_SOURCE,
+      evidence: 'expert-opinion',
+      reviewed: null,
+      group: null,
+    };
+  });
+}
+
+/** Tokens for the project's current state. */
+export function projectTokens(project: Project): DerivedTokens {
+  return deriveTokens(project.params, project.a11y);
+}
+
+export function nextStepId(stepId: string): string | null {
+  const i = STEPS.findIndex((s) => s.id === stepId);
+  return i >= 0 && i < STEPS.length - 1 ? (STEPS[i + 1]?.id ?? null) : null;
+}
+
+export function prevStepId(stepId: string): string | null {
+  const i = STEPS.findIndex((s) => s.id === stepId);
+  return i > 0 ? (STEPS[i - 1]?.id ?? null) : null;
+}
+
+export function firstOpenStepId(project: Project): string {
+  return STEPS.find((s) => !project.decisions[s.id])?.id ?? STEPS[STEPS.length - 1]!.id;
+}
+
+// ───────── Saved projects: checked on the way in ─────────
+
+// Zod can generate code at run time to parse faster. A strict Content Security Policy forbids that, and this project never needs it.
+z.config({ jitless: true });
+
+const shortText = z.string().max(600);
+const paramShape: Record<string, z.ZodType> = {};
+for (const [key, list] of Object.entries(PARAM_VALUES)) paramShape[key] = z.enum(list as unknown as [string, ...string[]]);
+for (const [key, [min, max]] of Object.entries(PARAM_RANGES)) paramShape[key] = z.number().min(min).max(max);
+const paramsSchema = z.object(paramShape);
+
+const contentSchema = z.object({
+  business: shortText, tag: shortText, headline: shortText, headlineEmphasis: shortText, lede: shortText,
+  primaryAction: shortText, secondaryAction: shortText, phone: shortText,
+  nav: z.array(shortText).max(12),
+  servicesTitle: shortText, servicesIntro: shortText,
+  services: z.array(z.object({ title: shortText, body: shortText })).max(12),
+  facts: z.array(z.object({ value: shortText, label: shortText })).max(8),
+  feesTitle: shortText,
+  fees: z.array(z.object({ item: shortText, price: shortText })).max(12),
+  aboutTitle: shortText, aboutBody: shortText, promise: shortText,
+  contactTitle: shortText, contactBody: shortText, address: shortText, hours: shortText, footerNote: shortText,
+});
+
+const decisionSchema = z.object({
+  stepId: z.string().max(60),
+  optionId: z.string().max(60).nullable(),
+  kind: z.enum(['picked', 'kept', 'tuned']),
+  rejected: z.array(z.string().max(60)).max(40),
+  values: paramsSchema.partial(),
+  reason: z.string().max(600).optional(),
+  at: z.string().max(40),
+});
+
+const projectSchema = z.object({
+  schemaVersion: z.literal(SCHEMA_VERSION),
+  name: z.string().max(120),
+  template: z.literal('small-business'),
+  a11y: z.enum(A11Y_PROFILES),
+  direction: z.string().max(60).nullable(),
+  base: paramsSchema,
+  params: paramsSchema,
+  decisions: z.record(z.string().max(60), decisionSchema),
+  content: contentSchema,
+  brief: z.strictObject(Object.fromEntries(BRIEF_KEYS.map((key) => [key, z.string().max(BRIEF_MAX).optional()]))).optional(),
+  overlays: z.array(z.string().max(40)).max(40).optional(),
+  skin: z.string().max(40).optional(),
+});
+
+export type ParseResult =
+  | { ok: true; project: Project; /** The older version the file was upgraded from, or `null`. */ migratedFrom: number | null; /** What the Studio adjusted so that the file matches this version's Catalog. */ notes: string[] }
+  | { ok: false; error: string };
+
+// Every message is fixed text. A message never repeats content from the file.
+const NOT_A_PROJECT = 'This is not a Frontend Focus project file.';
+const NEWER_VERSION = 'A newer version of the Studio made this file, and this version cannot read it.';
+const SECTIONS = ['name', 'template', 'a11y', 'direction', 'base', 'params', 'decisions', 'content', 'brief', 'overlays', 'skin'] as const;
+/** What each part of a project file holds, in plain words, for the message that refuses a damaged file (finding U2-21). The words are fixed; nothing from the file is repeated. */
+const SECTION_WORDS: Record<(typeof SECTIONS)[number], string> = {
+  name: 'the project name',
+  template: 'the kind of website',
+  a11y: 'the Contrast checks setting',
+  direction: 'the Direction',
+  base: 'the starting design values',
+  params: 'the design values',
+  decisions: 'the Decisions',
+  content: 'the texts of the page',
+  brief: 'the three answers about the project',
+  overlays: 'the Overlays',
+  skin: 'the Skin',
+};
+
+const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value);
+const ISO_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,3})?Z$/;
+const UNKNOWN_TIME = '1970-01-01T00:00:00.000Z';
+
+/** Upgrade a version-1 file to the version-2 shape. The result still passes through the full check. */
+function migrateV1(raw: Record<string, unknown>): unknown {
+  // The earliest version-1 files lack the four finish values.
+  const params = isRecord(raw['params']) ? { atmosphere: 'plain', buttonFinish: 'flat', displayTreatment: 'solid', motion: 'subtle', ...raw['params'] } : raw['params'];
+  // Version 1 stored a Direction by its display name.
+  const named = typeof raw['direction'] === 'string' ? raw['direction'] : null;
+  const curated = named === null ? undefined : DIRECTIONS.find((d) => d.name === named);
+  // A name that is no curated Direction is passed on as a name that no version has, so that the note about an unknown
+  // Direction appears for an old file as it does for a new one (campaign 4, round 3).
+  const direction = named === null ? null : (curated?.id ?? 'unlisted');
+  const decisions: [string, unknown][] = [];
+  if (isRecord(raw['decisions'])) {
+    for (const [key, value] of Object.entries(raw['decisions'])) {
+      if (!isRecord(value)) {
+        decisions.push([key, value]);
+        continue;
+      }
+      // "Skip: take the default" became "keep". Version 1 never wrote a reason; a reason that someone added by hand is kept when it is text (finding S2-07).
+      const { reason: givenReason, ...withoutReason } = value;
+      const rest = typeof givenReason === 'string' ? { ...withoutReason, reason: givenReason } : withoutReason;
+      const skipped = value['kind'] === 'defaulted';
+      const upgraded = { ...rest, kind: skipped ? 'kept' : value['kind'], optionId: null, values: {}, ...(skipped ? { rejected: [] } : {}) };
+      if (key === 'theme') {
+        // Version 1 had one Step for "light or dark" and contrast together; version 2 has two.
+        decisions.push(['theme', { ...upgraded, stepId: 'theme' }], ['contrast', { ...upgraded, stepId: 'contrast' }]);
+      } else decisions.push([key, upgraded]);
+    }
+  }
+  const content = isRecord(raw['content']) ? { feesTitle: SAMPLE_CONTENT.feesTitle, fees: SAMPLE_CONTENT.fees, ...raw['content'] } : raw['content'];
+  return { ...raw, schemaVersion: SCHEMA_VERSION, direction, base: curated ? curated.params : params, params, decisions: isRecord(raw['decisions']) ? Object.fromEntries(decisions) : raw['decisions'], content };
+}
+
+/**
+ * Bring a shape-checked project into line with this version's Catalog.
+ * References are recomputed from the design values, which are the source of truth; nothing from the file is trusted as a reference.
+ */
+/**
+ * The values of a slider that the Studio itself can produce: the slider's range, and the values of the Step's Options that lie
+ * beyond it ("Fully round" is 999, beyond the slider's 28). The project format allows more (a text size of 30, a spacing of 2),
+ * because it only guards the Mockup against nonsense. A file with such a value opened, and the Studio then described it with
+ * the slider's end ("22px" for 30), kept it as a Decision under that wrong description, and its sliders could not move it
+ * (campaign 4, round 3). So opening brings such a value to the nearest one that the Studio can set, and says so.
+ */
+export function withinReach(params: DesignParams): { params: DesignParams; moved: number } {
+  let out = params;
+  let moved = 0;
+  for (const step of STEPS) {
+    for (const t of step.tunables ?? []) {
+      const value = out[t.key];
+      if (typeof value !== 'number' || (value >= t.min && value <= t.max)) continue;
+      const beyond = step.options.map((o) => o.patch[t.key]).filter((v): v is number => typeof v === 'number' && (v < t.min || v > t.max));
+      if (beyond.some((v) => same(v, value))) continue;
+      const above = beyond.filter((v) => v > t.max);
+      const below = beyond.filter((v) => v < t.min);
+      const target = value > t.max ? (above.length > 0 ? Math.min(...above) : t.max) : below.length > 0 ? Math.max(...below) : t.min;
+      out = { ...out, [t.key]: target };
+      moved++;
+    }
+  }
+  return { params: out, moved };
+}
+
+function normalize(data: z.infer<typeof projectSchema>, migrated: boolean): { project: Project; notes: string[] } {
+  assertKnownParams(data.params as unknown as DesignParams);
+  assertKnownParams(data.base as unknown as DesignParams);
+  const reachable = withinReach(data.params as unknown as DesignParams);
+  const params = reachable.params;
+  // The file's own record of where the project started is kept, also where it differs from today's Catalog: a project saved under
+  // an older Catalog keeps its start (the typefaces' test). VISION.md says so where the two differ (campaign A2, J-9).
+  const base = withinReach(data.base as unknown as DesignParams).params;
+  const notes: string[] = [];
+  if (reachable.moved > 0) notes.push(reachable.moved === 1 ? 'One design value in the file lay outside what the Studio can set. The Studio brought it to the nearest value that it can set, and the design changed with it.' : `${reachable.moved} design values in the file lay outside what the Studio can set. The Studio brought each to the nearest value that it can set, and the design changed with them.`);
+  let dropped = 0;
+  let relabelled = 0;
+  let corrected = 0;
+  let shortened = 0;
+  const decisions: [string, Decision][] = [];
+  for (const [key, d] of Object.entries(data.decisions)) {
+    const step = findStep(key);
+    if (!step) {
+      dropped++;
+      continue;
+    }
+    const optionIds = step.options.map((o) => o.id);
+    const optionId = heldId(params, base, d.kind, step);
+    let kind: DecisionKind = d.kind;
+    if (kind === 'picked' && optionId === null) {
+      // The file records a pick, and its design values match no Option: the picked Option no longer exists in the Catalog, or
+      // its values changed, or the file was written by hand. The values stay; the label changes. The note says only what is
+      // known in each of those cases (it used to say that the Catalog lacks the Option, also when it has it; round 3).
+      kind = 'tuned';
+      relabelled++;
+    } else if (!migrated && d.optionId !== optionId) {
+      // The file's Decision names one Option, and the file's own design values show another (or none). The design values
+      // win, because the Mockup is drawn from them; the Studio says that it changed the Decision (campaign 4, finding F-3:
+      // a Decision was rewritten to a choice nobody made, without a word). A file from version 1 is exempt: bringing it up to
+      // date recomputes every Decision, and its own notice says so.
+      corrected++;
+    }
+    // The list of rejected Options is the file's own list, without what cannot stand: an Option that this Catalog does not
+    // have, the Option that the Decision holds, the Option that the file itself records as picked, and repeats. Nothing is
+    // ever added. An earlier version filled the list of a pick with every other Option of the Step; an Option that joined the
+    // Catalog after the owner picked then counted as rejected, though the owner never saw it (round 3).
+    const rejected = [...new Set(d.rejected)].filter((id) => optionIds.includes(id) && id !== optionId && !(d.kind === 'picked' && id === d.optionId));
+    const fullReason = d.reason?.trim();
+    const reason = fullReason === undefined ? undefined : cutUnits(fullReason, REASON_MAX);
+    if (fullReason !== undefined && fullReason.length > REASON_MAX) shortened++;
+    decisions.push([key, { stepId: key, optionId, kind, rejected, values: ownedValues(step, params), at: ISO_TIME.test(d.at) && !Number.isNaN(Date.parse(d.at)) ? d.at : UNKNOWN_TIME, ...(reason ? { reason } : {}) }]);
+  }
+  let direction = data.direction;
+  // A Direction of the owner's own lives outside the project, in the browser; the project keeps its identifier.
+  if (direction !== null && !findDirection(direction) && !GENERATED_ID.test(direction) && !isOwnDirectionId(direction)) {
+    direction = 'generated-0-0';
+    notes.push('The file named a Direction that this version of the Studio does not have. The design itself is unchanged.');
+  }
+  if (dropped > 0) notes.push(dropped === 1 ? 'One Decision in the file belongs to a Step that this version of the Studio does not have. It was left out.' : `${dropped} Decisions in the file belong to Steps that this version of the Studio does not have. They were left out.`);
+  if (relabelled > 0) notes.push(relabelled === 1 ? 'One Decision was recorded as a picked Option, but its design values match no Option of this version of the Catalog. Its values were kept and it is now marked as hand-set.' : `${relabelled} Decisions were recorded as picked Options, but their design values match no Option of this version of the Catalog. Their values were kept and they are now marked as hand-set.`);
+  if (corrected > 0) notes.push(corrected === 1 ? 'One Decision in the file named a choice that the file’s own design values do not show. The Studio follows the design values, so it changed that Decision to match them.' : `${corrected} Decisions in the file named choices that the file’s own design values do not show. The Studio follows the design values, so it changed those Decisions to match them.`);
+  if (shortened > 0) notes.push(shortened === 1 ? `One written reason was longer than ${REASON_MAX} characters. It was shortened to fit.` : `${shortened} written reasons were longer than ${REASON_MAX} characters. They were shortened to fit.`);
+  // The three answers: those that the file holds with words, in their fixed order; none at all when the file holds none.
+  const loadedAnswers = Object.fromEntries(BRIEF_KEYS.flatMap((key) => (data.brief?.[key] ? [[key, data.brief[key]]] : []))) as Brief;
+  // The texts of the page and the answers are cleaned as typed text is cleaned: a file is not a way around the cleaning (finding X7-05).
+  const cleaned = cleanLoaded(data.content, Object.keys(loadedAnswers).length > 0 ? loadedAnswers : undefined);
+  // The project's name too: every file cleans it when it writes it, but the project in memory keeps nothing that nobody sees (A2-R3).
+  const name = visibleText(data.name);
+  const changedTexts = cleaned.changed + (name === data.name ? 0 : 1);
+  if (changedTexts > 0) notes.push(changedTexts === 1 ? 'One text in the file held hidden signs, a line break, or more characters than the page allows. The Studio cleaned it.' : `${changedTexts} texts in the file held hidden signs, line breaks, or more characters than the page allows. The Studio cleaned them.`);
+  if (cleaned.replaced > 0) notes.push(cleaned.replaced === 1 ? 'One text in the file held nothing that a person can see. The sample’s words stand in its place.' : `${cleaned.replaced} texts in the file held nothing that a person can see. The sample’s words stand in their place.`);
+  const brief = cleaned.brief;
+  // Overlays: those of the file that this Catalog has, each once, in the Catalog's order.
+  const listed = data.overlays ?? [];
+  const overlays = OVERLAYS.map((overlay) => overlay.id).filter((id) => listed.includes(id));
+  const unknown = new Set(listed.filter((id) => !findOverlay(id))).size;
+  if (unknown > 0) notes.push(unknown === 1 ? 'One Overlay in the file is unknown to this version of the Studio. It was left out.' : `${unknown} Overlays in the file are unknown to this version of the Studio. They were left out.`);
+  // The Skin's name stays only when this Direction offers that Skin; the colors are in the design values either way.
+  const skin = data.skin !== undefined && offersSkin(direction, data.skin) ? data.skin : undefined;
+  if (data.skin !== undefined && skin === undefined) notes.push('The file names a Skin that this version of the Studio does not offer for this Direction. The name was left out; the colors are unchanged.');
+  const project: Project = { schemaVersion: SCHEMA_VERSION, name, template: data.template, a11y: data.a11y, direction, base, params, decisions: Object.fromEntries(decisions), content: cleaned.content, ...(brief ? { brief } : {}), ...(overlays.length > 0 ? { overlays } : {}), ...(skin !== undefined ? { skin } : {}) };
+  return { project, notes };
+}
+
+const FONT_KEYS = ['fontHeading', 'fontBody'] as const;
+
+/**
+ * One set of design values with the standing typeface in the place of each replaced one (see `RETIRED_FONTS`). The values
+ * themselves are not changed. `found` collects the replaced typefaces that the values named.
+ */
+export function currentFonts(values: Record<string, unknown>, found?: Set<string>): Record<string, unknown> {
+  const next = { ...values };
+  for (const key of FONT_KEYS) {
+    const id = next[key];
+    if (typeof id !== 'string' || !Object.hasOwn(RETIRED_FONTS, id)) continue;
+    found?.add(id);
+    next[key] = RETIRED_FONTS[id]!.now;
+  }
+  return next;
+}
+
+/**
+ * The same swap in every part of a project file that holds design values: the design, the starting design, and each
+ * Decision's values. Returns the replaced typefaces that the file named, so that the Studio can say what it did.
+ */
+function replaceRetiredFonts(file: Record<string, unknown>): { file: Record<string, unknown>; retired: string[] } {
+  const found = new Set<string>();
+  const swap = (values: unknown): unknown => (isRecord(values) ? currentFonts(values, found) : values);
+  const decisions = isRecord(file['decisions'])
+    ? Object.fromEntries(Object.entries(file['decisions']).map(([id, d]) => [id, isRecord(d) ? { ...d, values: swap(d['values']) } : d]))
+    : file['decisions'];
+  const swapped = { ...file, params: swap(file['params']), base: swap(file['base']), decisions };
+  return { file: swapped, retired: Object.keys(RETIRED_FONTS).filter((id) => found.has(id)) };
+}
+
+/** The sentence that says which typefaces opening replaced. */
+function retiredFontsNote(retired: string[]): string {
+  const quote = (names: string[]): string => names.map((name) => `“${name}”`).join(' and ');
+  const was = quote(retired.map((id) => RETIRED_FONTS[id]!.label));
+  const now = quote(retired.map((id) => FONTS[RETIRED_FONTS[id]!.now].label));
+  return retired.length === 1
+    ? `This project used the typeface ${was}, which the Studio no longer carries. It now shows ${now} in its place; nothing else changed.`
+    : `This project used the typefaces ${was}, which the Studio no longer carries. It now shows ${now} in their place; nothing else changed.`;
+}
+
+/** Check a saved or imported project. Anything that does not match the format is refused; references to the Catalog are recomputed. */
+export function parseProject(input: unknown): ParseResult {
+  if (!isRecord(input)) return { ok: false, error: NOT_A_PROJECT };
+  const version = input['schemaVersion'];
+  if (typeof version !== 'number' || !Number.isInteger(version) || version < 1) return { ok: false, error: NOT_A_PROJECT };
+  if (version > SCHEMA_VERSION) return { ok: false, error: NEWER_VERSION };
+  const current = version === 1 ? migrateV1(input) : input;
+  const { file: candidate, retired } = isRecord(current) ? replaceRetiredFonts(current) : { file: current, retired: [] };
+  const result = projectSchema.safeParse(candidate);
+  if (!result.success) {
+    const head = result.error.issues[0]?.path[0];
+    // A version-1 file has no part for the starting design values; bringing it up to date copies its design values there.
+    // A fault found in that copy is a fault in the file's design values, and the message names that part.
+    const section = SECTIONS.find((s) => s === (version === 1 && head === 'base' && !isRecord(input['base']) ? 'params' : head));
+    return { ok: false, error: section ? `The file does not match the project format. The problem is in the part that holds ${SECTION_WORDS[section]}.` : NOT_A_PROJECT };
+  }
+  try {
+    const { project, notes } = normalize(result.data, version !== SCHEMA_VERSION);
+    return { ok: true, project, migratedFrom: version === SCHEMA_VERSION ? null : version, notes: retired.length > 0 ? [retiredFontsNote(retired), ...notes] : notes };
+  } catch {
+    return { ok: false, error: 'The file does not match the project format. The problem is in the part that holds the design values.' };
+  }
+}

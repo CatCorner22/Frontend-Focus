@@ -1,0 +1,488 @@
+{
+  "features": [
+    {
+      "id": "F001",
+      "description": "A tab that closes or goes to the background within 2 seconds after its own save keeps its work in an entry of its own, so that another tab's write in the same moment cannot lose it (finding C4-F18).",
+      "spec_section": "SPEC.md section 2.1",
+      "steps": [
+        "Open the Studio with a saved project, change the project's name, wait until the status line says Saved, and close the tab at once",
+        "Look at the browser's storage from a blank page: one entry in the state 'leaving' holds the changed project, and the saved project holds it too",
+        "Open the Studio again: the entry is gone and no notice appears",
+        "Repeat, but replace the saved project with another project before the Studio opens again: the Studio shows a notice, and the Summary lists the changed project as a kept copy"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F002",
+      "description": "The Studio draws headings in Playfair and reading text in Literata in place of the two typefaces that reserve their names, and a saved project that names a replaced typeface opens with the replacement, a notice, and a kept copy.",
+      "spec_section": "SPEC.md section 2.2",
+      "steps": [
+        "Start a project, go to the Step 'Letter style', and pick 'Elegant thick-and-thin headings': the heading in the preview is drawn in Playfair",
+        "Pick 'Letters with small feet throughout': headings and reading text are drawn in Literata",
+        "Open the Licences screen: it lists Playfair and Literata, and lists neither Playfair Display nor Source Serif 4",
+        "Open the Studio on a stored project that names 'playfair-display' and 'source-serif-4': a notice names both swaps, and the Summary lists the project as it was among the kept copies",
+        "Reload: no notice appears"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F003",
+      "description": "The core holds the record of a Direction of the owner's own: it makes one from a project, checks and cleans one that comes from storage or a file, refuses what cannot stand, and reads and writes a set of them as one file.",
+      "spec_section": "SPEC.md section 2.3",
+      "steps": [
+        "Run the unit tests of the core: a record made from a project holds the project's design values, a name, three texts, and a date",
+        "A record with an empty name, a name already in use, a text over its limit, markup, or a value outside what the Studio can set is refused or cleaned as section 2.3 states",
+        "A set written as a file and read back equals the set; a file that is not such a set is refused with a plain sentence"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F004",
+      "description": "The owner keeps the design on screen as a Direction of the owner's own from the Summary, sees it under \"Your own\" on the Directions screen after a reload, and starts a project from it that holds exactly the kept design.",
+      "spec_section": "SPEC.md section 2.3",
+      "steps": [
+        "Open the Summary of a project, press \"Keep this design as a Direction of my own\", type a name and the three texts, and confirm",
+        "Reload and open the Directions screen: a group \"Your own\" shows the Direction with its picture, its texts, and the line \"Your own; no source, not reviewed\"",
+        "Start a project from it: the stored design values equal the kept ones, value by value",
+        "Type markup and script into each field: the screen shows them as text, and nothing runs",
+        "Fill the browser's storage and keep a Direction: the Studio says that it could not keep it"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F005",
+      "description": "The owner renames and removes a Direction of the owner's own, downloads all of them as one file, and opens such a file in a browser that holds none.",
+      "spec_section": "SPEC.md section 2.3",
+      "steps": [
+        "Rename an own Direction: the card and any project that started from it show the new name",
+        "Remove it: the Studio asks first; after \"Yes, remove it for good\" the card is gone, and a project that started from it says that it started from a Direction of your own that you removed",
+        "Download the file of own Directions, clear the browser's storage, and open the file: the Directions are back, and a notice says how many were added",
+        "Open the same file again: none is added twice, and the notice says so"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F006",
+      "description": "Hardening, part 1: the owner's own Directions are never lost without a word, a change to a Direction that another tab removed says so, and a file with hostile content adds only inert text.",
+      "spec_section": "SPEC.md section 2.4.1",
+      "steps": [
+        "Put a list into storage in which one entry has the name of a built-in Direction, open the Studio, and keep a new Direction: the stored list as it was is among the kept copies",
+        "Open two tabs, remove a Direction in one, and rename it in the other: the second tab says that the Direction is no longer here, and the stored list is unchanged",
+        "Open a file whose entries carry markup, script, and signs that change the direction of writing: the cards show them as text, nothing runs, and no request leaves the page",
+        "Press the download button while the stored list cannot be read: the Studio says so and hands over no empty file"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F007",
+      "description": "Hardening, part 2: six built-in Directions no longer start with a contrast note on form-field borders or small labels, and a test pins the three Directions whose link colors stay as known departures that their cards state.",
+      "spec_section": "SPEC.md section 2.4.2",
+      "steps": [
+        "Run the unit tests: under Warn me, exactly Sticker Pop, Sunlit Studio, and Poster Block start with a contrast note, each on links only (Poster Block also on its opening paragraph), with every Skin",
+        "Open the Directions screen: the cards of those three say that the Direction starts with contrast notes on its links",
+        "Start from Midnight Aurora and open the Summary: it lists no contrast note"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F008",
+      "description": "Hardening, part 3: the builder has looked at every built-in Direction at phone and desktop width, logged each visible fault, and repaired the faults of the Mockup or of a Direction's values.",
+      "spec_section": "SPEC.md section 2.4.3",
+      "steps": [
+        "Read redteam/FINDINGS.md: it holds one row for each fault that the builder saw, or one row that says that none was seen, with the source \"the builder's look of 2026-11-15\"",
+        "Each repaired fault that a program can measure has a test that fails without the repair",
+        "The full checks pass"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F009",
+      "description": "The craft layer: each fine detail that the Studio adds by itself is a Catalog record with plain words, an exact instruction, a check that a program runs on the Mockup of every built-in Direction, a source, and a grade; the Summary lists them.",
+      "spec_section": "SPEC.md section 2.5",
+      "steps": [
+        "Run the unit tests: every craft rule is a complete record in plain words, and its check holds on the Mockup's style sheet for every built-in Direction",
+        "Open the Summary of a project: the section \"Fine details the Studio adds by itself\" lists every craft rule with its sentence, its strength, and its source",
+        "Start from a Direction whose motion is \"none\" and open the Summary: the rules about movement say that nothing moves",
+        "No text of a craft rule calls a result accessible or compliant"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F010",
+      "description": "The core writes the first slice of the Prescription from a project as four files that agree with each other and with the preview: tokens.css, tokens.json, mockup.html, and PRESCRIPTION.md, with the owner's own words fenced as quoted data.",
+      "spec_section": "SPEC.md section 2.6",
+      "steps": [
+        "Run the unit tests: for two projects the four files equal their stored snapshots",
+        "Every value in tokens.css equals the value in tokens.json and the value that mockup.html draws",
+        "A project name and a reason that hold markup, a code fence, and a sentence that addresses the builder stay inside their fence in PRESCRIPTION.md",
+        "PRESCRIPTION.md names the start (also a Direction of the owner's own, or one that was removed), lists every Decision with its rejected Options and reason, lists the craft rules, and says what a person must still check and what this slice leaves out"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F011",
+      "description": "The owner downloads each of the four Prescription files from the Summary, or copies its text, and each file equals what the core writes for the stored project.",
+      "spec_section": "SPEC.md section 2.6",
+      "steps": [
+        "Open the Summary of a project and find the section \"The Prescription\" with one download button for each of the four files",
+        "Download each file: its content equals what the core writes for the stored project",
+        "Change a Decision and download again: the files show the change",
+        "The section says what the files are for, what this slice leaves out, and what a person must still check"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F012",
+      "description": "Repairs after the red-team review, part 1: no text from a file acts as an instruction in PRESCRIPTION.md, and no file can break or bloat the list of the owner's own Directions.",
+      "spec_section": "SPEC.md section 2.8.1",
+      "steps": [
+        "Run the unit tests: the name of an own Direction stands in PRESCRIPTION.md inside a fenced block marked as quoted data, and the file says that the Direction is the owner's own",
+        "A name, a reason, and a project name with invisible signs or signs that change the direction of writing reach PRESCRIPTION.md without them",
+        "The name cleaner refuses the look-alike names and quotation signs of findings S6-04 and S6-05, and never cuts a character in two",
+        "An own Direction read from a file holds the known design values and nothing else; the Studio holds at most 100 and says so; a date that is no date is refused; a replaced typeface is said in the note",
+        "Content that holds the words ':hover' or 'transition: all' does not change what PRESCRIPTION.md says about the craft rules",
+        "In the browser: open a file of 101 own Directions; the Studio adds 100, says that 1 was left out, and shows them again after a reload"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F013",
+      "description": "Repairs after the red-team review, part 2: every sentence of the Prescription and of a craft rule is true of the design in hand, and the tests assert what their titles say.",
+      "spec_section": "SPEC.md section 2.8.2",
+      "steps": [
+        "Run the unit tests: for every built-in Direction and every Option, no craft rule's sentence contradicts the design (digits of natural width, no motion, a button with a hard shadow)",
+        "Each craft rule's grade is no stronger than its source, and PRESCRIPTION.md gives each rule's basis",
+        "Switch on an Overlay and download mockup.html: the page shows the Overlay open",
+        "PRESCRIPTION.md lists under 'what no program checked' only what the design has, and with contrast checks off it does not read as if every pair had passed",
+        "tokens.json types a typeface list as a typeface and a keyword as a keyword; each color's components equal its CSS color; mockup.html is stored for two projects"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F014",
+      "description": "Repairs after the red-team review, part 3: the screens say what is true today, and say it where the owner looks.",
+      "spec_section": "SPEC.md section 2.8.3",
+      "steps": [
+        "Open the Directions screen and the Summary: no sentence says that the instructions for an AI coding tool come in a later version",
+        "Decide a Step and read the field for a reason: it says that the reason goes into PRESCRIPTION.md",
+        "Open the Summary of a new project: the Prescription section says that no Direction and no Decision is picked yet",
+        "Download a file: the message appears beside that file; the section's closing sentence lists what section 7 of PRESCRIPTION.md lists",
+        "Rename an own Direction: the Studio says 'Renamed'; keep a 60-character name without spaces at 375 pixels: nothing leaves the window; the Directions screen has a jump link to 'Your own'"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F015",
+      "description": "The Brief, part 1 (core): the project holds the owner's texts and three answers; the core sets, adds, and removes them within limits, cleans them, writes them to the project file, and the Mockup draws them as text with no empty box where a text or a list is empty.",
+      "spec_section": "SPEC.md section 2.7",
+      "steps": [
+        "Run the unit tests: a text is cleaned and cut at its limit; the page's name and headline cannot become empty",
+        "A service, a fact, and a price are added and removed within 1 to 8, 0 to 4, and 0 to 8; the menu keeps five links",
+        "The three answers are held only where the owner wrote one, and travel in the project file; a file from before opens unchanged",
+        "With every optional text empty and every list at its fewest, the Mockup's page holds no empty element; a text with markup is drawn as text"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F016",
+      "description": "The Brief, part 2 (screen): on the screen \"Your content\" the owner answers three questions, replaces any text of the sample website, adds and removes list items, and puts the sample back; every preview and the downloaded mockup.html follow.",
+      "spec_section": "SPEC.md section 2.7",
+      "steps": [
+        "Open \"Your content\" from the top bar: type a name, a headline, and the three answers; the preview beside the form shows the words",
+        "Add a service and a price, remove a fact, reload: the texts and the lists are as you left them",
+        "Open the Summary and download mockup.html: it holds your words and not the sample practice's",
+        "Type markup into a field: the screen and the preview show it as text, and nothing runs",
+        "Press \"Put the sample text back\": the Studio asks first, and Undo brings your texts back"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F017",
+      "description": "The Brief, part 3 (layout): every built-in Direction draws the fewest and the most list items, long words, and long texts at phone and desktop width without overflow or overlap.",
+      "spec_section": "SPEC.md section 2.7",
+      "steps": [
+        "Run the browser tests: for each of the 38 Directions, with the fewest items and with the most, at 375 and 1280 pixels, the page is no wider than its window and the headline is the largest text",
+        "The same with a 40-letter word in the name, the headline, a service, and a price",
+        "Each fault that the sweep finds has a row in redteam/FINDINGS.md and a repair, or a reason why it stays"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F018",
+      "description": "The Brief, part 4 (Prescription): PRESCRIPTION.md carries the three answers as quoted data and says that mockup.html shows the owner's own texts.",
+      "spec_section": "SPEC.md section 2.7",
+      "steps": [
+        "Run the unit tests: the three answers stand in PRESCRIPTION.md inside fenced blocks marked as quoted data; an answer with a code fence or an instruction stays inside its fence",
+        "A project with the owner's texts: the file says that mockup.html shows the project's own texts and tells the AI coding tool to use them word for word",
+        "In the browser: type the answers, download PRESCRIPTION.md, and read them there"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F019",
+      "description": "The core writes FONTS.md, and every file of the Prescription carries one fingerprint of the design values, so that the files of one design can be told from those of another.",
+      "spec_section": "SPEC.md section 2.9",
+      "steps": [
+        "Run the unit tests: the same project gives the same fingerprint in every file, and a changed design value gives another",
+        "FONTS.md names each typeface of the design with its CSS family, licence, package, and the version that the Studio ships, and names a device's own typeface as such",
+        "No file carries a date; the same project gives the same files"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F020",
+      "description": "The core writes DESIGN.md in the DESIGN.md format, and the format's own lint program finds no error in it for any built-in Direction.",
+      "spec_section": "SPEC.md section 2.9",
+      "steps": [
+        "Run the unit tests: DESIGN.md holds the eight sections in their fixed order, with named colors, type levels, roundings, spacing, and two components",
+        "The format's lint program reports no error for the plain start and for each of the 38 Directions",
+        "A hostile project name appears only inside a block marked as quoted data, or not at all"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F021",
+      "description": "The core writes theme.css with the design's colors and corner rounding under the names that the shadcn component library reads.",
+      "spec_section": "SPEC.md section 2.9",
+      "steps": [
+        "Run the unit tests: theme.css defines every name of the library's list, each with a value of the design",
+        "A dark design and a light design both give the light name and the dark name the same values, and the file says so"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F022",
+      "description": "A parser of the Design Tokens format that the builder did not write reads tokens.json without an error, for every built-in Direction.",
+      "spec_section": "SPEC.md section 2.9",
+      "steps": [
+        "Run the unit tests: the outside parser reads tokens.json of the plain start and of each of the 38 Directions and reports no error",
+        "The same parser reports an error for a file with a planted fault, so that its silence means something"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F023",
+      "description": "The owner downloads each of the seven Prescription files from the Summary, or all of them as one archive file whose content equals the single files.",
+      "spec_section": "SPEC.md section 2.9",
+      "steps": [
+        "Open the Summary: the section \"The Prescription\" offers seven files and one button for all of them",
+        "Download each file and the archive: every file equals what the core writes for the stored project, and the archive holds the same seven files",
+        "The section no longer says that the three files are missing"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F024",
+      "description": "The owner runs one command that measures a page, built from the Prescription, against the Prescription's files, and reads an Honest receipt that names every deviation.",
+      "spec_section": "SPEC.md section 2.10",
+      "steps": [
+        "Write the seven files of a project into a folder, and give the Mockup as the build: the receipt reports zero deviations for requests, colors, typefaces, radii, content, and width, on the plain start and on all 38 Directions",
+        "Damage the Mockup in each of eight ways, one at a time: the receipt reports the matching deviation each time",
+        "Give a missing file, two different fingerprints, an empty build, hostile page text, and a page that never finishes loading: the program refuses or records the fault, and writes no false result",
+        "Run the program twice on the same inputs: the two receipts are byte for byte the same, and neither says that the page is accessible or compliant"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F025",
+      "description": "The owner reads the record of the first build trial: one helper agent built a page from the seven files, and the program measured it.",
+      "spec_section": "SPEC.md section 2.11",
+      "steps": [
+        "Open plugin/fit/trials/001/: it holds the instruction, the helper's page, the receipt, and a record of what the run shows and does not show",
+        "Run the program on the stored page: the receipt equals the stored receipt",
+        "The receipt names the fingerprint of the files that the builder writes today for the fixed project"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F026",
+      "description": "The owner reads the record of the comparison run: the same project built by a helper agent without the seven files, measured against the same values, and set beside the first trial.",
+      "spec_section": "SPEC.md section 2.12",
+      "steps": [
+        "Open plugin/fit/trials/002/: it holds the instruction (the project in plain words), the helper's page, the receipt, and a record",
+        "Run the program on the stored page against the stored files: the receipt equals the stored receipt",
+        "The record's table gives, for each measure, the deviation counts of both receipts exactly as the receipts state them, and the record says what the comparison does not show"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F027",
+      "description": "The owner reads a receipt in which a font file at the site's own address is listed as not shipped with the page, and only a request to another site is a deviation.",
+      "spec_section": "SPEC.md section 2.13",
+      "steps": [
+        "Measure a page that names a font file at its own address, a root-relative style sheet, and a relative form action: the receipt lists each under \"Not shipped with the page\", reports no deviation in requests, and ends with status 0",
+        "Measure a page with an absolute font link, a link that begins with two slashes, and a mailto form action: each is a deviation in requests",
+        "Open the records of trials 001 and 002: their receipts are measured again with the repaired program, and the records say what changed and why"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F028",
+      "description": "The owner writes a reason from the Summary, sees every quiet button with an edge, and reads beside the Undo button what the next Undo takes back.",
+      "spec_section": "SPEC.md section 2.14",
+      "steps": [
+        "Open the Summary of a project with a Decision: that Step's row offers \"Add a reason\"; a Step without a Decision offers nothing; type a reason, and the row's \"Why:\" line shows it",
+        "Look at \"Copy PRESCRIPTION.md\", \"Rename\", and \"Remove\": each has a visible edge, in the light and in the dark theme",
+        "Read the line beside Undo: \"Nothing to undo.\" at the start, the Step's name after a reason, and the texts of the page after a change on \"Your content\"; press Undo, and read the message"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F029",
+      "description": "The owner measures a hostile page with the Fit check and gets an honest receipt: the page's scripts do not run by default, the window has no network, and no text of the page can stand in the receipt as an instruction.",
+      "spec_section": "SPEC.md section 2.15",
+      "steps": [
+        "Measure a page that replaces the browser's own functions to hide a red box and a wrong typeface: the receipt equals the receipt of the same page without the replacement, and it says that the page's scripts did not run",
+        "Measure pages that try a WebSocket, a popup, a prefetch link, and a preconnect link, with scripts off and on: a local listener counts no connection",
+        "Measure a page that tries to put a heading and a bullet into the receipt, and a page with tag characters and a one-million-character class name: the receipt holds the standard headings only, no invisible sign, and lines of at most 200 characters",
+        "Run the command line with a symbolic link as the receipt file: the program refuses and writes nothing",
+        "Measure pages with an oklch color, a DATA: address, a formaction, a poster, a meta refresh, and a text hidden at 375 pixels: each is read as the requirement says"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F030",
+      "description": "The owner double-clicks by accident and loses nothing, is told which texts of the page are still the sample's, loads a hostile project file and gets clean texts, and reads a DESIGN.md that claims no measurement that did not happen.",
+      "spec_section": "SPEC.md section 2.16",
+      "steps": [
+        "Double-click the main button on a Step: one Decision, and one Step forward",
+        "Change one text on \"Your content\": the screen and the Summary say how many of the 23 texts are still the sample's, and PRESCRIPTION.md names the placeholders",
+        "Open a project file whose texts hold hidden signs, line breaks, and 600 characters: the texts are cleaned and cut, and the notes say so",
+        "Set Contrast checks to Off and download DESIGN.md: it says that no program measured the pair; with \"Warn me\" it says what it said before"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F031",
+      "description": "The owner's texts lose the 28 remaining hidden format signs, a reason is never cut in half a character, FONTS.md states each font's real weight range, and the Undo line says when nothing differs.",
+      "spec_section": "SPEC.md section 2.17",
+      "steps": [
+        "Type a text with a hieroglyph format sign, a shorthand format sign, a musical format sign, and U+FFF0: each becomes a space in the name and in the texts for an AI tool",
+        "Write a reason of 279 letters followed by an emoji: the stored reason holds no lone half",
+        "Download FONTS.md for a project that uses Instrument Sans: its @font-face block says 400 700, not 100 900",
+        "Type a reason and delete it again within one run of typing: the Undo line says that the change left nothing different"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F032",
+      "description": "The owner downloads a PRESCRIPTION.md that carries the Floors, each requirement with its source, and that says what is written, what is not, and why.",
+      "spec_section": "SPEC.md section 2.18",
+      "steps": [
+        "Download PRESCRIPTION.md with Contrast checks set to \"Warn me\": section 7 lists the Floors for security of the page, the host's settings, search, and speed, and says that the Floor for people with disabilities is not written and why",
+        "Set Contrast checks to \"Fix for me\" and download again: section 7 also lists the requirements for people with disabilities",
+        "Every requirement shows its id, its text, what a person must still check, and a source address on an approved host; none says that the page is accessible or compliant",
+        "The Summary says what the Prescription holds and no longer says that the Floors are missing"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F033",
+      "description": "The owner opens docs/reference/directions.md and reads every built-in Direction in code: its mood, its design settings, every design value of its tokens.css, and the main colors of each of its Skins; the file always matches the Studio, and no Direction can leave the Catalog without a test failing.",
+      "spec_section": "SPEC.md section 2.20",
+      "steps": [
+        "Open docs/reference/directions.md: it lists the 38 built-in Directions under their four groups, with Galactic Goth under \"Dark and dramatic\"",
+        "Under Galactic Goth, read its design settings as JSON and its colors, typefaces, sizes, and spacing as the CSS custom properties of tokens.css, and a table of the main colors of each of its five Skins",
+        "Change a Direction's value in the Catalog without running npm run directions: npm run check fails, because the stored file no longer matches",
+        "Remove one of the 38 Directions from the Catalog: npm run check fails and names it"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F034",
+      "description": "The owner sees the app named \"Frontend Focus\" and the export bundle named the \"Vision\" (its first file is VISION.md) on every screen, in every handed-over file, and in every receipt; saved work still opens.",
+      "spec_section": "SPEC.md section 2.21",
+      "steps": [
+        "Open the Studio: the top bar and the page title say \"Frontend Focus Studio\"",
+        "Download the files from the Summary: the first file is VISION.md, and no file says \"Refraction\" or \"Prescription\"",
+        "A project that the browser stored before the change is still there, and a project file saved before the change still opens"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F035",
+      "description": "The owner runs the Fit check on a built page and reads, in the receipt, which part of each Floor requirement of the Vision a program checked and what it found, at three window widths, with contrast as a requirement when the Vision writes Floor A1.",
+      "spec_section": "SPEC.md section 2.22",
+      "steps": [
+        "Run npm run fit on a reference build: the receipt names the widths 375, 768, and 1280, and its measure \"Floors\" shows no deviation",
+        "Remove the description tag from the page and run again: the measure shows a line that begins with \"Q8:\" and the status is 1",
+        "With Contrast checks \"Fix for me\", make one text too pale: the contrast measure says \"required by Floor A1\" and the status is 1",
+        "\"Still needs a person\" names the requirements of which the program checked nothing"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F036",
+      "description": "The owner installs the folder plugin/ as a Claude Code plugin and has the commands /fit-build, /fit-check, and /fit-repair; a repair stops after three rounds, and what the model judged stands apart in the receipt.",
+      "spec_section": "SPEC.md section 2.23",
+      "steps": [
+        "The plugin folder holds a manifest and three command files that name the program by a path inside the plugin",
+        "Run the program with --round 2: the receipt states the round; with --round 4 it refuses and says that the budget of three rounds is spent",
+        "Run the program with --judged and a file of two lines: the receipt shows both lines in a fence under \"Judged by the model\" and says that no program checked them"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F037",
+      "description": "The owner can trust the Fit check's exit test: on a reference build with one defect planted at a time, the program finds every planted defect, and on the reference build without a defect it reports none.",
+      "spec_section": "SPEC.md section 2.24",
+      "steps": [
+        "Run the exit test: each planted defect appears under its measure, and each Floor defect with its requirement's id",
+        "The reference build without a defect shows no deviation and status 0"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F038",
+      "description": "The owner can rely on the Fit check after the gate review of M6 and M7: a hidden required text is not counted as found, what the program cannot read counts as not measured, the Floors are read only in the edition that the program knows, and the receipt and the plugin's README say in plain words what was checked and what to do next.",
+      "spec_section": "SPEC.md section 2.25",
+      "steps": [
+        "Run the exit test: 61 planted defects are each found, among them the ways around a check that the gate review found",
+        "Hide the headline in a box of height 0, or cover the page with a box: the receipt does not count the headline as found, and the status is 1",
+        "Run the program on trial 003 (a Vision of the first draft): the Floors measure checks nothing, counts one thing as not measured, and says to write the Vision again",
+        "Make the program refuse with a hostile name in tokens.json: the refusal is one visible line without that name",
+        "Read plugin/README.md: it explains each step, each status, each option, and what happens after round 3"
+      ],
+      "passes": true
+    },
+    {
+      "id": "F039",
+      "description": "The Fit check checks a part of Floor A9 (target size): every drawn pointer target of a built page is measured, an undersized target stands only when the 24 pixel circle-spacing test of WCAG 2.2 success criterion 2.5.8 clears every other target, a link inside a sentence is not counted, and the Floors note reports how many targets fall short of 44 by 44 pixels as information that never changes the status.",
+      "spec_section": "SPEC.md section 2.30",
+      "steps": [
+        "Run the spacing tests of plugin/fit/e2e/target-size.e2e.ts: a 24 by 24 target passes however crowded, an undersized target alone passes, two undersized targets 20 pixels apart at their centers fail, and an inline sentence link is never counted",
+        "Run the Fit check on the reference build with two 16 pixel buttons planted side by side: the Floors measure holds a line that begins \"A9:\" and the status is 1",
+        "Run it with one 16 pixel button planted with clear space around it, and with a small link planted inside a sentence: no line begins \"A9:\"",
+        "Run it on a Vision that does not write A9 (Contrast checks not \"Fix for me\"): no line begins \"A9:\" and A9 is not among the checked parts",
+        "Read the Floors note of a receipt whose Vision writes A9: it reports, for each window width, how many targets are smaller than 44 by 44 pixels, as information"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F040",
+      "description": "The Fit check counts a required text drawn in the very color of what lies behind it as missing (finding R-S08): where the letters' paint and every layer of color behind the text are plain colors that the program can composite, exactly as the contrast reading composes them, and the two come out the same color, the text is not counted as shown in that reading, whatever the Vision writes about Floor A1.",
+      "spec_section": "SPEC.md section 2.31",
+      "steps": [
+        "Run plugin/fit/e2e/invisible-text.e2e.ts on a headline recolored to its own background, under a Vision that writes no Floor A1: the Content measure names the headline as not where a person can read it, and the status is 1",
+        "Run it with the headline's letters filled in the background color (-webkit-text-fill-color): the same result",
+        "Run it with the headline 1 channel from its background: the Content measure holds no line for it, because the program claims only what it can prove",
+        "Run it on the unaltered reference build under the same Vision: the Content measure holds no line and the status is 0",
+        "Run it under a Vision that writes Floor A1: the status is 1, as before"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F041",
+      "description": "Reverie, the Studio's guide from the owner's approved character package, introduces herself on the first screen in her approved words beside her reading pose, her handoff pose stands beside the Vision files on the Summary, and her face is the page's icon; her pictures are decoration that travels inside the one file, and neither her name nor her pictures enter the Vision.",
+      "spec_section": "SPEC.md section 2.32",
+      "steps": [
+        "Run apps/studio/test/reverie.test.ts: her introduction matches the approved words exactly, her pictures render as decoration with their places reserved, each picture stays under its byte cap, and a written Vision holds neither her name nor a PNG picture",
+        "Open the built Studio: the first screen shows her introduction and her reading pose, and the page makes no network request",
+        "Open the Summary: her handoff pose stands beside the Vision files and renders from inside the file",
+        "Run the size check: the Studio script stays within its budget of 1,600 KB (1,501 KB with her pictures inside it)",
+        "Read apps/studio/src/brand/README.md: the masters' SHA-256 sums, the palette derivation, and the rule that her identity is not redesigned here"
+      ],
+      "passes": false
+    }
+  ]
+}

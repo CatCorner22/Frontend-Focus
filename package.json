@@ -1,0 +1,45 @@
+{
+  "name": "refraction",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "typecheck": "tsc -p packages/core && tsc -p packages/core/tsconfig.test.json && tsc -p apps/studio && tsc -p tsconfig.e2e.json && tsc -p plugin/fit",
+    "lint": "eslint . --max-warnings 0",
+    "boundaries": "depcruise packages apps --config .dependency-cruiser.cjs",
+    "test": "vitest run",
+    "build": "npm run build -w @refraction/studio",
+    "dev": "npm run dev -w @refraction/studio",
+    "check": "npm run typecheck && npm run lint && npm run boundaries && npm run test",
+    "build:page": "npm run build && node apps/studio/scripts/make-artifact.mjs",
+    "size": "node scripts/check-size.mjs",
+    "audit:deps": "node scripts/audit-deps.mjs --self-test && node scripts/audit-deps.mjs",
+    "e2e": "npm run build:page && npm run size && vitest run --config vitest.e2e.config.ts",
+    "fit": "node plugin/fit/src/cli.ts",
+    "notices": "node scripts/make-notices.mjs",
+    "directions": "vitest run packages/core/test/directionsBook.test.ts -u",
+    "visual:update": "UPDATE_BASELINES=1 vitest run --config vitest.e2e.config.ts apps/studio/e2e/visual.e2e.ts"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "axe-core": "4.14.0",
+    "dependency-cruiser": "18.7.2",
+    "eslint": "10.14.0",
+    "playwright": "1.65.0",
+    "prettier": "3.10.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.2",
+    "vite": "8.3.8",
+    "vitest": "5.1.0"
+  }
+}
