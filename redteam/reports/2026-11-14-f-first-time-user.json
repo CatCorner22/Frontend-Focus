@@ -1,0 +1,157 @@
+{
+ "findings": [
+  {
+   "id": "U5-01",
+   "severity": "major",
+   "title": "Trial guide, Part 2: two of its four instructions cannot be followed on the Steps it sends the owner to",
+   "steps": "docs/trial-guide.md lines 24-27. Start from any Direction (I used \"Unbleached and Indigo\"). On Step 1 (\"Menu (navigation)\"), Step 2 (\"First screen\") and Step 3 (\"List of services\") look for \"Adjust with sliders\" and for \"Why this choice?\".",
+   "observed": "The guide says: \"Do the same on the next two Steps. On one of them, open \\\"Adjust with sliders\\\" and move a slider.\" None of Steps 1 to 5 has \"Adjust with sliders\"; the first Step that has it is Step 6 (\"Spacing\"). Sliders exist on 8 of 23 Steps only (6, 8, 9, 11, 12, 15, 17, 19). The guide then says: \"On one Step, type a reason into \\\"Why this choice?\\\".\" No undecided Step shows that field. It appears only after a pick, and the pick moves me to the next Step, so I had to press \"Previous Step\" to find it, below the cards and below the main button.",
+   "expected": "The guide names a Step that has sliders (for example \"go to Step 6, Spacing\") and says that \"Why this choice?\" appears on a Step after you have picked there, so you go back one Step to type it."
+  },
+  {
+   "id": "U5-02",
+   "severity": "minor",
+   "title": "Following the guide in order, \"Undo\" erases the reason just typed, and the notice does not say so",
+   "steps": "Guide Part 2 step 4, then Part 3 step 1. On Step 3 type \"I have a photo for each service.\" into \"Why this choice? (optional)\". Press \"Undo\" in the top bar once.",
+   "observed": "Notice: \"Undone: the Step “List of services” is back to how it was.\" The reason field is empty. The notice does not mention the reason, offers no way to bring it back, and \"Undo\" is then greyed out (there is no redo). Part 3 step 2 of the guide (\"If the Studio tells you that it removed your reason, read the notice\") can then never happen unless I type the reason a second time.",
+   "expected": "The notice says what was undone (\"your reason on the Step … was removed\") and offers to put it back, as the other two reason notices do; or the guide puts the Undo step before the reason step."
+  },
+  {
+   "id": "U5-03",
+   "severity": "major",
+   "title": "Pressing a Skin chip changes nothing I can see in the card picture on several Directions",
+   "steps": "Desktop 1440 by 900, #directions. On \"Quiet Luxury\" press \"Gold\", then \"Ember\", then \"Indigo dye\". On \"Blue Hour Chapel\" press \"Gold\". On \"Ink and Seal\" and on \"Plain Label\" press \"Indigo dye\". On \"Graphite Precision\" press \"Berry\", \"Gold\", \"Forest\", \"Ember\" in turn. Evidence: shots/m-ql.png, m-bhc.png, m-ink.png, m-plain.png, m-graphite.png; measurements in diff.py over thumbs/ (216 pictures).",
+   "observed": "The guide says \"Watch the picture change.\" On these cards the picture stays the same to my eye. Measured against \"As designed\" (mean difference per pixel, scale 0 to 255): Quiet Luxury/Gold 0.02, Blue Hour Chapel/Gold 0.02, Quiet Luxury/Indigo dye 0.03, Ink and Seal/Indigo dye 0.07, Quiet Luxury/Ember 1.01, Plain Label/Indigo dye 1.04. The only thing that changes is one line of text about 4 pixels tall above the headline. The picture ends above the button, which is where the Skin's color mostly goes. On \"Graphite Precision\" the four Skins look identical to each other, and the five chip dots are all near-black (rgb 34,39,46; 45,35,39; 42,38,30; 33,41,35; 45,36,34), so the dots do not tell them apart either. The button \"Start from Quiet Luxury\" does not name the Skin that is on.",
+   "expected": "A press on a chip shows a change I can see: a close-up of the button and a link (as the Step \"Main color\" already does), or a sentence that says where the change is. A Skin that changes nothing visible on a Direction is not offered there."
+  },
+  {
+   "id": "U5-04",
+   "severity": "major",
+   "title": "After the start, the Studio never names the Skin again and credits the Skin's colors to the Direction",
+   "steps": "#directions, card \"Unbleached and Indigo\", press chip \"Vermilion seal\", press \"Start from Unbleached and Indigo\". Reload the page (or press \"Dismiss\"). Open Step 12 (#accent), the Summary (#summary), then #directions again. Also press \"Download the project file\" and read the file.",
+   "observed": "One notice names it once: \"Started from “Unbleached and Indigo”, in the skin “Vermilion seal”. …\". After a reload the word \"Vermilion\" is nowhere on any screen. The list of Steps says \"Started from Unbleached and Indigo\". The Summary says \"This project started from Unbleached and Indigo\". Step 12 says of the brown-red button: \"These values come from Unbleached and Indigo.\" They do not: that Direction's own color is deep blue and its card says \"the blue marks what a visitor can press\". Back on #directions the card of my own Direction shows \"As designed\" as the chosen chip. The downloaded file has no word about a Skin. Trial guide Question 2 asks \"Which Direction and which Skin did you pick\" and Question 7 asks whether the Summary says what I decided. (PROGRESS.md lists \"A project does not store the name of its Skin\" as a known gap; the screen does not tell the person.)",
+   "expected": "The list of Steps and the Summary say \"Started from Unbleached and Indigo, in the Skin Vermilion seal\"; Step 11, 12 and 13 say the values come from that Skin; the card on #directions marks the Skin in use."
+  },
+  {
+   "id": "U5-05",
+   "severity": "minor",
+   "title": "Two color descriptions contradict what the eye sees: a brown called \"close to Dark purple\", and \"orange-red\" that arrives as brown",
+   "steps": "Same project as U5-04. Read Step 12 \"Main color\" (card \"Your design now\"), the same line in the list of Steps and on the Summary. Compare the chip text of \"Vermilion seal\" with the chip dot and the button. Evidence: shots/d16-accent.png, shots/m-accent-compare.png.",
+   "observed": "Text: \"close to “Dark purple”: color moved toward red (35° on the color wheel); vividness a little duller (0.09)\". The button is brown (rgb 112,51,36). Beside it the cards \"Deep red\" (171,0,47) and \"Red-orange\" (222,63,37) are on offer; \"Dark purple\" is 102,44,107. The chip text for \"Vermilion seal\" says \"The orange-red of a seal stamped on a letter, with grays that lean slightly warm.\" What I got is that brown; the true orange-red (171,52,21) is \"Ink and Seal\" as designed. Also unexplained: \"35° on the color wheel\", \"tint strength clearly stronger (0.02)\".",
+   "expected": "The sentence names the Option that a person would call nearest (a red or a brown), or simply says \"a dark brown-red, set by the Skin\". A Skin called \"Vermilion seal … orange-red\" gives orange-red, or its text says it turns darker on this Direction."
+  },
+  {
+   "id": "U5-06",
+   "severity": "minor",
+   "title": "A Skin's text names one color where its dot shows two, and the unnamed color is the largest block on the page",
+   "steps": "#directions, card \"Miami Beach Deco\", press chip \"Forest\", read the line under the chips, press \"Start from Miami Beach Deco\", open the Summary. Evidence: shots/d70-miami-forest-summary.png, shots/m-mbd.png.",
+   "observed": "Text: \"A deep green, with grays that lean slightly green.\" The page's only solid block of color, the band with \"6 days / 45 min / 3\", is purple (rgb 94,62,143). With \"Violet\" the band is brown-gold; with \"Gold\" it is blue. The chip dot is split in two colors (green and purple), but no word on the screen says what a split dot means. 60 chips that are not called \"fade\" have a split dot (for example Galactic Goth/Ocean, Motel Neon/Gold, Desert Fever/Berry) and each text names one color.",
+   "expected": "The text names both colors (\"a deep green, with purple as the second color\"), and the legend says once what a split dot means."
+  },
+  {
+   "id": "U5-07",
+   "severity": "major",
+   "title": "On a phone, Steps 1 and 2 each show two cards with identical pictures and no words say so; tapping a card changes a preview that is out of view",
+   "steps": "Phone window 390 by 800, touch. Start from \"Ink and Seal\". Step 1 \"Menu (navigation)\": compare card 1 \"Name left, links right\" with card 4 \"Links in a left column\"; tap card 4. Step 2 \"First screen\": compare card 1 \"Headline left\" with card 3 \"Text and photo side by side\". The same happens in a desktop window after pressing \"Phone\" over any preview. Evidence: shots/p05-nav-card4-tapped.png, shots/m-phonetiles-hero.png, tiles-realphone/.",
+   "observed": "Step 1, cards 1 and 4: 0 pixels differ. Step 2, cards 1 and 3: 0 pixels differ. The only hint on both Steps is \"Tap a card to see it large. Then tap the main button to pick it.\" When I tapped card 4 the large preview was above the screen (its box ran from 471 to 55 pixels above the top edge), so nothing I could see changed except the button's label. The trial guide's Part 6 sends the owner to exactly these two Steps on a phone. redteam/FINDINGS.md row U2-08 says of the look-alike pairs that remain: \"each such Step says so in words\"; at phone width these two Steps say nothing.",
+   "expected": "Where two cards draw the same at the width on show, the Step says so in words (\"on a phone these two look the same; choose Desktop to see the difference\"), and a tap on a card brings the large preview into view or says where it is."
+  },
+  {
+   "id": "U5-08",
+   "severity": "minor",
+   "title": "Overlays preview at \"Phone\" width shows one and a half of six Overlays and does not say that the rest are further down inside the picture",
+   "steps": "#overlays, tick all six. Desktop window: press \"Phone\" over the preview. Phone window: the default width is \"Phone\". Evidence: shots/d22-ov-all-phone.png, shots/p12-ov-all-preview.png.",
+   "observed": "The line says \"6 Overlays are switched on. The preview shows each one open.\" I see \"Tooltip\" and the top of \"“Are you sure?” question\". The picture inside is 2,101 pixels tall in a 512-pixel box (phone: 2,106 in 416) and scrolls with the wheel or a finger, with no scroll bar on show; the line under it says \"The preview is a picture. Nothing in it opens, closes, or moves\". On the phone one thumb swipe over the preview scrolled the inside of the picture by 914 pixels, so the picture catches the swipe that was meant to move down the page to the checkboxes. On the phone the checkboxes sit below the preview, so from the second tick on, the preview that \"draws each one open\" is above the screen. At \"Desktop\" width on the phone the text in the picture is about 4 pixels tall.",
+   "expected": "The line says \"scroll inside the preview to see the others\" or the preview shows the Overlay just ticked; on a phone the tick shows its Overlay next to the checkbox."
+  },
+  {
+   "id": "U5-09",
+   "severity": "minor",
+   "title": "The Overlays preview is labelled \"Sample website\" but shows no website, and the label covers part of the picture",
+   "steps": "#overlays with no Overlay ticked, desktop and phone. Then tick all six. Open the Summary on the phone with \"Main button that stays in view on a phone\" on. Evidence: shots/d20-overlays.png, shots/p12-ov-all-preview.png, shots/p19-sum-arrive.png.",
+   "observed": "With nothing ticked the preview is an empty cream box 744 by 512 pixels with the sentence \"No Overlay is switched on.\" in very small type (the same sentence stands above it in normal type) and the tag \"Sample website\". With Overlays ticked, each is drawn in a box of its own on an empty page. The heading says an Overlay \"appears over the page\", and the tag says \"Sample website\", but no website is there. On the phone the tag covers part of \"Cancel your visit\" in the picture, and on the Summary it covers the right end of the \"Book a visit\" bar. Five of the six Overlays appear nowhere else; only the phone button is drawn on the sample website (Summary and Steps at \"Phone\" width), and nothing says so.",
+   "expected": "The empty state uses the space to say what will appear, in readable type; the tag reads \"Overlay pictures\" or is absent here; the tag does not sit on top of content."
+  },
+  {
+   "id": "U5-10",
+   "severity": "minor",
+   "title": "Research rules on the Summary: a sentence printed twice, a builder's note, an odd zero, mixed units, and \"Holds\" never explained",
+   "steps": "#summary, section \"Research rules\", closed and opened. For the second quote: Step \"Text size\", \"Adjust with sliders\", press Home on both sliders, return to the Summary. Evidence: shots/d30-sum-03.png, shots/d41-sum-doesnothold.png.",
+   "observed": "(1) \"Holds: Buttons, menu links, and form fields are at least 44 pixels tall. Buttons, menu links, and form fields are at least 44 pixels tall.\" The rule and the finding are the same sentence. (2) \"Does not hold: Each text size is at least a tenth larger than the size below it. The two closest text sizes are 13 and 13 pixels: the larger is 0 percent larger.\" (3) Three of the five rules carry: \"no Step changes this value, so the rule holds for every design today. It is listed so that a later change of the sample website cannot break it unseen.\" That is a note for the person who builds the Studio; for me it means three of five lines can never say anything else. (4) The rule says \"at most 80 letters\" and the finding says \"at most 65 character widths wide (one such width is that of the digit 0, a little wider than an average letter)\"; \"text heights apart\" is not explained. (5) No sentence says what \"Holds\" and \"Does not hold\" mean; \"Does not hold: Reading text is at least 16 pixels tall.\" reads as a contradiction until the next sentence. \"at least a tenth\" is answered in \"12.36 percent\".",
+   "expected": "A fixed rule's finding gives the number (\"they are 44 pixels tall\"). The three fixed rules sit apart under one line (\"set by the sample website; you cannot change these yet\"). The intro says \"Holds: your design meets the rule\". Rule and finding use one unit."
+  },
+  {
+   "id": "U5-11",
+   "severity": "minor",
+   "title": "Trade words and an unexplained \"The record\" in the source lines of the research rules and the Overlays",
+   "steps": "#summary, open each research rule. #overlays, open each \"Where this guidance comes from\".",
+   "observed": "Words nobody explains: \"x-height\", \"critical print size\", \"CSS pixels\" (three times), \"modular type scale\", \"Weber's law and Stevens' power law\", \"Fitts’s law and the steering law\", \"Touch targets\", \"full justification\", \"search snippet\". Every line begins \"The record “…”\" and neither screen says what a record is or where it lives (the Step screens do: \"The lines below name the documents behind this guidance and say how each one is known\"). One sentence is not English: \"the figure of 8 pixels is the own arithmetic, from a laboratory finding, of the AI assistant that gathered this research\". PROGRESS.md states the rule \"no trade word outside round brackets\"; these titles are outside brackets.",
+   "expected": "One sentence above the list says what a record is; each title is given in plain words with the trade word in brackets, or the title is left out and only the plain summary shown."
+  },
+  {
+   "id": "U5-12",
+   "severity": "minor",
+   "title": "Several Direction cards have pictures I cannot tell apart; \"Ink and Seal\" and \"Plain Label\" are the closest pair of all",
+   "steps": "#directions, group \"Light and calm\", last row. Evidence: shots/d02-dir-02.png; diff.py lists all 703 pairs.",
+   "observed": "\"Ink and Seal\" and \"Plain Label\" stand side by side: both a cream page, a small black headline at the left, a black button; they also offer the same four chips by name (\"As designed\", \"Indigo dye\", \"Forest\", \"Graphite\"). What tells them apart (centered name, a red line of text, the letter shapes) is 3 to 5 pixels tall in the picture. Next closest by my measure: \"Sunlit Studio\" and \"Unbleached and Indigo\"; \"Field Manual\" with each of the three new Directions; \"Soft Daylight\" and \"Quiet Orbit\". All are in the one group of 12.",
+   "expected": "The picture shows the part where each Direction differs at a size that can be seen, or the card says in a few words what sets it apart from its neighbour."
+  },
+  {
+   "id": "U5-13",
+   "severity": "minor",
+   "title": "A group heading folds its 12 Directions away with no sign that it can",
+   "steps": "#directions. Click the heading \"LIGHT AND CALM 12 Directions\". Evidence: shots/d60-group-collapsed.png.",
+   "observed": "All 12 cards vanish. The heading has no arrow and no word such as \"show\" or \"hide\", before or after. With the keyboard the heading is a Tab stop that reads only \"LIGHT AND CALM 12 Directions\". (A second click, or the link \"Light and calm (12)\" above, brings the cards back; a reload opens the group again.)",
+   "expected": "The heading shows an arrow or the words \"hide\" / \"show\", or it does not fold."
+  },
+  {
+   "id": "U5-14",
+   "severity": "minor",
+   "title": "On the phone, links in the new parts are too small to press with a thumb",
+   "steps": "Phone window 390 by 800. Measure on #directions and #summary.",
+   "observed": "The four group links (\"Light and calm (12)\" and so on) are 23 pixels tall, in two rows close together. \"Change the Overlays\" is 19 pixels tall. Each \"Change\" on the Summary is 59 by 16 pixels; \"Licences of the fonts and code inside the Studio\" is 16 pixels tall. The Studio's own research rule on the same Summary names 24 pixels as the guideline's lower limit and 44 as the comfortable size. (Skin chips are 44 pixels tall on touch, Overlay rows 44, list-of-Steps links 51: those held.)",
+   "expected": "Every link that a thumb must hit is at least 24 pixels tall, better 44, like the chips."
+  },
+  {
+   "id": "U5-15",
+   "severity": "minor",
+   "title": "The Skin can be chosen once; changing it later means \"Start again\", which clears every Decision, and neither the card nor the dialog says so",
+   "steps": "With a project open (one Decision made), go to #directions, card \"Plain Label\" (the project's own Direction), press chip \"Forest\", press \"Start from Plain Label\". Evidence: shots/d61-same-direction-other-skin.png.",
+   "observed": "Dialog: \"Start again from “Plain Label”? This replaces your current design and clears your 1 Decision. …\" The dialog does not name the Skin. The line above the cards says \"If you start from another Direction, the Studio asks first\"; it says nothing about Skins. No Step and no other screen offers the Skins.",
+   "expected": "The card says \"You choose the Skin once, at the start\", or a project can change its Skin and keep its Decisions; the dialog names the Skin."
+  },
+  {
+   "id": "U5-16",
+   "severity": "note",
+   "title": "\"Control Room\" starts with a research rule that \"Does not hold\", and nothing says it is made that way on purpose; the Step \"Text size\" is silent when text goes below the rule",
+   "steps": "Fresh project: \"Start from Control Room\" (as designed), open the Summary. Separately: Step \"Text size\", set the slider to 13px.",
+   "observed": "Summary: \"Does not hold: Reading text is at least 16 pixels tall. Reading text is 15 pixels tall.\" The Direction's card says only \"Too tightly packed for a public information site\". On the Step \"Text size\" no word appears when the text is set to 13 pixels; the first place that says so is the Summary.",
+   "expected": "The rule adds \"this Direction is made with small text on purpose\"; the Step \"Text size\" shows the rule's verdict next to the slider."
+  },
+  {
+   "id": "U5-17",
+   "severity": "note",
+   "title": "Card pictures look out of focus on a screen with double pixel density (seen in the installed test browser only)",
+   "steps": "Phone window with device pixel ratio 2, and desktop window with device pixel ratio 2; look at any Direction picture. Evidence: shots/p01-crop-thumb.png, shots/d62-thumb-dpr2-desktop.png.",
+   "observed": "The text around the picture is sharp; the picture itself is drawn at half the sharpness, so its small text is a blur. I saw this in the older Chromium at /opt/pw-browsers/chromium only. I had no real phone and no current browser, so I cannot say that the owner's phone shows it.",
+   "expected": "Pictures as sharp as the text around them. Worth one look on a real phone during the trial."
+  },
+  {
+   "id": "U5-18",
+   "severity": "note",
+   "title": "On the phone the top bar, the start notice, and the main button leave about 600 of 800 pixels, and a Step opens with no preview and no card on the first screenful",
+   "steps": "Phone window 390 by 800. Start from a Direction in a Skin. Evidence: shots/p04-step1-top.png, shots/p04-step1-s1.png.",
+   "observed": "The top bar is 313 pixels tall on every screen (it scrolls away). The notice \"Started from … in the skin …\" is 136 pixels tall and stays stuck to the top while I scroll, until I press \"Dismiss\"; the main button stays stuck to the bottom (65 pixels). On arrival at Step 1 the large preview starts 978 pixels down and the cards 1,658 pixels down. The #directions page is one card per screenful for 38 cards; the group links are the only shortcut and there is no way back up to them.",
+   "expected": "A shorter top bar on a phone; a notice that scrolls away once read."
+  },
+  {
+   "id": "U5-19",
+   "severity": "note",
+   "title": "Small things: \"skin\" and \"Skin\"; the first Step hides the Skin just chosen; the guide's Part 6 in a narrow window meets \"Start again\"",
+   "steps": "Start from any Direction in a Skin other than \"As designed\". Read the notice and look at the large preview of Step 1. Then read docs/trial-guide.md lines 67-68.",
+   "observed": "(1) The notice writes \"in the skin “Vermilion seal”. The skin changed colors only\" with a small s; the card and the guide write \"Skin\". (2) Right after I chose a Skin, the large preview is gray: \"Layout Steps show the page in gray, so that color does not distract you. Your colors return at Step 7.\" The screen says why, but the first thing I wanted was to see my Skin large. (3) Guide Part 6: \"or make the browser window very narrow. Start from a Direction\". In the same browser a project from Parts 1 to 5 exists, so \"Start from …\" opens \"Start again from …? This replaces your current design and clears your N Decisions\". The dialog is clear; the guide does not warn.",
+   "expected": "One spelling; the first Step after a Skin opens in color or says \"untick this box to see your Skin\"; the guide says \"on the same computer, press Keep my project and open Step 1 from the top bar\"."
+  }
+ ],
+ "held": "What I tried that held (each observed in the browser at commit 5e546e7, file apps/studio/dist/artifact/local-test.html):\n\n1. First screen. The heading \"Pick a Direction: a complete starting look\" and the three paragraphs told me what the Studio wants before I clicked. The four group links jump to their group and reopen a folded group.\n2. Skin before pressing. The legend \"Skin (the same look in other colors)\" stands over the chips on every card, so I knew what a Skin is first. The chosen chip is clear: blue ring and bold name. The line under the chips changes with each press (for example \"A rose red, with grays that lean slightly pink.\").\n3. Start notice. \"Started from “Unbleached and Indigo”, in the skin “Vermilion seal”. The skin changed colors only; every Step still starts from this Direction’s layout, letters, and shapes.\"\n4. Trial guide Part 3. Changing a pick gave: \"You picked another Option on the Step “List of services”. The reason you wrote there was for the earlier choice, so the Studio removed it: “I have a photo for each service.”\" with \"Keep that reason for the new choice\", then \"Your reason is on the Step “List of services” again.\" \"Put this Step back…\" gave a notice with \"Undo\".\n5. Overlays, desktop. Each of the six has a plain description, \"Switch it on when\" and \"What can go wrong\" that I understood without help. A tick is saved at once, and the line reads \"1 Overlay is switched on. The preview shows it open.\" At \"Desktop\" width all six fit and are readable, in the project's colors. Undo says \"Undone: the Overlays are back to how they were.\" The Summary lists the ticked ones, or \"No Overlay is switched on. Choose Overlays\". The downloaded file holds them. The phone button appears on the sample website at \"Phone\" width only while its Overlay is on.\n6. Research rules. \"Holds\" turned into \"Does not hold\" with the number when I made the text 13 pixels, and the rule's link to the Step \"Text size\" works. Each opened rule says \"Why the rule exists\" and \"What the Studio does not check\" in plain words. A rule that does not hold has a thick dark left edge.\n7. Download. \"The project file “my-first-project.refraction.json” was handed to your browser to save, usually into your Downloads folder. To continue later, open it here with “Open a project file”.\" The file was complete (5,319 bytes). \"Copy the project as text\" confirms too. \"Dress the Studio itself…\" matches the guide word for word and works.\n8. Start again. With a project open, #directions says \"You already have a project, started from …\", and \"Start from …\" asks first, with the count of Decisions.\n9. Keyboard alone, one full pass. 13 Tab presses to the first group; arrow keys change the Skin; Enter starts; a number key shows a card and Enter picks it; 22 such pairs reached the Overlays; Space ticks; Enter on \"Continue to the Summary\"; Enter opens a rule; Enter on its link opens the Step. Focus landed on the heading or the card in use after every move, was in view at every stop I logged, and carried a 3-pixel ring. \"Jump past the preview…\" is offered on Steps and Overlays.\n10. Phone 390 by 800. No sideways scrolling on Directions, Steps, Overlays, or Summary (page width 390 each time). Skin chips 44 pixels tall, Overlay rows 44, list-of-Steps links 51. The main button stays in view.\n11. Step cards at \"Desktop\" width. Every Step whose card pictures look alike carries a note in words (Tint of the grays, Amount of color, Text contrast, Background of the first screen, Box edges and shadows, Number style, Motion).\n12. No page error, no console error, and no request from the page in any of my runs.\n\nWhat I did not do: no real phone (the phone was a 390 by 800 window with touch switched on); no screen reader; no walk at \"Tablet\" width; I did not open a project file, read the research files, or run any unit test. One thing I could not settle: my test browser closed itself on some later downloads; the first download worked and the file was whole, so I count that against my own setup and not against the Studio."
+}

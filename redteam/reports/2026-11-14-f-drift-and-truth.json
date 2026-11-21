@@ -1,0 +1,149 @@
+{
+ "findings": [
+  {
+   "id": "DT-01",
+   "severity": "major",
+   "title": "A Skin's text names a color that the Skin does not give (Graphite on all 15 Directions; all four Skins of Graphite Precision; Vermilion seal)",
+   "steps": "Open #directions. (a) On the card \"Graphite Precision\" press the chips Berry, Gold, Forest, Ember in turn. (b) On \"Unbleached and Indigo\" press \"Vermilion seal\", then \"Start from Unbleached and Indigo\" and open #summary. (c) On \"Control Room\" and on \"Ink and Seal\" press \"Graphite\". Read the sentence under the chips and the --accent value in the card's picture. Files: packages/core/src/catalog/skins.ts lines 5-6, 38-47, 64-65; packages/core/test/catalog.test.ts lines 414-442.",
+   "observed": "(a) The card says \"A rose red…\", \"A warm yellow-brown…\", \"A deep green…\", \"A red-orange…\"; the picture stays black and white and the main color is #2d2327, #2a261e, #212923, #2d2422 (vividness about 0.015). (b) The card says \"The orange-red of a seal stamped on a letter\"; the main color and the button are #703324, a dark red-brown; the Summary then describes this same color as \"close to “Dark purple”\". (c) The card says \"Almost no color: a near-black main color\"; the main color is light silver #bcc5d1 on Control Room (and on Evening Formal, Marquee Deco, Vegas Modern, Sunlit Studio; #b5bfcb on Motel Neon and Mall Sunset) and mid gray #414853 to #6a727d on the eight light Directions. Cause: a Skin sets the hue only and keeps the Direction's vividness and lightness; no test compares a Skin's text with the color drawn.",
+   "expected": "A Skin's sentence is true of the color the card draws on every Direction that offers it, or the Direction does not offer that Skin. The code review of the same day graded the same kind of defect (CR5-02, a fade that ended in another color than its text named) as major."
+  },
+  {
+   "id": "DT-02",
+   "severity": "major",
+   "title": "Records say that Skins cite research and are complete Catalog records; a Skin record has no source, no evidence grade, and no review date",
+   "steps": "Read packages/core/src/catalog/skins.ts lines 15-30 (the Skin record) and 44-47. Compare with PROGRESS.md line 77, PLAN.md line 143, and docs/knowledge/03-research-of-2026-11-14.md line 7. Read packages/core/src/catalog/overlays.ts lines 28-29.",
+   "observed": "PROGRESS.md line 77: \"Three Directions … and two Skins (“Indigo dye”, “Vermilion seal”), each citing the research records it draws on.\" PLAN.md line 143: \"a Step, Option, Direction, Skin, Overlay, … is a record with plain text, a source, an evidence grade, and a review date.\" A Skin record holds id, name, what, three hue values, an optional vividness, and the headline fill; nothing else. The only link to research is a code comment. No screen says where a Skin comes from. The same line 7 of the research overview says the Studio uses the 2026-11-14 research for \"the source lines of the six Overlays\"; every Overlay source line names kb-perception-cognition.json or kb-aesthetics-satisfaction.json, the two older files.",
+   "expected": "Either the Skin record carries sources, a grade, and a review date (and \"Indigo dye\" and \"Vermilion seal\" name the record \"Traditional Japanese colour names have no single screen value\"), or the three records say that a Skin is the builder's own composition with no source. The research overview should say that the Overlays rest on the older knowledge base."
+  },
+  {
+   "id": "DT-03",
+   "severity": "major",
+   "title": "Guarantee 70.03 \"Every dependency is pinned to an exact version that is at least 7 days old\" is untrue at HEAD",
+   "steps": "Read docs/reference/guarantees.md lines 575-581, CLAUDE.md line 64, PLAN.md line 123, .github/dependabot.yml line 1. Compare with package.json (devDependencies), the release dates in the table of DECISIONS.md (rows @vitejs/plugin-react, typescript-eslint, vite) and line 106, and `git log --merges`.",
+   "observed": "package.json pins typescript-eslint 8.72.2 and @vitejs/plugin-react 6.3.0. DECISIONS.md gives both a release date of 2026-11-09; the merges are dated 2026-11-14, five days later. DECISIONS.md line 106 says that vite 8.3.7 was \"inside the waiting period\" on 2026-11-13; it was merged on 2026-11-14. Guarantee 70.03 still states the rule without exception (\"Last verified: 2026-11-13\"), and CLAUDE.md, PLAN.md, and dependabot.yml repeat it. D53 point 6 and PROGRESS.md item 6 say only that the wait \"was not checked\". Also at HEAD: DECISIONS.md line 106 says \"@types/node follows Node 22\" while 26.6.6 is pinned; the records say \"six\" merged updates, and the log shows seven Dependabot pull requests (five npm packages, two GitHub Actions).",
+   "expected": "The guarantee states what is true: three pinned versions are younger than 7 days by the repository's own dates, by the owner's merge. The count and the @types/node note match package.json."
+  },
+  {
+   "id": "DT-04",
+   "severity": "major",
+   "title": "The trial guide's part 2 cannot be followed as written: no slider exists on the first five Steps, and \"Why this choice?\" shows only on a Step that is already decided",
+   "steps": "Open the page, press \"Start from Soft Daylight\". Follow docs/trial-guide.md lines 24-27: pick a card with the main button on the Step that opens and on the next two Steps; look for \"Adjust with sliders\" and for \"Why this choice?\".",
+   "observed": "The Steps that open are \"Menu (navigation)\", \"First screen\", and \"List of services\". None of them shows \"Adjust with sliders\"; the first Step that does is Step 6, \"Spacing\" (9 of the 23 Steps have sliders). \"Why this choice? (optional)\" is absent on a Step before a pick, and the main button moves on to the next Step at once, so the field is seen only after going back to a decided Step. The guide says neither. PLAN.md line 67 makes the same overstatement: \"On each [Step]: … fine-tune with sliders, ask for small variations\".",
+   "expected": "The guide names a Step that has sliders (for example \"Spacing\" or \"Main color\") and says that the reason field appears on a Step after its pick. Milestone M4 closes on this trial, so its instructions must work on the screens as built."
+  },
+  {
+   "id": "DT-05",
+   "severity": "major",
+   "title": "\"Plain Label\" does what its own cited research record lists as an anti-pattern, and the records say that no Direction copies a brand",
+   "steps": "Read packages/core/src/catalog/directions.ts line 5 and lines 673-690. Open docs/knowledge/kb-japanese-design.json, record \"Emptiness as a container, and the plain-goods approach in retail\" (fields antiPatterns, designMoves, caveats). Compute the Direction's colors (deriveTokens) or read them from its card.",
+   "observed": "The record's first anti-pattern: \"Imitating a known retailer's label (its red-brown, its typeface, its kraft paper) and calling the result a principle.\" Its design move: \"Copy no company's label colour…\". Its caveat: a company's look is protected by trade-mark and trade-dress law, \"the tool must stay with the general principle\". The Direction is a near-white page (#fcf9f7) with plain letters, a black button, and \"one dark red\" (#7f1f29, a dark red-brown) for marks and links; its name is \"Plain Label\"; its \"Best for\" line reads \"food, household goods, stationery, clothing basics\", the range the record describes for that retailer. The Direction's \"Watch for\" text, D53 point 5, and directions.ts line 5 (\"No Direction copies a brand\") say nothing of this. The match with the retailer's real color rests on my memory, not on a source in the repository; the rest is the repository's own text.",
+   "expected": "The Direction either avoids the one color that its record warns against, or its \"Watch for\" text and D53 tell the owner that the look is close to a known retailer's and must not be used for a shop of that kind without a check."
+  },
+  {
+   "id": "DT-06",
+   "severity": "minor",
+   "title": "Counts in the records do not match the code: 186 unit tests, not 184 or 163; sliders on 9 Steps, not 10",
+   "steps": "Run `npx vitest run` in /home/user/Frontend. Read PROGRESS.md lines 38, 46, 128 and PLAN.md line 156. Count Steps with tunables in packages/core/src/catalog/steps.ts.",
+   "observed": "vitest: 6 files, 186 tests, 186 passed (catalog 59, color 13, engine 46, mockup 18, project-file 25, tokens 25). PROGRESS.md says \"184 unit tests\" twice. PLAN.md, column \"State on 2026-11-14\", says \"met (163 unit tests)\" (true at commit 5366cb8, stale since). PROGRESS.md line 128 says \"14 input values are adjustable on 10 Steps\"; the Catalog has 14 sliders on 9 Steps.",
+   "expected": "186 in all three places; 9 Steps."
+  },
+  {
+   "id": "DT-07",
+   "severity": "minor",
+   "title": "PROGRESS.md says the two new Skins are offered by the three new Directions only; \"Indigo dye\" is also on two older Directions",
+   "steps": "Read PROGRESS.md line 112. Read the `skins:` lists in packages/core/src/catalog/directions.ts lines 119, 231, 631, 652, 673, or open #directions and look at the chips of \"Paper and Ink\" and \"Quiet Luxury\".",
+   "observed": "\"Indigo dye\" is offered by Paper and Ink, Quiet Luxury, Ink and Seal, and Plain Label. \"Vermilion seal\" is offered by Unbleached and Indigo alone.",
+   "expected": "The sentence names the Directions that offer each Skin."
+  },
+  {
+   "id": "DT-08",
+   "severity": "minor",
+   "title": "After a start in a Skin, the Studio credits the Skin's color to the Direction, and the card keeps a description of colors that the Skin replaced",
+   "steps": "On #directions pick \"Vermilion seal\" on \"Unbleached and Indigo\", press Start, open #accent. Before starting, read the card's first sentence and its \"Watch for\" line with the Skin picked. File: apps/studio/src/App.tsx line 541.",
+   "observed": "Step \"Main color\": \"…color moved toward red (35° on the color wheel)… These values come from Unbleached and Indigo.\" The value 35° comes from the Skin; the Direction's own value is 250°. With the Skin picked, the card still reads \"the blue marks what a visitor can press\" and \"The blue is deep and quiet…\" over a picture with a brown button. \"Ink and Seal\" in Graphite still reads \"Warm paper… a few small orange-red marks\" over a cool white page (#f7faff) with gray marks. PROGRESS.md states only that the project does not store the Skin's name.",
+   "expected": "The sentence says that the colors come from a Skin (or from the starting look), and a card in a Skin does not describe colors that are no longer drawn."
+  },
+  {
+   "id": "DT-09",
+   "severity": "minor",
+   "title": "Four Overlays show guidance or a grade that is stronger than the record they cite",
+   "steps": "Open #overlays and open \"Where this guidance comes from\" on each Overlay. Compare packages/core/src/catalog/overlays.ts lines 49-109 with the records \"Show progress during waits\", \"A wait feels shorter when it is explained, bounded and occupied\", \"Make actions reversible; forgive mistakes\", \"Errors: identify, explain, and allow recovery\", \"Always show what the system is doing and what just happened\", \"Fitts’s law and the steering law…\".",
+   "observed": "Loading placeholder: shown as \"long-standing convention\"; its record says the evidence that such placeholders beat a spinner \"is thin… That part of the claim has grade C\", and the second record says \"do not count on them to make the wait feel shorter\". The figures \"about a second\" and \"about ten seconds\" come from a record that the Overlay does not cite (\"Response-time limits: about 0.1, 1 and 10 seconds\"). Main button that stays in view: \"long-standing convention\"; neither cited record speaks of a button that stays in view; \"a large target that is always near is reached fastest\" is the builder's inference, and the record's caveat says that on phones reach and the covering hand matter as much as size. “Are you sure?” question: the source gloss \"undo is the stronger protection\" is, in the record's words, \"expert opinion, not part of a standard\" and \"a practitioner observation, not verified here\", shown under \"long-standing convention\". Notice after an action: the risk sentence about a notice that vanishes has no support in the cited record, and that record advises confirming \"where the user is looking (inline, or next to the control)\", while the Overlay places the notice \"at the edge of the window\". PLAN.md line 57 promises that a rule graded C is shown as opinion.",
+   "expected": "\"Expert opinion\" for the loading placeholder and for the button that stays in view; a cited record for each figure; a gloss that keeps the record's own strength."
+  },
+  {
+   "id": "DT-10",
+   "severity": "minor",
+   "title": "Four research rules state their reason more firmly than their records do",
+   "steps": "Open #summary and open each research rule. Compare packages/core/src/catalog/researchRules.ts lines 75, 93-94, 110, 130 with the records \"Line length: moderate lines, capped near 80 characters\", \"Short lines: reading speed holds until about 13 characters per line…\", \"A measurable floor for text size: lowercase letters about 8 CSS pixels tall\", \"Letter and line spacing…\", \"The smallest useful step between two sizes…\". For the text-size rule, measure the height of the letter x in each offered letter style at 16 pixels.",
+   "observed": "Line length: \"Studies of reading on screens favor moderate lines\"; the record says the studies \"are small and partly conflict\" and that longer lines were read faster. \"Reading stays fast down to about 13 letters per line\"; the record says a reader at 13 \"has already lost about a fifth of maximum speed\". Text size: \"16 pixels keeps the small letters above that size\"; the record says 16-pixel text in a letter style with small letters \"sits at this limit, not safely above it\", with a floor of about 8 pixels give or take one. Measured in the Studio's own letter styles at 16 pixels: 7.9 (Source Serif 4) to 8.8 pixels. Step between sizes: \"look like one size that was set carelessly… must be clearly larger\"; the record says \"risk\" and calls the step its own inference (the rule's second text does say so). Line height: the upper limit 1.8 is the record's \"working convention\"; the screen gives no origin for it.",
+   "expected": "Each sentence carries its record's own limits: conflicting studies, a fifth of speed lost at 13 letters, 16 pixels at the limit and not above it, 1.8 as a working convention."
+  },
+  {
+   "id": "DT-11",
+   "severity": "minor",
+   "title": "The Studio shows \"Reviewed on 2026-11-14\" for Overlays and research rules that nobody has reviewed",
+   "steps": "Open #overlays or #summary and open any source fold. Files: apps/studio/src/App.tsx lines 866 and 1069; packages/core/src/catalog/overlays.ts line 31; PROGRESS.md line 74.",
+   "observed": "Each Overlay and each research rule reads \"How strong the guidance is: … Reviewed on 2026-11-14.\" The date is the day the builder wrote the record. PROGRESS.md and the code comments say of the same records \"nobody has reviewed\" them.",
+   "expected": "Wording that says what happened, for example \"Written on 2026-11-14; no person has reviewed it\"."
+  },
+  {
+   "id": "DT-12",
+   "severity": "minor",
+   "title": "\"Unbleached and Indigo\" says words and picture share the first screen \"unevenly\"; the split is 52.5 to 47.5",
+   "steps": "Read packages/core/src/catalog/directions.ts line 655 and packages/core/src/templates/smallBusiness.ts line 252. Read the record \"Fukinsei (不均斉): balance without mirror symmetry\", field designMoves.",
+   "observed": "The Mockup's rule for this first screen is `grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr)`, the same for every Direction with this first screen. The cited record's move: \"Split two-part layouts unequally (for example 5 to 7, or 1 to 2), not half and half.\"",
+   "expected": "The sentence describes what the picture shows, or the first screen is split as the record describes."
+  },
+  {
+   "id": "DT-13",
+   "severity": "minor",
+   "title": "PLAN.md version 2 holds statements that were overtaken the same day",
+   "steps": "Read PLAN.md lines 123 and 213 against PROGRESS.md lines 74 and 78 and DECISIONS.md line 40.",
+   "observed": "Line 213: \"four more parts in progress\"; the four files are finished (76 records). Line 123: \"the records of D27 and D28 must be brought in line\"; D28 is marked replaced, D27 is not brought in line (see DT-03).",
+   "expected": "The plan states the present: four parts written and unreviewed; D28 replaced; D27 open."
+  },
+  {
+   "id": "DT-14",
+   "severity": "minor",
+   "title": "No record states a CI result or a private-page version for this unit of work",
+   "steps": "Read WAYPOINTS.md (last rows W7, W8), PROGRESS.md lines 9 and 46, and search the records for commits d217d5e, 66474b4, 5e546e7.",
+   "observed": "PROGRESS.md says the private page's version number \"is in WAYPOINTS.md\"; the last version there is \"Version 11\" at commit 147ff08, before the 17 Directions and before Skins and Overlays. The last CI runs on record are 81 and 82 (fac22be, 4fc35c5). The trial guide sends the owner to the private page to use Skins and Overlays. I did not open the private page or CI (out of scope), so I do not know their state; the records do not say.",
+   "expected": "PROGRESS.md states the CI run for 5e546e7 and the version of the private page that holds this unit, or says plainly that neither is known yet."
+  },
+  {
+   "id": "DT-15",
+   "severity": "minor",
+   "title": "Defined terms: second names and second meanings",
+   "steps": "Read apps/studio/src/store.ts line 869 against App.tsx line 336; PLAN.md line 66; packages/core/src/catalog/directions.ts lines 188 and 425; docs/reference/guarantees.md lines 547-548; the first source line of the rule on text size at #summary.",
+   "observed": "\"Skin\" is written \"skin\" in the start notice (\"in the skin “Berry”. The skin changed…\") and in PLAN.md, and \"Skin\" on the card. \"Sample website\" is a second name for the Mockup of Template 1 on screen and in PROGRESS.md, D53, and guarantee 60.04, whose test name says \"the Template fixes\" for the same thing. The Direction name \"Steady Steps\" uses the defined word \"Steps\" for another thing, beside \"0 of 23 Steps decided\". \"Clinical Calm\" says \"looking like a template\". A record title shown on screen calls a research estimate \"A measurable floor\", while the code comment says \"A research rule is not a floor\".",
+   "expected": "One spelling and one name per term; the owner's decision on \"Sample website\" recorded, as PROGRESS.md already asks for \"Direction\" and \"research rule\"."
+  },
+  {
+   "id": "DT-16",
+   "severity": "note",
+   "title": "Figures that the repository gives no means to check",
+   "steps": "Search docs/ and redteam/ for the method behind \"39 pairs… 12 remain\" (PROGRESS.md line 71, FINDINGS row U2-08) and for the token counts in PROGRESS.md lines 74, 76.",
+   "observed": "No script, threshold, or measurement file exists for the comparison of card pictures; other measurements of the same day have a file in docs/knowledge/sources/. The code-review report holds no token count. My own stricter comparison (under 0.5 percent of pixels differing) on a project from Soft Daylight found one identical pair, on the Step \"Background of the first screen\", which carries a note in words.",
+   "expected": "A measurement file with the method and the 12 remaining pairs by name."
+  },
+  {
+   "id": "DT-17",
+   "severity": "note",
+   "title": "A Direction's sources and grade are shown on no screen; one of the four research files feeds nothing",
+   "steps": "Search apps/studio/src/App.tsx for `.sources` (lines 634, 868, 1071). Check which files the Catalog cites.",
+   "observed": "Sources and grade are shown for a Step, an Overlay, and a research rule, not for a Direction. The sentence \"The numbers in this Direction are the Studio’s own translation\" of the three new Directions exists in the record only. kb-eye-and-beauty.json (20 records) is cited by no rule, Overlay, Direction, or Skin.",
+   "expected": "Worth knowing; the plan does not promise either."
+  },
+  {
+   "id": "DT-18",
+   "severity": "note",
+   "title": "Names: the rule holds word for word; some descriptions still point at one person",
+   "steps": "Read every name, mood, \"Best for\", and \"Watch for\" text of the 38 Directions and 13 Skins; search Step texts for names.",
+   "observed": "No Direction or Skin carries the name of a person, a show, a book, or a brand. \"Woody Creek Winter\" names a real small place, and \"Mountain Rhinestone\" lists \"reading programs… family attractions\" with \"a butterfly yellow\"; a reader who knows the honored person will recognize them. Step source lines and examples name companies and two authors (for example IBM, GOV.UK, Radix, Linear, Shopify; Kowalski, Krehel) as citations; these are older than this unit.",
+   "expected": "The owner's call, as D51 already says."
+  }
+ ],
+ "held": "Counted in the code and found as recorded: 23 Steps (6 Layout, 17 Look and feel); 38 Directions in four groups (12, 10, 11, 5); 13 Skins, each Direction offering 2 to 5; 6 Overlays; 5 research rules; 12 conflict and 11 harmony rules; 29 contrast pairs; project format version 2; 76 new research records (20, 20, 20, 16) and 138 older ones; 49 guarantees in version 1.4; 263 browser tests by count (104 in studio.e2e.ts, 159 in visual.e2e.ts: 10 single, 23 per Step, 9 per paint-only Step, 117 per Direction and page part), with 117 stored pictures; 19 code-review findings, 17 rows. I did not run the browser tests.\n\nTest names: all 25 names in guarantees 10.14, 20.07, 30.06, 50.07, 50.08, 60.03, 60.04 exist word for word in the cited files, and each test checks what its rule says. All 35 names (31 distinct) in the saving table exist word for word, and its status-line words are in the code. All 12 test names and all commits in the findings rows exist.\n\nFindings rows: CR5-01 to CR5-17, U2-06, U2-08, U3-05 are true at HEAD as written (CR5-11 measured at 44 pixels in a touch setting; U2-06 bar is opaque with one button; the notes and color chips of U2-08 are on screen).\n\nSources: every source line in researchRules.ts, overlays.ts, and the three new Directions (33 lines) names a record that its file holds word for word. The research overview's counts of how sources were seen match the data files.\n\nResearch rules against the drawn page (Ink and Seal, Plain Label, Control Room, at 375, 768, 1280, 1700 pixels): each \"Holds\" or \"Does not hold\" matches what the browser draws; text links are 24 to 26 pixels tall, as the rule says.\n\nD52 and D53 otherwise: top bar reads \"3. Overlays\", \"4. Summary\"; a project without Overlays stores no Overlay field; an unknown Overlay planted in storage was left out with a notice and the original kept as a copy; no Overlay or rule is graded \"measured\"; four rules bind and Control Room departs; none of the 20 newest Directions starts with a contrast warning or a clash; no Skin adds a failing color pair (178 pairs computed).\n\nHard rules: no innerHTML or dangerouslySetInnerHTML in source; no React or browser API in packages/core (by search; I did not run the boundary tool); the Mockup holds no script and no event handler, in a frame with an empty sandbox; no outside request and no page error on any screen I walked; no text calls output \"accessible\" or \"compliant\".\n\nTrial guide: every other label matches the screens. The branch name matches, and HEAD equals the local record of the pushed branch.\n\nOne slip of mine: a vitest run with the JSON reporter wrote /home/user/Frontend/.vitest/json/output.json. I removed it; `git status` shows no change."
+}

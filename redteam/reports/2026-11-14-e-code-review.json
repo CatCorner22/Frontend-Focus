@@ -1,0 +1,318 @@
+[
+ {
+  "label": null,
+  "result": {
+   "findings": [
+    {
+     "id": "studio-undo-overlay-message",
+     "severity": "major",
+     "file": "apps/studio/src/store.ts",
+     "line": 992,
+     "summary": "Undo of an Overlay switch reports \"Undone: your earlier project is back, the one that started from ...\", which overstates what Undo did.",
+     "scenario": "On the Overlays screen tick \"Tooltip\", then press Undo in the top bar (the screen's own hint at App.tsx:853 tells the owner to do this). In undo(), `touched` is empty (no Step value or Decision differs), `wholeProject` is false, and `small` only knows the name and the Contrast checks setting, so it is null. The text falls through to the `wholeProject || !first` branch at line 995-996 and says the whole earlier project is back. Only one Overlay changed. The comment at lines 990-991 names this exact overstatement as the thing `small` exists to prevent; the new `overlays` field was not added to it.",
+     "suggestion": "Add an overlays case to `small`: compare overlaysOf(now) with overlaysOf(previous) and say, for example, \"Undone: the Overlay \\\"Tooltip\\\" is switched off again.\" Add an e2e assertion on the notice text."
+    },
+    {
+     "id": "studio-haswork-ignores-overlays",
+     "severity": "minor",
+     "file": "apps/studio/src/store.ts",
+     "line": 186,
+     "summary": "hasWork() does not count switched-on Overlays, so a project whose only work is its Overlays is replaced without a question and without a kept copy.",
+     "scenario": "New project (plain start, default name). Go to #overlays and switch on three Overlays. On the Summary, open a project file: requestImport line 955 sees !hasWork and calls open() with no confirmation, and replaceKeepingCopy line 242 sees !worthKeeping and keeps no copy. The Overlay choices survive only in the Undo history, which a reload empties. The same project also reopens on the Directions screen (line 746) and the Directions screen shows no \"Go on with my project\" link (App.tsx:366 computes `started` the same way).",
+     "suggestion": "Let hasWork (or at least worthKeeping) also return true when overlaysOf(project).length > 0."
+    },
+    {
+     "id": "studio-skin-touch-target",
+     "severity": "minor",
+     "file": "apps/studio/src/app.css",
+     "line": 240,
+     "summary": "A skin chip is 32 pixels tall on a touch screen; the stylesheet's own touch rule (44 pixels for every control) does not list it.",
+     "scenario": ".skin has min-height: 2rem and its text is 0.8125rem, so each chip is 32px tall, with 6px gaps (.skin-row gap 0.375rem). The block `@media (pointer: coarse)` at lines 301-304 (\"every control is at least 44 pixels tall\") raises .btn, .check, .rail a and others to 2.75rem but not .skin. On a phone a Direction card shows up to about six chips in wrapped rows, each below the height that the Studio's own research rule 'target-size' (TARGET_MIN = 44) asks of the designs it produces.",
+     "suggestion": "Add `.skin` to the selector list at line 302 (min-height: 2.75rem under pointer: coarse)."
+    },
+    {
+     "id": "studio-rail-tabstop-overlays",
+     "severity": "note",
+     "file": "apps/studio/src/App.tsx",
+     "line": 479,
+     "summary": "On the Overlays screen the Rail's single Tab stop is the \"Started from\" link, not the link marked as the current page.",
+     "scenario": "The Rail is one Tab stop with arrow keys inside. On a Step the stop is the current Step (tab(here), line 466). On the Overlays screen no Step is `here`, so the stop falls to the first link (tab(s.view !== 'steps'), line 452), while the Overlays link carries aria-current=\"page\" with tabIndex -1. A keyboard user who tabs into the Rail lands at the top and must press End, then ArrowUp, to reach the item that is marked current. Before this change the Rail was drawn only on Steps, so this branch never ran.",
+     "suggestion": "Give the Overlays link tabIndex={tab(s.view === 'overlays')} and the first link tab(false) in that case, so that the current item is the Tab stop on both screens."
+    }
+   ],
+   "looked_at": "Read the full diff from 5366cb8 of apps/studio/src/App.tsx (chipColors, DirectionCard, TopBar, Rail, RESEARCH_STEP, OverlaysView, the Overlays and Research rules sections of SummaryView, the view switch), apps/studio/src/store.ts (View list, readHash, enter, advance, commit, toggleOverlay, requestDirection, requestPlainStart, requestImport, replaceKeepingCopy, undo, hasWork/worthKeeping), apps/studio/src/preview.tsx (cache key, BUILT_MAX) and apps/studio/src/app.css (new rules, the one-column block at max-width 1099px, the coarse-pointer block). Read for context: engine.ts (overlaysOf, setOverlay, applyDirection, startPlain, normalize), skins.ts, overlays.ts, the measure functions of researchRules.ts, the `owns` lists of steps.ts, and the focus rules for 'overlays' in smallBusiness.ts. Nothing was run: no npm script, build, browser, or test; findings come from reading the code only.\n\nChecked and found sound: no innerHTML or dangerouslySetInnerHTML in the new code; all Catalog text renders as text. Memo dependencies in DirectionCard, OverlaysView and SummaryView cover the values they read. The path last Step -> Overlays -> Summary has no dead end, and the browser's Back button returns from Overlays to the last Step (enter pushes a hash). useHeadingFocus moves focus to the Overlays heading. A skin's colors survive a reload (normalize keeps the file's `base`). The three RESEARCH_STEP keys match rule ids and each parameter has an owning Step; the other three rules measure fixed Template values. `.overlay-list { gap }` takes effect because `.options fieldset` is a grid. The top bar wraps at 320 pixels. The skin radios are reachable by keyboard and show a focus ring through :has(input:focus-visible). The preview cache key includes the Overlays.\n\nNot checked: the rendered layout at 320 pixels in a real browser, screen-reader output, and the e2e tests' own strength (outside this area)."
+  }
+ },
+ {
+  "label": null,
+  "result": {
+   "findings": [
+    {
+     "id": "core-1",
+     "severity": "major",
+     "file": "packages/core/src/catalog/researchRules.ts",
+     "line": 159,
+     "summary": "The rule \"Every button and link is at least 44 pixels tall\" reports \"Holds\" from the constant token --target-min (always 2.75rem, tokens.ts:587), but the Mockup's own text links are set to 24 pixels.",
+     "scenario": "Any design: the Summary says \"Holds. Buttons and links are at least 44 pixels tall.\" Yet packages/core/src/templates/smallBusiness.ts:239 gives `.actions .link, .service .more, address .phone, .nav-actions .phone` a `min-height: 1.5rem` (24 px), and `.brand` (line 196) has no minimum height at all. Only `.btn`, `.nav li a` and form controls use --target-min. The rule's `notChecked` text (\"The Studio checks the height that the design gives to buttons and links\") is also untrue for links. Because the token is a constant, no design can ever make this rule say \"does not hold\".",
+     "suggestion": "Either name the rule for what the token governs (buttons, menu links, form fields) and say in `found` that text links are 24 pixels, or raise the text links to --target-min. Do not present a constant as a measurement of \"every\" link."
+    },
+    {
+     "id": "core-2",
+     "severity": "major",
+     "file": "packages/core/src/catalog/skins.ts",
+     "line": 66,
+     "summary": "A fade Skin on a Direction whose color strategy is quiet, tinted-surface or color-block loses its second color: the headline fades to a different hue than the Skin's `what` text states.",
+     "scenario": "skinParams applies `accent2Hue` only when the Direction is `duo` or `single-accent`, but always sets `displayTreatment: 'accent-gradient'`. For any other strategy tokens.ts:490 ends the fade at `shiftH(accentText, 52)`. Pairs the Catalog offers: \"Sunset fade\" (\"Orange that fades into rose pink\", 42 to 355) on graphite-precision, quiet-luxury, cobalt-wash, steady-steps fades from hue 42 to hue 94 (yellow-green). \"Meadow fade\" (\"into yellow-green\", 100) on graphite-precision, quiet-luxury, cobalt-wash ends at 192 (blue-green). \"Orchid fade\" (\"into violet\", 275) on paper-and-ink and steady-steps ends at 12 (red). The chip in App.tsx:313 shows one flat color for these pairs, because `second` is read only when the strategy is duo. Derived from the code; I did not render it (no browser run allowed). No unit test compares the fade's end with the Skin's second color.",
+     "suggestion": "Do not list fade Skins on Directions that cannot carry a second color, or carry the Skin's second hue into the fade for every strategy; add a test that the far end of --display-fill has the Skin's accent2Hue for every listed pair."
+    },
+    {
+     "id": "core-3",
+     "severity": "minor",
+     "file": "packages/core/src/catalog/researchRules.ts",
+     "line": 93,
+     "summary": "The line-length rule reports the constant --measure (always \"65ch\", tokens.ts:567) as \"the widest line of reading text\", but only two paragraph kinds use that token.",
+     "scenario": "smallBusiness.ts applies `max-width: var(--measure)` only to `.service p` (286) and `.about p` (346). The services intro paragraph sits in `.section-head { max-width: 46rem }` (281) at --text-base: 736 px wide at 17 px text is about 43 em, wider than 65ch for an ordinary sans face (roughly 72ch or more), and wider still at a smaller text size (13 px on the slider: about 57 em). The Summary still says \"The widest line of reading text holds about 65 letters. Holds.\" No design can change the value, so the rule can never fail. Also, \"ch\" is the width of the digit 0, which is wider than an average letter, so 65ch holds more than 65 letters. The width in letters is my estimate, not measured.",
+     "suggestion": "Put the --measure cap on every reading paragraph (section-head p included), or word `found` as \"Paragraphs in the services and about sections are capped at 65 character widths\"."
+    },
+    {
+     "id": "core-4",
+     "severity": "minor",
+     "file": "packages/core/src/catalog/researchRules.ts",
+     "line": 127,
+     "summary": "The size-step rule looks only at `scaleRatio`, so it reports \"Holds\" when two real text sizes are equal or under a tenth apart.",
+     "scenario": "(1) baseSize 13 (the bottom of the \"Text size\" slider, steps.ts:275), scaleRatio 1.25: tokens.ts:521-523 gives --text-sm = max(13, 11.57) = 13 px and --text-base = 13 px, the same size, and --text-xs = 12 px (8% smaller). The Summary says \"Each text size is 25 percent larger than the size below it. Holds.\" With baseSize 14: 14 / 13 / 12, steps of 7.7% and 8.3%. (2) On a 320-pixel phone, --lede-size = min(--text-lg, 5.6vw) = 17.92 px against reading text of 17 px (the default): 5% apart; at baseSize 19 or more the lede is smaller than the reading text. The `found` sentence is also untrue below the reading size in every design (sm is 0.89 of base, about 12%, never the scale ratio).",
+     "suggestion": "Measure the ratios between the consecutive worked-out size tokens (xs, sm, base, lg, ...) and report the smallest; state in `notChecked` that the caps on narrow screens are not measured."
+    },
+    {
+     "id": "core-5",
+     "severity": "minor",
+     "file": "packages/core/src/catalog/researchRules.ts",
+     "line": 142,
+     "summary": "The strong-colors measure can only answer 1 or 2 against a maximum of 2, so the rule can never fail, and its count is wrong for some designs.",
+     "scenario": "`count = colorStrategy === 'duo' ? 2 : 1`, `holds = count <= 2`: true for every possible input, so the unit test that binds it (catalog.test.ts:531) cannot fail for this rule. Wrong counts: the \"Graphite\" Skin (accentChroma 0.02, \"Almost no color\") is reported as \"The design uses one strong color\"; a non-duo design with `displayTreatment: 'accent-gradient'` or the aurora atmosphere draws a second hue 52 or 48 degrees away (tokens.ts:490, 361) and is still reported as one. The cited record's own design move is \"neutrals and one accent\"; the limit of two is the Studio's own number and the text does not say so.",
+     "suggestion": "Either drop the rule (a number that cannot change is not a measure) or count hues actually emitted (accent, accent-2, fade end, atmosphere) with a chroma threshold, and say that the limit of two is the Studio's choice."
+    },
+    {
+     "id": "core-6",
+     "severity": "minor",
+     "file": "packages/core/src/engine.ts",
+     "line": 700,
+     "summary": "The new \"overlays\" part of a project file is missing from SECTIONS, so a fault in it refuses the whole file with \"This is not a Refraction project file.\"",
+     "scenario": "A project file with `\"overlays\": \"tooltip\"` (a string, not a list), or a list with one identifier longer than 40 characters, or more than 40 entries: `projectSchema` (line 690) fails with path[0] = 'overlays'; `SECTIONS.find` (line 854) returns undefined; the owner is told the file is not a project file at all, although every other part names itself (finding U2-21's purpose). It is also inconsistent: an unknown identifier of 40 characters is dropped with a note, one of 41 characters loses the whole project.",
+     "suggestion": "Add 'overlays' to SECTIONS and SECTION_WORDS (\"the Overlays\"), or make the schema tolerant (`.catch(undefined)`) and let normalize drop bad entries with its existing note."
+    },
+    {
+     "id": "core-7",
+     "severity": "note",
+     "file": "packages/core/src/templates/smallBusiness.ts",
+     "line": 483,
+     "summary": "The documentation comment of `renderSmallBusiness` now sits above `OVERLAY_PICTURES`, directly followed by a second comment; the function itself (line 515) has lost its comment.",
+     "scenario": "Two consecutive `/** */` blocks at lines 483-487: editors show the \"Render the Mockup as one complete HTML document. Throws if...\" text for nothing, and hovering `renderSmallBusiness` shows no description.",
+     "suggestion": "Move the one-line comment back to directly above `export function renderSmallBusiness`."
+    },
+    {
+     "id": "core-8",
+     "severity": "note",
+     "file": "packages/core/src/templates/smallBusiness.ts",
+     "line": 488,
+     "summary": "Overlay identifiers and names are written twice (MOCKUP_OVERLAYS and OVERLAY_PICTURES[..].name duplicate OVERLAYS in catalog/overlays.ts), and the same list filter is written three times.",
+     "scenario": "Cost: adding or renaming one Overlay needs edits in three places; only unit tests (catalog.test.ts:498, mockup.test.ts:207) keep them equal. \"The Catalog's Overlays that are in this list, each once, in order\" is computed separately in engine.ts setOverlay (line 319), engine.ts normalize (line 835) and smallBusiness.ts (line 524).",
+     "suggestion": "Let the template take the caption from the Catalog record (`findOverlay(id).name`, escaped) and keep only the picture markup per id; extract one helper `orderedOverlays(ids)` in overlays.ts and use it in all three places."
+    }
+   ],
+   "looked_at": "Read in full: packages/core/src/catalog/skins.ts, overlays.ts, researchRules.ts; the diff from 5366cb8 of catalog/directions.ts, engine.ts, index.ts and templates/smallBusiness.ts; the parts of tokens.ts that the measures and skins depend on (typeTokens, spaceTokens, shapeTokens, displayTokens, palette lines 93-160); parseProject and SECTIONS in engine.ts; the research-rule and Overlay tests in packages/core/test/catalog.test.ts and mockup.test.ts; chipColors in apps/studio/src/App.tsx. With a read-only script I confirmed that all 33 record titles cited by overlays.ts, researchRules.ts and the three new Directions exist in the cited docs/knowledge/kb-*.json files, and I read nine of those records against the Catalog texts (touch targets, target size in millimetres, Fitts, line length, type-size step, x-height, empty space and plainness, system status, progress indicators): the texts stay within what the records say, apart from the points in core-1, core-3 and core-5. Checked and found sound: the overlays input check in renderSmallBusiness (only identifiers from the fixed list reach markup; the one variable text, the main button's label, is escaped); no script, no duplicate element ids, no React or browser API in the new core files; setOverlay and normalize keep Catalog order and remove duplicates; a project started in a Skin keeps its colors on reopening (normalize keeps the file's `base`); the Overlay CSS (grid uses min(100%, 17rem), .ov has min-width 0, the sticky bar is hidden outside the phone media query and in the overlays, buttons and box regions). Not done, per the limits: no npm script, test suite, build or browser was run, so core-2 and the letter counts in core-3 are derived from the code, not rendered or measured."
+  }
+ },
+ {
+  "label": null,
+  "result": {
+   "findings": [
+    {
+     "id": "T1",
+     "severity": "minor",
+     "file": "apps/studio/e2e/studio.e2e.ts",
+     "line": 1994,
+     "summary": "The Overlay e2e tests read text with allTextContents()/innerText() from the preview, which succeed on hidden elements, so 'draws a switched-on Overlay in the preview' (line 2025) and the '.ov-none' check (line 2013) pass when nothing is visible.",
+     "scenario": "Delete or break the CSS rule at packages/core/src/templates/smallBusiness.ts:423 (`body[data-focus=\"overlays\"] .overlay-demo { display: block; ... }`). The rule above it hides every other child of main and the footer, and `.overlay-demo` keeps its default `display: none`, so the Overlays preview is an empty page. `drawn()` still returns ['Tooltip', '“Are you sure?” question'] because textContent ignores display, and innerText on a display:none element also returns its text. No unit test checks this rule either (mockup.test.ts checks markup only), and visual.e2e.ts takes pictures of the regions top/services/contact only, never 'overlays'.",
+     "suggestion": "Assert visibility: `await expect.poll(() => preview(page).locator('.ov-stage').first().isVisible()).toBe(true)` and the same for `.ov-none` (the sticky-call test at line 2069 already uses isVisible)."
+    },
+    {
+     "id": "T2",
+     "severity": "minor",
+     "file": "packages/core/test/mockup.test.ts",
+     "line": 239,
+     "summary": "The test named '...only on a narrow screen, and only where the page is shown whole' does not check the 'shown whole' half: the regular expression uses `[^{]*` between the body selector and `.sticky-call`, so it matches with or without the three :not() clauses.",
+     "scenario": "Remove `:not([data-focus=\"overlays\"]):not([data-focus=\"buttons\"]):not([data-focus=\"box\"])` from packages/core/src/templates/smallBusiness.ts:451. The unit test still passes. The e2e test at studio.e2e.ts:2069 does not catch it either: it looks at the Summary (focus 'top') and at Step cards, which never receive overlays at all, so the :not() clauses are never exercised. Result in the app: on the Overlays screen at Phone width with 'Main button that stays in view' ticked, a real sticky bar appears over the pictures in addition to the picture of the bar.",
+     "suggestion": "Match the :not() clauses literally in the regular expression, or add an e2e check on #overlays at Phone width that `.sticky-call` is not visible while `.ov-bar` is."
+    },
+    {
+     "id": "T3",
+     "severity": "minor",
+     "file": "packages/core/test/catalog.test.ts",
+     "line": 444,
+     "summary": "The test '...gives a one-color page a second color only where the page has room for one' never asserts the positive branch of skinParams (skins.ts:66-68): no test states that a 'single-accent' or 'duo' Direction with a two-color skin becomes 'duo' with accent2Hue equal to the skin's.",
+     "scenario": "Delete `out.colorStrategy = 'duo'; out.accent2Hue = skin.accent2Hue;` in packages/core/src/catalog/skins.ts. The test at line 444 checks only galactic-goth+ocean (the else-branch) and that cobalt-wash+sunset keeps its strategy. The e2e test at studio.e2e.ts (Midnight Aurora + Sunset fade) compares the stored params with `skinParams(aurora, skin)`, the code with itself, and its independent assertions cover accentHue, hero, fontHeading, radius, accentLightness only. No harmony rule depends on the pair. The 'Sunset fade' on Midnight Aurora would then fade to the Direction's own second hue with every test green (unless a contrast pair fails by accident).",
+     "suggestion": "Add: `const a = skinParams(findDirection('midnight-aurora'), findSkin('sunset')); expect(a.colorStrategy).toBe('duo'); expect(a.accent2Hue).toBe(355);` and one case for a duo Direction with a two-color skin."
+    },
+    {
+     "id": "T4",
+     "severity": "minor",
+     "file": "packages/core/src/catalog/skins.ts",
+     "line": 63,
+     "summary": "Untested case with a wrong result on screen: a fade skin on a Direction whose colorStrategy is neither 'duo' nor 'single-accent' keeps its strategy, so the headline fade ends at accentHue+52 degrees (tokens.ts:490, `shiftH(pal.accentText, 52)`), not at the skin's accent2Hue; the card still prints the skin's `what` text.",
+     "scenario": "Cobalt Wash ('tinted-surface') lists the skins lagoon, meadow, sunset; Quiet Luxury and Graphite Precision ('quiet') list them too. Pick 'Sunset fade' on Cobalt Wash: skin.accent2Hue 355 is dropped, the fade runs from hue 42 to hue 94 (orange to yellow-green), and the hint under the card (App.tsx, `skin.what`) reads 'Orange that fades into rose pink across the headline.' 'Meadow fade' says 'into yellow-green' (100) and gets 192; 'Orchid fade' says 'into violet' (275) and gets 12. The only test of this case (catalog.test.ts:451) asserts that colorStrategy is unchanged and nothing about the fade.",
+     "suggestion": "Either do not list fade skins on Directions where twoColors is false (and add a unit test that says so), or carry the skin's second hue into the fade. Add a test that the far end of '--display-fill' has the skin's second hue wherever a fade skin is offered."
+    },
+    {
+     "id": "T5",
+     "severity": "minor",
+     "file": "packages/core/src/catalog/researchRules.ts",
+     "line": 142,
+     "summary": "The research rule 'strong-colors' can never fail: count is 1 or 2 and the limit is 2, so `holds` is always true. Every assertion on it is therefore always true, and the Summary always prints 'Holds' for it.",
+     "scenario": "catalog.test.ts:531 ('holds every binding rule on every Direction and on every Skin') is trivially true for this rule for any input. catalog.test.ts:550 checks only the `found` sentence for 'duo', never a `holds: false`, because none exists. A design that paints the whole first screen ('color-block') or uses an accent-gradient with a shifted second hue is still counted as 'one strong color'. The file's own header says a rule is here 'only when a number of the design can answer it'; this number cannot answer 'no'.",
+     "suggestion": "Drop the rule, or make the count real (for example count a color fade's far end and a painted first screen) and add a test with a design that does not hold it."
+    },
+    {
+     "id": "T6",
+     "severity": "note",
+     "file": "packages/core/test/catalog.test.ts",
+     "line": 526,
+     "summary": "`expect(result.found).toMatch(/\\d|one|two/)` matches too much to mean 'a real number': 'one' and 'two' match inside any word (done, none, tone, network), and every `found` template except strong-colors already contains a digit position.",
+     "scenario": "A measure that returned 'Nothing was done.' or 'none' passes. The guard that does the work is the line above (`not.toMatch(/NaN|undefined|Infinity/)`); this line adds no protection but reads as if it did.",
+     "suggestion": "Use `/\\b(\\d+(\\.\\d+)?|one|two)\\b/`, or delete the line."
+    },
+    {
+     "id": "T7",
+     "severity": "note",
+     "file": "packages/core/test/project-file.test.ts",
+     "line": 345,
+     "summary": "The test '...repeats included, and says so' repeats a known Overlay ('confirm' twice) only. The count of unknown Overlays (engine.ts:836, `new Set(...).size`) and the plural sentence are never executed with a repeated or a second unknown identifier.",
+     "scenario": "Change engine.ts:836 to `listed.filter((id) => !findOverlay(id)).length`: every test passes, and a file with overlays ['x','x'] then reports '2 Overlays in the file are unknown' for one unknown Overlay. The plural branch ('N Overlays in the file are unknown...') has no test at all, in core or in the e2e test (which also uses one unknown identifier).",
+     "suggestion": "Add `overlays: ['x', 'x', 'tooltip']` (expect the 'One Overlay' sentence) and `['x', 'y']` (expect '2 Overlays in the file are unknown to this version of the Studio. They were left out.')."
+    }
+   ],
+   "looked_at": "Read-only review; no npm script, build, browser or test was run, so every scenario is reasoned from the code, not observed. Read in full: the diff from 5366cb8 of packages/core/test/catalog.test.ts, mockup.test.ts, project-file.test.ts, apps/studio/e2e/studio.e2e.ts, engine.ts, store.ts, preview.tsx, App.tsx, templates/smallBusiness.ts; the untracked files catalog/overlays.ts and catalog/researchRules.ts; catalog/skins.ts; the test helpers (roundTrip, ok, refusal, busyProject, hostileContent, render, withoutStyle, worked). Checked by grep: tokens.ts displayTokens and the uses of accent2/shiftH (I did not open color.ts; T4 assumes shiftH adds degrees, and with the opposite sign 'Lagoon fade' is the mismatch instead), HARMONY_FIXES in engine.ts, the colorStrategy of cobalt-wash, midnight-aurora, galactic-goth, soft-daylight, quiet-luxury, graphite-precision, the skin lists on the Direction records, app.css rules for .research-list, and how visual.e2e.ts treats a missing stored picture (it fails unless UPDATE_BASELINES=1, which is sound; it covers the regions top, services, contact only, and no skin). The describes 'a person can choose by eye' and 'the saving table' are unchanged since 5366cb8; I read the first fully and the second fully and found nothing to report in them. Tests I judged sound: the Overlay refusal test (mockup.test.ts:219), the hostile-content test of the pictures (the escaped label is asserted inside the demo section and the section is checked to be longer than 500 characters), the Overlay file-schema refusal test, the named-record check against the knowledge-base files, the research-rule 'does not hold' cases with fixed numbers, the e2e round trip of Overlays through save, reload, Undo, and the kept copy of a file with an unknown Overlay. Not checked: whether the knowledge-base JSON files really hold each named record (the unit test does that at run time), the nine new PNG baselines, styles.json, and the documents."
+  }
+ },
+ {
+  "label": null,
+  "result": {
+   "verdicts": [
+    {
+     "id": "core-core-1",
+     "verdict": "confirmed",
+     "corrected_severity": "major",
+     "reason": "Seen in code. researchRules.ts:158-161 reads only css['--target-min'], which tokens.ts:587 sets to the constant '2.75rem'. smallBusiness.ts:239 gives `.actions .link, .service .more, address .phone, .nav-actions .phone` min-height 1.5rem (24 px; its own comment at 238 says so), and `.brand` (196) has no minimum. Only `.btn` (182), `.nav li a` (198) and form controls (363) use the token. App.tsx:1063 prints 'Holds: Every button and link is at least 44 pixels tall. Buttons and links are at least 44 pixels tall.' for every design. The unit test (catalog.test.ts:557-558) only swaps the token by hand, so nothing ties the sentence to the links. Could not refute: the 24 px rule predates this unit, but the false sentence is new."
+    },
+    {
+     "id": "core-core-2",
+     "verdict": "confirmed",
+     "corrected_severity": "major",
+     "reason": "Seen in code. skins.ts:63-68 sets accent2Hue only for 'duo' or 'single-accent', yet line 64 always sets the skin's displayTreatment. tokens.ts:490 then ends the fade at shiftH(pal.accentText, 52) for any non-duo, non-painted strategy. Listed pairs in directions.ts: graphite-precision (quiet: lagoon, meadow, sunset), paper-and-ink (quiet: orchid), quiet-luxury (quiet: lagoon, meadow, sunset), cobalt-wash (tinted-surface: lagoon, meadow, sunset), steady-steps (tinted-surface: sunset, orchid). Sunset ends at hue 94 not 355, Meadow at 192 not 100, Orchid at 12 not 275; Lagoon ends at 247 against 255, so it is nearly right. App.tsx:350 still prints skin.what, and chipColors (313) shows one flat color. No rule or test changes displayTreatment for these strategies (grep of 'accent-gradient' finds none in rules). Not rendered, as the reviewer says; the code path is unambiguous."
+    },
+    {
+     "id": "core-core-3",
+     "verdict": "confirmed",
+     "corrected_severity": "minor",
+     "reason": "Core claim seen in code: tokens.ts:567 sets '--measure' to the constant '65ch', and only `.service p` (smallBusiness.ts:286) and `.about p` (346) use it, so no design can make the rule fail. One detail of the scenario is wrong: `.section-head p` is set at --lede-size (line 283), not --text-base. At the default that is 21.25 px, so 46rem is about 35 em (roughly 69 character widths), not 43 em. The overrun past the rule's own limit of 80 appears only at small settings: base 13 with ratio 1.067 gives 13.9 px, about 53 em, roughly 100 character widths, while the Summary still says 65 and 'Holds'. Widths in letters are estimates; a render would settle the exact number."
+    },
+    {
+     "id": "core-core-4",
+     "verdict": "confirmed",
+     "corrected_severity": "minor",
+     "reason": "Seen in code. researchRules.ts:127-130 reads only params.scaleRatio. tokens.ts:521-523 clamps '--text-xs' at 12 and '--text-sm' at 13, so at baseSize 13 (the slider's bottom, steps.ts:275) sm equals base, and at 14 the steps are 14/13/12 (7.7% and 8.3%), both under the rule's tenth, while the rule reports 'Holds'. Both small tokens are used in the Mockup (12 and 2 uses). '--lede-size' is min(--text-lg, 5.6vw) (tokens.ts:540): 17.92 px at 320 px wide against 17 px text. The `found` sentence is also untrue below base in every design (base/sm is 1.12, not the scale ratio). The binding test (catalog.test.ts:531) only runs Directions, whose sizes do not hit the clamps."
+    },
+    {
+     "id": "core-core-5",
+     "verdict": "confirmed",
+     "corrected_severity": "minor",
+     "reason": "Seen in code. researchRules.ts:142-143: count is 1 or 2 and STRONG_COLORS_MAX is 2, so `holds` is true for every input; the binding test (catalog.test.ts:531) cannot fail for this rule, and line 550 checks only the sentence. The count ignores chroma (Graphite skin, accentChroma 0.02, reads 'one strong color') and the shifted second hue that tokens.ts:490 and 361 draw for non-duo designs. Same defect as tests-T5; count once."
+    },
+    {
+     "id": "core-core-6",
+     "verdict": "confirmed",
+     "corrected_severity": "minor",
+     "reason": "Seen in code. engine.ts:690 adds `overlays` to projectSchema, but SECTIONS (line 700) and SECTION_WORDS do not hold 'overlays'. On a schema fault whose first issue has path[0] = 'overlays', SECTIONS.find (854) returns undefined and line 855 answers NOT_A_PROJECT. The test at project-file.test.ts:355-359 asserts only that a refusal exists (toBeTruthy), not its text, so it does not cover the message. Reachable only through a hand-edited or damaged file, so minor is right."
+    },
+    {
+     "id": "core-core-7",
+     "verdict": "confirmed",
+     "corrected_severity": "note",
+     "reason": "Seen in code. smallBusiness.ts:483 holds the 'Render the Mockup as one complete HTML document...' comment, directly followed by the OVERLAY_PICTURES comment at 484-487; `export function renderSmallBusiness` at 515 has no comment."
+    },
+    {
+     "id": "core-core-8",
+     "verdict": "confirmed",
+     "corrected_severity": "note",
+     "reason": "The duplication is real: ids in MOCKUP_OVERLAYS (smallBusiness.ts:97) and OVERLAYS, names in OVERLAY_PICTURES (490-510) and overlays.ts, and the ordered filter at engine.ts:316, engine.ts:835 and smallBusiness.ts:524. Two limits on the finding. The id list is deliberate and documented (lines 93-96: only fixed words may reach markup), and tests catch any drift (catalog.test.ts:498, mockup.test.ts:207), so the cost is one extra line per new Overlay. The suggested fix as written would break the boundary check: catalog/types.ts:2 imports a type from templates/smallBusiness.ts, so smallBusiness.ts importing catalog/overlays.ts makes a cycle, and .dependency-cruiser.cjs has 'no-circular' with tsPreCompilationDeps on. A shared helper for the two engine.ts sites is the only free part."
+    },
+    {
+     "id": "studio-studio-undo-overlay-message",
+     "verdict": "confirmed",
+     "corrected_severity": "minor",
+     "reason": "Seen in code. store.ts:988: an Overlay switch changes no Decision and no Step value, so `touched` is empty; 989: wholeProject is false; 993: `small` knows only name and a11y, so it is null; 994-996: the `!first` branch prints 'Undone: your earlier project is back, the one that started from ...'. The e2e test (studio.e2e.ts:2058-2060) presses Undo after an Overlay change but never reads the notice. The screen's own hint (App.tsx, 'Undo in the top bar takes it back') leads the owner here. Severity lowered: Undo restores the right state and nothing is lost; only the sentence overstates, which is exactly what the comment at 991-992 says `small` exists to prevent."
+    },
+    {
+     "id": "studio-studio-haswork-ignores-overlays",
+     "verdict": "confirmed",
+     "corrected_severity": "minor",
+     "reason": "Seen in code. store.ts:186: hasWork looks only at direction and decisions; 193: worthKeeping adds only a non-default name. The Overlays screen is reachable on a fresh project (top-nav link at App.tsx:177, and readHash accepts '#overlays'), and toggleOverlay (906) commits without a Direction. Then requestImport line 955 opens the file with no question and replaceKeepingCopy line 242 keeps no copy. Lines 746 and App.tsx:366 behave as described. What is lost is at most six ticks, recoverable by Undo until a reload, so minor is right."
+    },
+    {
+     "id": "studio-studio-skin-touch-target",
+     "verdict": "confirmed",
+     "corrected_severity": "minor",
+     "reason": "Seen in code. app.css:240: `.skin` has min-height 2rem with a 22 px chip, 4 px padding each side and a 1 px border under border-box (line 20), so 32 px. The block at 300-304 ('Touch screens: every control is at least 44 pixels tall') lists .btn, select, .name, .segmented button, .reason input, .rail a, .decision-list a and .check, not .skin. The hidden radio input (242) is 1 px, so the label is the whole target. No e2e test emulates a coarse pointer (no 'coarse' or 'hasTouch' in studio.e2e.ts)."
+    },
+    {
+     "id": "studio-studio-rail-tabstop-overlays",
+     "verdict": "confirmed",
+     "corrected_severity": "note",
+     "reason": "Seen in code. App.tsx:452: the first link gets tabIndex 0 whenever view is not 'steps'; 463-466: no Step is `here` on the Overlays screen; 479: the Overlays link carries aria-current='page' with a fixed tabIndex -1. The Rail was drawn only in StepsView at 5366cb8 (one `<Rail />` then, two now, the new one at 829), so this branch is newly reached. Keyboard route End then ArrowUp follows from onKeyDown (443). A contained keyboard inconvenience; note is right."
+    },
+    {
+     "id": "tests-T1",
+     "verdict": "confirmed",
+     "corrected_severity": "minor",
+     "reason": "Seen in code. studio.e2e.ts:1994 uses allTextContents() and 2013 uses innerText(); both return text for an element that is attached but not rendered. Without smallBusiness.ts:423, line 421 keeps `.overlay-demo` at display:none and 422 hides the rest of main, so the preview is empty while both assertions pass. No other test looks: mockup.test.ts:195-236 checks markup strings only, visual.e2e.ts pictures top, services and contact (124, 319), and the other e2e loops that visit '#overlays' (2359, 2432, 2466, 2550) check axe on the outer page, height, sideways scroll and wording, not the preview's content. The sticky-call test (2075) shows the suite already uses isVisible elsewhere."
+    },
+    {
+     "id": "tests-T2",
+     "verdict": "confirmed",
+     "corrected_severity": "minor",
+     "reason": "Seen in code. mockup.test.ts:239: `[^{]*` sits between the body selector and `.sticky-call`, so the pattern matches with or without the three :not() clauses of smallBusiness.ts:451. `.sticky-call` (line 639) is a child of body, not of main, so line 422 does not hide it on the Overlays region; without the :not() it would show at Phone width beside the picture of the bar. The e2e test at 2069-2086 visits only the Summary (focus 'top', App.tsx:914) and Step cards, which get no overlays, so it does not exercise the clauses either."
+    },
+    {
+     "id": "tests-T3",
+     "verdict": "confirmed",
+     "corrected_severity": "minor",
+     "reason": "Seen in code. catalog.test.ts:444-452 asserts the else-branch (galactic-goth with ocean) and that cobalt-wash with sunset keeps its strategy; nothing asserts skins.ts:67-68. A grep of all tests for skinParams and accent2Hue finds no other assertion on the pair: the test at 414-425 lists colorStrategy and accent2Hue among keys that may change, the test at 427-442 checks clash, harmony and contrast only, and studio.e2e.ts:1957-1960 compares stored params with skinParams itself. Removing the two assignments leaves every assertion true unless a contrast pair happens to fail, which reading cannot rule out for every pair."
+    },
+    {
+     "id": "tests-T4",
+     "verdict": "confirmed",
+     "corrected_severity": "major",
+     "reason": "Same defect as core-core-2, confirmed there in skins.ts:63-68 and tokens.ts:490; count it once. The test half is also true: catalog.test.ts:451 is the only assertion on a fade skin over a 'tinted-surface' or 'quiet' Direction, and it checks colorStrategy only. Severity aligned with core-core-2, because the card states a color that the headline does not show for nine listed pairs."
+    },
+    {
+     "id": "tests-T5",
+     "verdict": "confirmed",
+     "corrected_severity": "minor",
+     "reason": "Same defect as core-core-5 (researchRules.ts:142-143: 1 or 2 against a maximum of 2); count it once. The test half is true: catalog.test.ts:534 is always true for this rule and line 550 checks the sentence only. One part is weak: a 'color-block' page counted as one strong color is arguably correct, since it paints one color."
+    },
+    {
+     "id": "tests-T6",
+     "verdict": "confirmed",
+     "corrected_severity": "note",
+     "reason": "Seen in code. catalog.test.ts:526: /\\d|one|two/ has no word boundary, so 'done' or 'none' match. Five of six `found` templates always print a number through plain(), and a missing value is caught by the line above (NaN|undefined|Infinity), so this line adds no protection today."
+    },
+    {
+     "id": "tests-T7",
+     "verdict": "confirmed",
+     "corrected_severity": "note",
+     "reason": "Seen in code. project-file.test.ts:346 repeats the known 'confirm' and holds one unknown identifier; line 351 holds one unknown. engine.ts:836-837: the Set and the plural sentence are never run with two unknown or a repeated unknown identifier. A grep for 'Overlays in the file' finds only the singular sentence in tests (project-file.test.ts:349, studio.e2e.ts:2094). Replacing the Set with a plain count would keep every test green."
+    }
+   ]
+  }
+ }
+]
